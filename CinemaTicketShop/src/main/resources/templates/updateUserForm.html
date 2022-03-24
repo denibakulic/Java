@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Online ticket shop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body style="background-color:lightgrey;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <h1>Our cinema!</h1>
+        </li>
+    </ul>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    </ul>
+</nav>
+</nav>
+<br>
+<br>
+<div class="container">
+    <form action="#" th:action="@{/user/update/{id}(id=${user.userId})}" method ="post" th:object="${user}">
+
+        <p> Username <input type="text" th:field = "*{username}" placeholder="Username" class="form-control mb-4 col-4"><p/>
+        <p>Password <input type="text" th:field = "*{password}"placeholder="Password" class="form-control mb-4 col-4"><p/>
+        <p>Fullname<input type="text" th:field = "*{fullname}"placeholder="Fullname" class="form-control mb-4 col-4"><p/>
+        <p>Email<input type="text" th:field = "*{email}"placeholder="Email" class="form-control mb-4 col-4"><p/>
+        <p>Permission<input type="text" th:field = "*{role}"placeholder="Permission" class="form-control mb-4 col-4"><p/>
+
+        <p><input type="submit" class="btn btn-info col-2" value="Update"></p>
+    </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

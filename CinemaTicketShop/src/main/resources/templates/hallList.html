@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Online ticket shop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body style="background-color:lightgrey;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <h1>Our cinema!</h1>
+        </li>
+    </ul>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    </ul>
+</nav>
+<br>
+<div class="container">
+    <div class="text-center text-primary">
+        <h1> Halls </h1>
+    </div>
+    <br>
+    <td><a th:href="@{/hall}" class="btn btn-primary">Add hall</a></td>
+    <br></br>
+    <table class="table">
+
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Number of seats</th>
+            <th scope="col">Description</th>
+            <th scope="col" colspan="2"></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "hall: ${halls}" >
+            <td th:text = "${hall.name}"></td>
+            <td th:text = "${hall.numberOfSeats}" ></td>
+            <td th:text = "${hall.description}"></td>
+            <td><a th:href ="@{/hall/update/{id}(id=${hall.hallId})}"class="btn btn-primary">Update hall</a></td>
+            <td><a th:href ="@{hall/delete/{id}(id=${hall.hallId})}" class="btn btn-danger">Delete hall</a></td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

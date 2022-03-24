@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" >
+<link th:rel="stylesheet" th:href="@{/css/style.css}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body style="background-color:lightgrey;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <h1>Our cinema!</h1>
+        </li>
+    </ul>
+</nav>
+
+<br>
+<br>
+<div class="container" >
+    <div class="row">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4" >
+
+            <div class=" text-center">
+                <h1>Login</h1><br>
+            </div>
+
+            <form th:action="@{/login}" method="post" th:object="${user}">
+
+                <div>
+                    <label class="control-label" for="username">  </label> Username<input
+                        type="text" id="username" name="username" placeholder="Enter username" class="form-control"
+                        autofocus="autofocus" required="true" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="password"> Password </label> <input
+                        id="password" class="form-control" type="password" placeholder="Enter password"
+                        name="password" required="true"/>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-primary" value="Log In"/>
+                </div>
+            </form>
+            <div class = "form-group">
+                <span>New user? <a href="/" th:href="@{/register}">Register now!</a></span>
+            </div>
+        </div>
+        <div class="col-sm-4" >
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>
