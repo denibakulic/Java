@@ -29,8 +29,6 @@
             <th scope="col">Time</th>
             <th scope="col">Hall</th>
             <th scope="col">Movie</th>
-            <th scope="col">Seat number</th>
-            <th scope="col">Seat status</th>
 
         </tr>
 
@@ -40,14 +38,10 @@
         <th class="text-center"  th:text="${projection.startTime}"></th>
         <th class="text-center"  th:text="${projection.hall.name}"></th>
         <th class="text-center"  th:text="${projection.movie.name}"></th>
-        <tr th:each = "seat: ${projection.seatList}" >
-            <td th:text="${seat.seatNumber}" ></td>
-            <td th:text="${seat.status}"></td>
-        </tr>
         </tbody>
     </table>
     <div  class=" position-absolute bottom-0 end-0">
-        <a th:href="@{/ticket}" class="btn btn-primary">Make your ticket</a>
+        <a th:href="@{/ticket}" class="btn btn-primary">Buy a ticket</a>
     </div>
 </div>
 </body>

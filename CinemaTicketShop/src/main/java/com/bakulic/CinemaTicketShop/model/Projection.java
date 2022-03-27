@@ -33,8 +33,9 @@ public class Projection {
     @JoinColumn(name = "idMovie")
     private Movie movie;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "projection", cascade = CascadeType.ALL)
-    private List<Seat> seatList;
+    @Column(name = "seatList")
+    @ElementCollection
+    private List<Integer> seatList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "projection", cascade = CascadeType.ALL)
     private List<Ticket> ticketList;

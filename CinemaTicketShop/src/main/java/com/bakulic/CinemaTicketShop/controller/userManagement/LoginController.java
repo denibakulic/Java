@@ -40,7 +40,7 @@ public class LoginController {
 
     @PostMapping
     public String loginUser (@ModelAttribute("user") LoginUserAccountDTO loginUserAccountDTO, Model model) {
-        User user = userService.getUserByUsername(loginUserAccountDTO.getUsername());
+        User user = userService.getUserRepository().findByUsername(loginUserAccountDTO.getUsername());
         if (user.getRole().equals("admin")) {
             userService.login(loginUserAccountDTO);
             return "adminhome";

@@ -12,20 +12,20 @@ public class ProjectionDTO  implements Serializable {
     private int id;
     private String date;
     private String startTime;
-    private List<Seat> seatList;
     private  List<Ticket> ticketList;
     private Hall hall;
     private Movie movie;
+    private List<Integer> seatList;
 
     public ProjectionDTO(Projection projection){
         if(projection != null){
             this.id = projection.getProjectionId();
             this.date = projection.getDate();
             this.startTime = projection.getStartTime();
-            this.seatList = projection.getSeatList();
             this.ticketList = projection.getTicketList();
             this.hall = projection.getHall();
             this.movie = projection.getMovie();
+            this.seatList = projection.getSeatList();
         }
     }
 

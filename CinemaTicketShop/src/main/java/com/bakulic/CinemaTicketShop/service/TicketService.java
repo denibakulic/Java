@@ -2,6 +2,7 @@ package com.bakulic.CinemaTicketShop.service;
 
 import com.bakulic.CinemaTicketShop.model.*;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateTicketDTO;
+import com.bakulic.CinemaTicketShop.repository.ProjectionRepository;
 import com.bakulic.CinemaTicketShop.repository.TicketRepository;
 import com.bakulic.CinemaTicketShop.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -9,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bakulic.CinemaTicketShop.exceptions.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.*;
+import java.util.stream.IntStream;
 
 @AllArgsConstructor
 @Service
@@ -36,6 +36,14 @@ public class TicketService extends ProjectionService {
         return userRepository;
     }
 
+    @Autowired
+    private final ProjectionRepository projectionRepository;
+
+    @Autowired
+    public ProjectionRepository getProjectionRepository(){
+        return projectionRepository;
+    }
+/*
     public Ticket getTicketById (int id) {
         Optional<Ticket> ticketOpt = Optional.of(ticketRepository.getById(id));
         if (ticketOpt.isPresent()) {
@@ -43,32 +51,36 @@ public class TicketService extends ProjectionService {
         }
         throw new ObjectNotFoundException(String.format("User not found for Id = %s", id));
     }
-
+*/
     /** ticket create**/
-    public Ticket createTicket(CreateTicketDTO creteTicketDTO) {
+    public Ticket createTicket(CreateTicketDTO creteTicketDTO, List<Integer> seatList) {
         if (creteTicketDTO == null) {
             throw new InvalidDataException("Ticket cannot be null");
         }
         Ticket ticket = new Ticket();
-        ticket.setStatus(creteTicketDTO.getStatus());
+        ticket.setStatus("sold");
         User user = userRepository.findByUsername(creteTicketDTO.getUsername());
         ticket.setUser(user);
 
-        Projection projection = ticket.getProjection();
-        if(projection == null){
-            projection = new Projection();
-        }
-        Integer num = ticket.getSeatNumber();
-        List<Seat> list = projection.getSeatList();
-        for(int i = 0; i<list.size(); i++){ //stream
-            Seat seat = new Seat();
-            if(seat.getSeatNumber().equals(num) && seat.getStatus() =="empty" && num > list.size()){
-                seat.setStatus(ticket.getStatus());
-            }
-            else throw new InvalidDataException("The seat you selected i not available");
+        Projection projection = projectionRepository.findByMovie_Name(creteTicketDTO.getMovieName());
+        ticket.setProjection(projection);
 
-        }
+        Integer seatNumber = Integer.valueOf(creteTicketDTO.getSeatNumber());
+        ticket.setSeatNumber(seatNumber);
 
+
+        var hall = projection.getHall();
+        Integer numberOfSeats = hall.getNumberOfSeats();
+
+        List<Integer> list = projection.getSeatList();
+        IntStream.range(1, numberOfSeats)
+                .forEach(index -> {
+                    if (index == seatNumber){
+                        list.remove(index);
+                    }
+                });
+
+        projection.setSeatList(list);
         Ticket ticketCreated = ticketRepository.save(ticket);
         log.info(String.format("Ticket %s has been created.", ticket.getTicketId()));
         return ticketCreated;

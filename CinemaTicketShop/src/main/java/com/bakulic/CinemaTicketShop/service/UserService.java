@@ -93,9 +93,9 @@ public class UserService {
             throw new InvalidDataException("User data cannot be null");
         }
 
-        passwordValidator.checkPassword(updateUserDTO.getPassword());
-        emailValidator.checkEmail(updateUserDTO.getEmail());
-        usernameValidator.checkUsername(updateUserDTO.getUsername());
+        //passwordValidator.checkPassword(updateUserDTO.getPassword());
+        //emailValidator.checkEmail(updateUserDTO.getEmail());
+        //usernameValidator.checkUsername(updateUserDTO.getUsername());
         //checkIfUsernameNotUsed(updateUserDTO.getUsername());
         //checkIfEmailNotUsed(updateUserDTO.getEmail());
 
@@ -125,10 +125,10 @@ public class UserService {
             throw new InvalidDataException("User account data cannot be null");
         }
 
-        checkIfUsernameNotUsed(registerUserAccountDTO.getUsername());
-        passwordValidator.checkPassword(registerUserAccountDTO.getPassword());
-        emailValidator.checkEmail(registerUserAccountDTO.getEmail());
-        checkIfEmailNotUsed(registerUserAccountDTO.getEmail());
+        //checkIfUsernameNotUsed(registerUserAccountDTO.getUsername());
+        //passwordValidator.checkPassword(registerUserAccountDTO.getPassword());
+        //emailValidator.checkEmail(registerUserAccountDTO.getEmail());
+        //checkIfEmailNotUsed(registerUserAccountDTO.getEmail());
 
         // create the new user account: not all the user information required
         User newUser = new User();

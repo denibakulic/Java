@@ -1,7 +1,9 @@
 package com.bakulic.CinemaTicketShop.controller;
 
+import com.bakulic.CinemaTicketShop.model.Projection;
 import com.bakulic.CinemaTicketShop.model.Ticket;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateTicketDTO;
+import com.bakulic.CinemaTicketShop.service.ProjectionService;
 import com.bakulic.CinemaTicketShop.service.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private ProjectionService projectionService;
+
     @GetMapping
     public String getTicketForm(Model model) {
         CreateTicketDTO newTicket = new CreateTicketDTO();
@@ -29,9 +34,10 @@ public class TicketController {
     }
 
     @PostMapping
-    public String saveTicket(@ModelAttribute("ticket") CreateTicketDTO createTicketDTO){
+    public String saveTicket(@ModelAttribute("ticket") CreateTicketDTO createTicketDTO, int projId){
         CreateTicketDTO newTicket = new CreateTicketDTO();
-        ticketService.createTicket(newTicket);
+        List<Integer> seatList = projectionService.getProjectionRepository().findById(projId).getSeatList();
+        ticketService.createTicket(newTicket, seatList);
         return  "ticketList";
     }
 

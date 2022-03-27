@@ -3,19 +3,18 @@ package com.bakulic.CinemaTicketShop.service;
 import com.bakulic.CinemaTicketShop.model.Hall;
 import com.bakulic.CinemaTicketShop.model.Movie;
 import com.bakulic.CinemaTicketShop.model.Projection;
-import com.bakulic.CinemaTicketShop.model.Seat;
-import com.bakulic.CinemaTicketShop.model.dto.ProjectionDTO;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateProjectionDTO;
 import com.bakulic.CinemaTicketShop.repository.ProjectionRepository;
-import com.bakulic.CinemaTicketShop.repository.SeatRepository;
 import com.bakulic.CinemaTicketShop.service.validation.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import com.bakulic.CinemaTicketShop.exceptions.*;
 
 @AllArgsConstructor
@@ -24,16 +23,12 @@ public class ProjectionService {
 
     @Autowired
     private ProjectionRepository projectionRepository;
-    @Autowired
-    private SeatRepository seatRepository;
 
     @Autowired
     public ProjectionRepository getProjectionRepository(){
         return projectionRepository;
     }
 
-    @Autowired
-    public SeatRepository getSeatRepository(){return seatRepository;}
 
     private TimeValidator timeValidator;
     private DateValidator dateValidator;
@@ -72,39 +67,20 @@ public class ProjectionService {
         var proj = new Projection(); //object mapper, pretvotrba dto u entity(mapstruct)
         proj.setDate(createProjectionDTO.getDate());
         proj.setStartTime(createProjectionDTO.getStartTime());
+
         var hall = hallService.findHallByName(createProjectionDTO.getName());
-        if(hall == null){
-            hall = new Hall();
-        }
         proj.setHall(hall);
         Integer numOfSeats = hall.getNumberOfSeats();
 
         Movie movie = movieService.getMovieByName(createProjectionDTO.getName());
-        if(movie == null){
-            movie = new Movie();
-        }
         proj.setMovie(movie);
 
-        List<Seat> list = createProjectionDTO.getSeatList();
-        if(list == null) {
-            List<Seat> list1 = new LinkedList<>();
-            for (int i = 1; i <= numOfSeats; i++) {
-                Seat seat = new Seat();
-                seat.setSeatNumber(i);
-                seat.setStatus("empty");
-                list1.add(seat);
-            }
-            createProjectionDTO.setSeatList(list1);
-        }
-        else{
-            for (int i = 1; i <= numOfSeats; i++) {
-                Seat seat = new Seat();
-                seat.setSeatNumber(i);
-                seat.setStatus("empty");
-                list.add(seat);
-            }
-            createProjectionDTO.setSeatList(list);
-        }
+        List<Integer> seatList = new ArrayList<>();
+        IntStream.range(1, numOfSeats)
+                .forEach(index -> {
+                   seatList.add(index);
+                });
+        proj.setSeatList(seatList);
 
         Projection projCreated = projectionRepository.save(proj); //povratan informacija da li kreirano
         log.info(String.format("Projection %s has been created.", proj.getProjectionId()));
@@ -129,34 +105,16 @@ public class ProjectionService {
         proj.setDate(updateProjectionDTO.getDate());
         proj.setStartTime(updateProjectionDTO.getStartTime());
 
-        //proj.setSeatList(updateProjectionDTO.getSeatList());
-        Hall hall = proj.getHall();
-        if (hall == null) {
-            hall = new Hall();
-        }
-        hall.setName(updateProjectionDTO.getName());
+        var hall = hallService.findHallByName(updateProjectionDTO.getName());
+        proj.setHall(hall);
 
-        Movie movie = proj.getMovie();
-        if (movie == null) {
-            movie = new Movie();
-        }
-        movie.setName(updateProjectionDTO.getMovieName());
-
-        List<Seat> list = updateProjectionDTO.getSeatList();
-        Integer oldNumSeats = 0;
-        for (int i =0;i< list.size(); i++){
-            oldNumSeats = oldNumSeats+1;
-        }
-        Integer numSeat= hall.getNumberOfSeats();
-        if(numSeat != oldNumSeats) {
-            for (int i = 1; i <= numSeat; i++) {
-                Seat seat = new Seat();
-                seat.setSeatNumber(i);
-                seat.setStatus("empty");
-                list.add(seat);
-            }
-        }
-
+        Integer numOfSeats = hall.getNumberOfSeats();
+        List<Integer> seatList = new ArrayList<>();
+        IntStream.range(1, numOfSeats)
+                .forEach(index -> {
+                    seatList.add(index);
+                });
+        proj.setSeatList(seatList);
 
         Projection projUpdate = projectionRepository.save(proj);
 
@@ -172,6 +130,13 @@ public class ProjectionService {
         return  projectionRepository.listOfProjectionByMovie(name);
     }
 
+    /** get projection by movie*/
+    public Projection getProjectionByMovie(String name){
+        if(name == null){
+            throw  new InvalidDataException("Movie name cannot be null");
+        }
+        return  projectionRepository.findByMovie_Name(name);
+    }
     /** get projections by hall*/
 
     public Collection<Projection> getProjectionsByHall(String name){
@@ -197,17 +162,7 @@ public class ProjectionService {
         return  projectionRepository.listOfProjectionsByTime(time);
     }
 
-    /** change reserved seat status to empty 1h before projection*/
-    public List<Seat> resetSeatStatus(ProjectionDTO projectionDTO){
-        List<Seat> list = projectionDTO.getSeatList();
-        for(int i=0;i<list.size();i++){
-            Seat seat = new Seat();
-            if(seat.getStatus()== "reserved"){
-                seat.setStatus("empty");
-            }
-        }
-        return list;
-    }
+
 
     /**delete projection*/
     public void deleteProjectionById(int id){
