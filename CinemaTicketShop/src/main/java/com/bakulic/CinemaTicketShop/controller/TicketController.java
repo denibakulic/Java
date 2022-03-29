@@ -34,11 +34,9 @@ public class TicketController {
     }
 
     @PostMapping
-    public String saveTicket(@ModelAttribute("ticket") CreateTicketDTO createTicketDTO, int projId){
-        CreateTicketDTO newTicket = new CreateTicketDTO();
-        List<Integer> seatList = projectionService.getProjectionRepository().findById(projId).getSeatList();
-        ticketService.createTicket(newTicket, seatList);
-        return  "ticketList";
+    public String saveTicket(@ModelAttribute("ticket") CreateTicketDTO createTicketDTO){
+        ticketService.createTicket(createTicketDTO);
+        return  "redirect:ticket/all";
     }
 
     @GetMapping("/all")
@@ -55,9 +53,9 @@ public class TicketController {
         return "userTicketList";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteTicket( @RequestParam @PathVariable ("id") int id){
         ticketService.deleteTicketById(id);
-        return  "ticketList";
+        return  "redirect:/ticket/all";
     }
 }

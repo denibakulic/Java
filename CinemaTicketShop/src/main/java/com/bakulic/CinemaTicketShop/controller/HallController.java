@@ -30,7 +30,7 @@ public class HallController {
     @PostMapping
     public String createHall(@ModelAttribute("hall")  CreateOrUpdateHallDTO createHallDTO){
         hallService.createHall(createHallDTO);
-        return "hallList";
+        return "redirect:hall/all";
     }
 
     @GetMapping("update/{id}")
@@ -43,7 +43,7 @@ public class HallController {
     @PostMapping("/update/{id}")
     public String saveUpdateHall(@PathVariable ("id") int id, @ModelAttribute("hall") CreateOrUpdateHallDTO createOrUpdateHallDTO){
         hallService.updateHall(id,createOrUpdateHallDTO);
-        return "hallList";
+        return "redirect:hall/all";
     }
 
     @GetMapping("/all")
@@ -53,10 +53,10 @@ public class HallController {
         return "hallList";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public  String deleteHallById( @PathVariable ("id") int id){
         hallService.deleteHallById(id);
-        return "hallList";
+        return "redirect:/hall/all";
     }
 
 }

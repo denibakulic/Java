@@ -3,6 +3,7 @@ package com.bakulic.CinemaTicketShop.service;
 import com.bakulic.CinemaTicketShop.model.Hall;
 import com.bakulic.CinemaTicketShop.model.Movie;
 import com.bakulic.CinemaTicketShop.model.Projection;
+import com.bakulic.CinemaTicketShop.model.Seat;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateProjectionDTO;
 import com.bakulic.CinemaTicketShop.repository.ProjectionRepository;
 import com.bakulic.CinemaTicketShop.service.validation.*;
@@ -72,14 +73,10 @@ public class ProjectionService {
         proj.setHall(hall);
         Integer numOfSeats = hall.getNumberOfSeats();
 
-        Movie movie = movieService.getMovieByName(createProjectionDTO.getName());
+        Movie movie = movieService.getMovieByName(createProjectionDTO.getMovieName());
         proj.setMovie(movie);
 
-        List<Integer> seatList = new ArrayList<>();
-        IntStream.range(1, numOfSeats)
-                .forEach(index -> {
-                   seatList.add(index);
-                });
+        List<Seat> seatList = createSeatList(numOfSeats, proj);
         proj.setSeatList(seatList);
 
         Projection projCreated = projectionRepository.save(proj); //povratan informacija da li kreirano
@@ -109,11 +106,8 @@ public class ProjectionService {
         proj.setHall(hall);
 
         Integer numOfSeats = hall.getNumberOfSeats();
-        List<Integer> seatList = new ArrayList<>();
-        IntStream.range(1, numOfSeats)
-                .forEach(index -> {
-                    seatList.add(index);
-                });
+        List<Seat> seatList = createSeatList(numOfSeats, proj);
+
         proj.setSeatList(seatList);
 
         Projection projUpdate = projectionRepository.save(proj);
@@ -122,7 +116,21 @@ public class ProjectionService {
         return projUpdate;
     }
 
-    /** get projections by movie*/
+    /** Create seat list*/
+
+    public List<Seat> createSeatList(int num, Projection proj){
+        List<Seat> seatList = new ArrayList<>();
+        IntStream.range(1, num+1)
+                .forEach(index -> {
+                    var seat = new Seat();
+                    seat.setSeatNumber(index);
+                    seat.setProjection(proj);
+                    seatList.add(seat);
+                });
+        return seatList;
+    };
+
+    /** get projections of a movie*/
     public Collection<Projection> getProjectionsByMovie(String name){
         if(name == null){
             throw  new InvalidDataException("Movie name cannot be null");
@@ -130,40 +138,16 @@ public class ProjectionService {
         return  projectionRepository.listOfProjectionByMovie(name);
     }
 
-    /** get projection by movie*/
+
+    /** get projection by movie*//*
     public Projection getProjectionByMovie(String name){
         if(name == null){
             throw  new InvalidDataException("Movie name cannot be null");
         }
+        List<Projection> projList = projectionRepository.findByMovie_Name(name);
         return  projectionRepository.findByMovie_Name(name);
     }
-    /** get projections by hall*/
-
-    public Collection<Projection> getProjectionsByHall(String name){
-        if(name == null){
-            throw  new InvalidDataException("Hall name cannot be null");
-        }
-        return  projectionRepository.listOfProjectionByHall(name);
-    }
-
-    /** get projections by date*/
-    public Collection<Projection> getProjectionsByDate(String date){
-        if(date == null){
-            throw  new InvalidDataException("Date cannot be null");
-        }
-        return  projectionRepository.listOfProjectionByDate(date);
-    }
-
-    /** get projections by time*/
-    public Collection<Projection> getProjectionsByTime(String time){
-        if(time == null){
-            throw  new InvalidDataException("Time cannot be null");
-        }
-        return  projectionRepository.listOfProjectionsByTime(time);
-    }
-
-
-
+*/
     /**delete projection*/
     public void deleteProjectionById(int id){
 

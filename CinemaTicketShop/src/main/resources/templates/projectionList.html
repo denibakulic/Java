@@ -49,7 +49,7 @@
             <td th:text = "${projection.date}"></td>
             <td th:text = "${projection.startTime}" ></td>
             <td th:text = "${projection.hall.name}"></td>
-            <td th:text = "${projection.movie.name}" ></td>
+            <td th:text = "${projection.movie.movieName}" ></td>
             <td><a th:href ="@{/projection/update/{id}(id=${projection.projectionId})}"class="btn btn-primary">Update projection</a></td>
             <td><a th:href ="@{/delete/{id}{id=$(projection.projectionId})}" class="btn btn-danger">Delete projection</a></td>
         </tr>

@@ -18,20 +18,7 @@ public interface ProjectionRepository extends JpaRepository<Projection, Integer>
     @Query("SELECT p.hall.name, p.date, p.startTime FROM Projection p WHERE p.movie.name = :name")
     Collection<Projection> listOfProjectionByMovie(String name);
 
-    //popis projekcija neke dvorane
-    @Query("SELECT p.movie.name, p.date, p.startTime FROM Projection p WHERE p.hall.name = :name")
-    Collection<Projection> listOfProjectionByHall(String name);
-
-    //projekcije po datumu
-    @Query("SELECT p.movie.name, p.hall.name, p.startTime FROM Projection p WHERE p.date = :date")
-    Collection<Projection> listOfProjectionByDate(String date);
-
-    //projekcije u određeno vrijeme
-    @Query("SELECT p.movie.name, p.hall.name, p.date FROM Projection p WHERE p.startTime = :time")
-    Collection<Projection> listOfProjectionsByTime(String time);
-
     Projection findById(int id);
 
-    Projection findByMovie_Name(String name);
 
 }

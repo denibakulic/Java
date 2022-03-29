@@ -35,7 +35,7 @@ public class MovieController {
     @PostMapping
     public String saveMovie(@ModelAttribute("movie")  CreateOrUpdateMovieDTO createOrUpdateMovieDTO ) {
         movieService.createMovie(createOrUpdateMovieDTO);
-        return "movieList";
+        return "redirect:movie/all";
     }
 
     @GetMapping("/update/{id}")
@@ -48,19 +48,20 @@ public class MovieController {
     @PostMapping("update/{id}")
     public String saveUpdateMovie(@PathVariable("id") int id, @ModelAttribute("movie") CreateOrUpdateMovieDTO createOrUpdateMovieDTO) {
         movieService.updateMovie(id, createOrUpdateMovieDTO);
-        return "movieList";
+        return "redirect:movie/all";
     }
 
     @GetMapping("/all")//koristi se
     public String getMovieList(Model model) {
         List<Movie> list = movieService.getAllMovies();
+        System.err.println("picture:"+list.get(0).getPicture());
         model.addAttribute("movies", list);
         return "movieList";
     }
 
-    @DeleteMapping("delete/{id}")
+    @GetMapping("delete/{id}")
     public String deleteMovieById( @PathVariable("id") int id) {
         movieService.deleteMovieById(id);
-        return "movieList";
+        return "redirect:/movie/all";
     }
 }

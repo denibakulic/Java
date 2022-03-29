@@ -15,7 +15,7 @@ public class ProjectionDTO  implements Serializable {
     private  List<Ticket> ticketList;
     private Hall hall;
     private Movie movie;
-    private List<Integer> seatList;
+    private List<Seat> seatList;
 
     public ProjectionDTO(Projection projection){
         if(projection != null){

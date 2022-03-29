@@ -1,18 +1,22 @@
 package com.bakulic.CinemaTicketShop.controller.userManagement;
 
 import com.bakulic.CinemaTicketShop.model.Movie;
+import com.bakulic.CinemaTicketShop.model.Projection;
 import com.bakulic.CinemaTicketShop.model.User;
-import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateUserDTO;
 import com.bakulic.CinemaTicketShop.model.dto.requests.LoginUserAccountDTO;
 import com.bakulic.CinemaTicketShop.service.MovieService;
 import com.bakulic.CinemaTicketShop.service.UserService;
+import com.bakulic.CinemaTicketShop.service.ProjectionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Controller
 @Slf4j
@@ -25,6 +29,8 @@ public class LoginController {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private ProjectionService projectionService;
 
     @ModelAttribute("user")
     public LoginUserAccountDTO loginUserAccountDTO() {
@@ -47,6 +53,12 @@ public class LoginController {
         } else
             userService.login(loginUserAccountDTO);
             List<Movie> list = movieService.getAllMovies();
+            IntStream.range(0, list.size())
+                .forEach(index ->{
+                    Movie movie = list.get(index);
+                    Collection<Projection> projList = projectionService.getProjectionsByMovie(movie.getName());
+
+                });
             model.addAttribute("movies", list);
             return "home";
     }

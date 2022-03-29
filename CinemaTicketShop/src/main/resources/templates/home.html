@@ -52,7 +52,7 @@
                     <tr th:each = "movie: ${movies}" >
                         <th class="text-center"  th:text="${movie.name}"></th>
                         <th class="text-center"  th:text="${movie.description}"></th>
-                    <tr th:each = "projection: ${movieProjections}" >
+                    <tr th:each = "projection: ${projList}" >
                         <td class="text-center" th:text="${projection.date}" >Date</td>
                         <td class="text-center" th:text = "${projection.startTime}">Time</td>
                         <td class="text-center" th:text = "${projection.hall.name}">Hall</td>
@@ -60,7 +60,8 @@
                     </tr>
                     </tr>
                     </tbody>
-                </table>
+                </table>//dobijemo iz logina?
+                <td th:text = "@/{{username}(username =${ticket.user.username})}}" class="btn btn-primary">User's tickets</td>
             </div>
         </div>
         </tbody>

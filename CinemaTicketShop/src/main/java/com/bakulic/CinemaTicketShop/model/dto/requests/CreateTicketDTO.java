@@ -21,7 +21,6 @@ public class CreateTicketDTO implements Serializable {
     private String hallName;
     private String movieName;
     private String seatNumber;
-    private String status;
 
 
 }

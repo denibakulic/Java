@@ -32,7 +32,6 @@
     <a th:href="@{/user}" class="btn btn-primary">Add user</a>
     <br></br>
     <table class="table">
-
         <thead>
         <tr>
             <th scope="col">Username</th>
@@ -41,7 +40,6 @@
             <th scope="col">Permission</th>
             <th scope="col" >Tickets</th>
             <th scope="col" colspan="2"> </th>
-
         </tr>
         </thead>
         <tbody>
@@ -52,11 +50,10 @@
             <td th:text = "${user.role}" ></td>
             <td><a th:href="@{/ticket/{username}(username=${user.username})}" class="btn btn-primary">View</a></td>
             <td><a th:href ="@{/user/update/{id}(id=${user.userId})}"class="btn btn-primary">Update user</a></td>
-            <td><a th:href ="@{/delete/{id}(id=${user.userId})}" class="btn btn-danger">Delete user</a></td>
+            <td><a th:href ="@{/user/delete/{id}(id=${user.userId})}" class="btn btn-danger">Delete user</a></td>
         </tr>
         </tbody>
     </table>
-
 </div>
 </body>
 </html>

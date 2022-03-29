@@ -26,7 +26,8 @@ public class UserController {
 
 
     @ModelAttribute("newUser")
-    public RegisterUserAccountDTO registerUserAccountDTO(){return new RegisterUserAccountDTO();}
+    public RegisterUserAccountDTO registerUserAccountDTO(){
+        return new RegisterUserAccountDTO();}
 
     @GetMapping
     public String getCreateUserForm(Model model){
@@ -39,7 +40,7 @@ public class UserController {
     @PostMapping
     public String savCreateUserForm (@ModelAttribute("newUser") RegisterUserAccountDTO registerUserAccountDTO) {
         userService.register(registerUserAccountDTO);
-        return "userList";
+        return "redirect:user/all";
     }
 
     @GetMapping("/update/{id}")
@@ -52,7 +53,7 @@ public class UserController {
     public String saveUpdateUser(@ModelAttribute("user") CreateOrUpdateUserDTO createOrUpdateUserDTO, @PathVariable("id") int id) {
         //User user = userService.getUserRepository().findByUsername(createOrUpdateUserDTO.getUsername());
         userService.updateUser(createOrUpdateUserDTO, id);
-        return "userList";
+        return "redirect:user/all";
     }
 
 
@@ -63,10 +64,12 @@ public class UserController {
         return "userList";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteUserById(@PathVariable("id") int id, Model model) {
+    @GetMapping("/delete/{id}")
+    public String deleteUserById(@PathVariable("id") int id) {
+        System.err.println("bla bla");
         userService.getUserRepository().deleteById(id);
-        return "userList";
+
+        return "redirect:/user/all";
     }
 }
 

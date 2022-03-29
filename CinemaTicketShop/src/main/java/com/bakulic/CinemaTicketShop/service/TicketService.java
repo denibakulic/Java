@@ -53,16 +53,15 @@ public class TicketService extends ProjectionService {
     }
 */
     /** ticket create**/
-    public Ticket createTicket(CreateTicketDTO creteTicketDTO, List<Integer> seatList) {
+    public Ticket createTicket(CreateTicketDTO creteTicketDTO) {
         if (creteTicketDTO == null) {
             throw new InvalidDataException("Ticket cannot be null");
         }
         Ticket ticket = new Ticket();
-        ticket.setStatus("sold");
         User user = userRepository.findByUsername(creteTicketDTO.getUsername());
         ticket.setUser(user);
 
-        Projection projection = projectionRepository.findByMovie_Name(creteTicketDTO.getMovieName());
+        Projection projection =null;
         ticket.setProjection(projection);
 
         Integer seatNumber = Integer.valueOf(creteTicketDTO.getSeatNumber());
@@ -72,13 +71,8 @@ public class TicketService extends ProjectionService {
         var hall = projection.getHall();
         Integer numberOfSeats = hall.getNumberOfSeats();
 
-        List<Integer> list = projection.getSeatList();
-        IntStream.range(1, numberOfSeats)
-                .forEach(index -> {
-                    if (index == seatNumber){
-                        list.remove(index);
-                    }
-                });
+        List<Seat> list = projection.getSeatList();
+        list.remove(seatNumber);
 
         projection.setSeatList(list);
         Ticket ticketCreated = ticketRepository.save(ticket);

@@ -2,6 +2,7 @@ package com.bakulic.CinemaTicketShop.controller;
 
 import com.bakulic.CinemaTicketShop.model.Projection;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateProjectionDTO;
+import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateUserDTO;
 import com.bakulic.CinemaTicketShop.service.ProjectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class ProjectionController {
     @Autowired
     private ProjectionService projectionService;
 
+    @ModelAttribute("projection")
+    public CreateOrUpdateProjectionDTO createOrUpdateProjectionDTO(){return new CreateOrUpdateProjectionDTO();}
+
+
     @GetMapping
     public String getProjectionForm(Model model) {
         CreateOrUpdateProjectionDTO newProjection = new CreateOrUpdateProjectionDTO();
@@ -31,7 +36,7 @@ public class ProjectionController {
     @PostMapping
     public String saveProjection(@ModelAttribute("projection")  CreateOrUpdateProjectionDTO createOrUpdateProjectionDTO) {
         projectionService.createProjection(createOrUpdateProjectionDTO);
-        return "projectionList";
+        return "redirect:projection/all";
     }
 
     @GetMapping("/update/{id}")
@@ -44,17 +49,17 @@ public class ProjectionController {
     @PostMapping("/update/{id}")
     public String updateProjection(@PathVariable("id") int id, @ModelAttribute("projection")  CreateOrUpdateProjectionDTO projection) {
         projectionService.updateProjection(id, projection);
-        return "projectionList";
+        return "redirect:projection/all";
     }
 
-    @GetMapping("/all")//koristi se
+    @GetMapping("/all")
     public String getProjList(Model model) {
         List<Projection> list = projectionService.getAllProjections();
-        model.addAttribute("projections", list);
+        model.addAttribute("projection", list);
         return "projectionList";
     }
 
-    @GetMapping("/{id}")//koristi se
+    @GetMapping("/{id}")
     public String getProjById(Model model, @PathVariable("id") int id) {
         Projection proj = projectionService.getProjectionRepository().findById(id);
         model.addAttribute("projection", proj);
@@ -64,21 +69,14 @@ public class ProjectionController {
     @GetMapping("/movie")//koristi se
     public String getProjByMovie(Model model, @PathVariable("name") String name) {
         Collection<Projection> list = projectionService.getProjectionsByMovie(name);
-        model.addAttribute("movieProjections", list);
+        model.addAttribute("projection", list);
         return "projectionDetails";
     }
 
 
-    @GetMapping("/time")
-    public String getProjByTime(@PathVariable(value = "time") String time, Model model) {
-        Collection<Projection> list = projectionService.getProjectionsByTime(time);
-        model.addAttribute("projections", list);
-        return "projectionDetails";
-    }
-
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public  String deleteProjById(@PathVariable ("id") int id){
         projectionService.deleteProjectionById(id);
-        return "projectionList";
+        return "redirect:/projection/all";
     }
 }
