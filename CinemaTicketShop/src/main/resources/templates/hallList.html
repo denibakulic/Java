@@ -47,7 +47,7 @@
             <td th:text = "${hall.numberOfSeats}" ></td>
             <td th:text = "${hall.description}"></td>
             <td><a th:href ="@{/hall/update/{id}(id=${hall.hallId})}"class="btn btn-primary">Update hall</a></td>
-            <td><a th:href ="@{hall/delete/{id}(id=${hall.hallId})}" class="btn btn-danger">Delete hall</a></td>
+            <td><a th:href ="@{/hall/delete/{id}(id=${hall.hallId})}" class="btn btn-danger">Delete hall</a></td>
         </tr>
         </tbody>
 

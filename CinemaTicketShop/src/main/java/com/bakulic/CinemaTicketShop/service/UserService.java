@@ -16,8 +16,7 @@ import com.bakulic.CinemaTicketShop.service.validation.*;
 
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
 
 
 @Getter
@@ -92,15 +91,12 @@ public class UserService {
         if (updateUserDTO == null) {
             throw new InvalidDataException("User data cannot be null");
         }
-
-        //passwordValidator.checkPassword(updateUserDTO.getPassword());
-        //emailValidator.checkEmail(updateUserDTO.getEmail());
-        //usernameValidator.checkUsername(updateUserDTO.getUsername());
-        //checkIfUsernameNotUsed(updateUserDTO.getUsername());
-        //checkIfEmailNotUsed(updateUserDTO.getEmail());
+        checkIfEmailNotUsed(updateUserDTO.getEmail());
+        emailValidator.checkEmail(updateUserDTO.getEmail());
+        passwordValidator.checkPassword(updateUserDTO.getPassword());
 
 
-        User user = getUserRepository().findById(id);
+        var user = getUserRepository().findById(id);
         // update the user
         user.setFullname(updateUserDTO.getFullname());
         user.setEmail(updateUserDTO.getEmail());
@@ -110,7 +106,7 @@ public class UserService {
         user.setUsername(updateUserDTO.getUsername());
 
 
-        User userUpdated = userRepository.save(user);
+        var userUpdated = userRepository.save(user);
         log.info(String.format("User %s has been updated.", user.getUserId()));
         return userUpdated;
     }
@@ -125,20 +121,23 @@ public class UserService {
             throw new InvalidDataException("User account data cannot be null");
         }
 
-        //checkIfUsernameNotUsed(registerUserAccountDTO.getUsername());
-        //passwordValidator.checkPassword(registerUserAccountDTO.getPassword());
-        //emailValidator.checkEmail(registerUserAccountDTO.getEmail());
-        //checkIfEmailNotUsed(registerUserAccountDTO.getEmail());
+        checkIfUsernameNotUsed(registerUserAccountDTO.getUsername());
+        usernameValidator.checkUsername(registerUserAccountDTO.getUsername());
+        checkIfEmailNotUsed(registerUserAccountDTO.getEmail());
+        emailValidator.checkEmail(registerUserAccountDTO.getEmail());
+        passwordValidator.checkPassword(registerUserAccountDTO.getPassword());
+
+
 
         // create the new user account: not all the user information required
-        User newUser = new User();
+        var newUser = new User();
         newUser.setFullname(registerUserAccountDTO.getFullname());
         newUser.setEmail(registerUserAccountDTO.getEmail());
         newUser.setUsername(registerUserAccountDTO.getUsername());
         newUser.setPassword(EncryptionService.encrypt(registerUserAccountDTO.getPassword(), salt));
         newUser.setRole("user");
 
-        User userCreated = userRepository.save(newUser);
+        var userCreated = userRepository.save(newUser);
 
         log.info(String.format("User %s has been created.", userCreated.getUserId()));
         return userCreated;
@@ -175,7 +174,7 @@ public class UserService {
      * check if the username has not been registered
      */
     public void checkIfUsernameNotUsed(String username) {
-        User userByUsername = getUserByUsername(username);
+        var userByUsername = getUserByUsername(username);
         if (userByUsername != null) {
             String msg = String.format("The username %s it's already in use from another user with ID = %s",
                     userByUsername.getUsername(), userByUsername.getUserId());
@@ -187,7 +186,7 @@ public class UserService {
      * check if the email has not been registered
      */
     public void checkIfEmailNotUsed(String email) {
-        User userByEmail = getUserByEmail(email);
+        var userByEmail = getUserByEmail(email);
         if (userByEmail != null) {
             String msg = String.format("The email %s it's already in use from another user with ID = %s",
                     userByEmail.getEmail(), userByEmail.getUserId());
@@ -195,20 +194,4 @@ public class UserService {
                     userByEmail.getEmail()));
         }
     }
-
-    /**
-     * delete user
-     */
-    /*public void deleteUserById(int id) {
-
-        User user = userRepository.deleteById();
-
-        if (user == null) {
-            throw new ObjectNotFoundException(String.format("User not found with Id = %s", id));
-        }
-
-        userRepository.deleteById(id);
-        log.info(String.format("User %s has been deleted.", id));
-    }
-*/
 }

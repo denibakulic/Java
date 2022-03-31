@@ -35,12 +35,6 @@
                            required autofocus="autofocus" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="seatNumber"> Seat number</label> //napravit optional box
-                    <input id="seatNumber"
-                           class="form-control" th:field="*{seatNumber}" required
-                        autofocus="autofocus" />
-                </div>
-                <div class="form-group">
                     <label class="control-label" for="date"> Date</label>
                     <input id="date"
                            class="form-control" th:field="*{date}" readonly
@@ -63,6 +57,13 @@
                     <input id="movie"
                            class="form-control" th:field="*{movieName}" readonly
                            autofocus="autofocus" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label"> Seat number </label>
+                    <select  th:field="*{seatNumber}" required>
+                        <option th:each="i : ${#numbers.sequence(0, hall.numberOfSeats)}" th:value="${i}" th:text="${i}">
+                    </select>
+
                 </div>
                 <br>
                 <div class="form-group">

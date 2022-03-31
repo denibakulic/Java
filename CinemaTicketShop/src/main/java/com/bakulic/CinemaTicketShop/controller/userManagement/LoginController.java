@@ -13,10 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
-import java.util.stream.IntStream;
+
 
 @Controller
 @Slf4j
@@ -53,27 +52,11 @@ public class LoginController {
         } else
             userService.login(loginUserAccountDTO);
             List<Movie> list = movieService.getAllMovies();
-            IntStream.range(0, list.size())
-                .forEach(index ->{
-                    Movie movie = list.get(index);
-                    Collection<Projection> projList = projectionService.getProjectionsByMovie(movie.getName());
-
-                });
+            List<Projection> listProj = projectionService.getAllProjections(); //ili projekcije po filmu
             model.addAttribute("movies", list);
+            model.addAttribute("projections", listProj);
             return "home";
     }
-
-
-
-   /* @PostMapping
-    public String home(Model model, String username) {
-        User user = userService.getUserByUsername(username);
-        if (user.getRole().equals(true)) {
-            return "redirect:/adminhome";
-        } else
-            return "redirect:/home";
-    }
-*/
 
 }
 

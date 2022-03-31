@@ -3,7 +3,6 @@ package com.bakulic.CinemaTicketShop.service.validation;
 import com.bakulic.CinemaTicketShop.exceptions.InvalidDataException;
 import com.bakulic.CinemaTicketShop.exceptions.InvalidPasswordException;
 
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

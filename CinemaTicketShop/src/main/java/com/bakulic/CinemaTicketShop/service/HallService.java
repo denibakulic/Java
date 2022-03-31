@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bakulic.CinemaTicketShop.exceptions.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
 
 @AllArgsConstructor
 @Service
@@ -31,12 +30,12 @@ public class HallService {
         if(creteHallDTO == null){
             throw new InvalidDataException("Hall cannot be null");
         }
-        Hall hall = new Hall();
+        var hall = new Hall();
         hall.setName(creteHallDTO.getName());
         hall.setNumberOfSeats(creteHallDTO.getNumberOfSeats());
         hall.setDescription(creteHallDTO.getDescription());
 
-        Hall hallCreated = hallRepository.save(hall);
+        var hallCreated = hallRepository.save(hall);
         log.info(String.format("Hall %s has been created.", hall.getName()));
         return hallCreated;
 
@@ -48,7 +47,7 @@ public class HallService {
         if (updateHallDTO == null) {
             throw new InvalidDataException("Hall data cannot be null");
         }
-        Hall hall = hallRepository.findById(id);
+        var hall = hallRepository.findById(id);
         if (hall ==null) {
             throw new ObjectNotFoundException(String.format("The hall with Id = %s doesn't exists", id));
         }
@@ -57,7 +56,7 @@ public class HallService {
         hall.setNumberOfSeats(updateHallDTO.getNumberOfSeats());
         hall.setDescription(updateHallDTO.getDescription());
 
-        Hall hallUpdate = hallRepository.save(hall);
+        var hallUpdate = hallRepository.save(hall);
         log.info(String.format("Hall %s has been updated.", hall.getName()));
         return hallUpdate;
     }
@@ -74,19 +73,6 @@ public class HallService {
             throw  new InvalidDataException("Hall name cannot be null");
         }
         return hallRepository.findByName(name);
-    }
-
-
-    /**delete hall*/
-    public void deleteHallById(int id){
-
-        Hall hall = hallRepository.findById(id);
-        if (hall == null) {
-            throw new ObjectNotFoundException(String.format("User not found with Id = %s", id));
-        }
-
-        hallRepository.deleteById(id);
-        log.info(String.format("Hall %s has been deleted.", id));
     }
 }
 

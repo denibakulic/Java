@@ -3,7 +3,7 @@ package com.bakulic.CinemaTicketShop.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.UUID;
+
 
 @Data
 @Getter

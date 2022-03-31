@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @AllArgsConstructor
 @Controller
@@ -43,7 +43,7 @@ public class HallController {
     @PostMapping("/update/{id}")
     public String saveUpdateHall(@PathVariable ("id") int id, @ModelAttribute("hall") CreateOrUpdateHallDTO createOrUpdateHallDTO){
         hallService.updateHall(id,createOrUpdateHallDTO);
-        return "redirect:hall/all";
+        return "redirect:/hall/all";
     }
 
     @GetMapping("/all")
@@ -55,7 +55,7 @@ public class HallController {
 
     @GetMapping("/delete/{id}")
     public  String deleteHallById( @PathVariable ("id") int id){
-        hallService.deleteHallById(id);
+        hallService.getHallRepository().deleteById(id);
         return "redirect:/hall/all";
     }
 

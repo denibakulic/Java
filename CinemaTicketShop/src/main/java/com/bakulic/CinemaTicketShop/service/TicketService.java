@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bakulic.CinemaTicketShop.exceptions.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
-import java.util.stream.IntStream;
 
 @AllArgsConstructor
 @Service
@@ -43,39 +41,31 @@ public class TicketService extends ProjectionService {
     public ProjectionRepository getProjectionRepository(){
         return projectionRepository;
     }
-/*
-    public Ticket getTicketById (int id) {
-        Optional<Ticket> ticketOpt = Optional.of(ticketRepository.getById(id));
-        if (ticketOpt.isPresent()) {
-            return ticketOpt.get();
-        }
-        throw new ObjectNotFoundException(String.format("User not found for Id = %s", id));
-    }
-*/
+
+
     /** ticket create**/
-    public Ticket createTicket(CreateTicketDTO creteTicketDTO) {
+    public Ticket createTicket(CreateTicketDTO creteTicketDTO, Projection proj) {
         if (creteTicketDTO == null) {
             throw new InvalidDataException("Ticket cannot be null");
         }
-        Ticket ticket = new Ticket();
-        User user = userRepository.findByUsername(creteTicketDTO.getUsername());
+        var ticket = new Ticket();
+        var user = userRepository.findByUsername(creteTicketDTO.getUsername());
         ticket.setUser(user);
 
-        Projection projection =null;
-        ticket.setProjection(projection);
+        ticket.setProjection(proj);
 
         Integer seatNumber = Integer.valueOf(creteTicketDTO.getSeatNumber());
         ticket.setSeatNumber(seatNumber);
 
 
-        var hall = projection.getHall();
-        Integer numberOfSeats = hall.getNumberOfSeats();
+        var hall = proj.getHall();
+        var numberOfSeats = hall.getNumberOfSeats();
 
-        List<Seat> list = projection.getSeatList();
+        var list = proj.getSeatList();
         list.remove(seatNumber);
 
-        projection.setSeatList(list);
-        Ticket ticketCreated = ticketRepository.save(ticket);
+        proj.setSeatList(list);
+        var ticketCreated = ticketRepository.save(ticket);
         log.info(String.format("Ticket %s has been created.", ticket.getTicketId()));
         return ticketCreated;
 
@@ -92,16 +82,6 @@ public class TicketService extends ProjectionService {
             throw  new InvalidDataException("Username cannot be null");
         }
         return ticketRepository.findByUsername(username);
-    }
-
-
-    /**delete ticket*/
-    public void deleteTicketById(int id){
-
-        Ticket ticket = ticketRepository.findById(id);
-
-        ticketRepository.deleteById(id);
-        log.info(String.format("Ticket %s has been deleted.", id));
     }
 
 }

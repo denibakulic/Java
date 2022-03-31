@@ -42,15 +42,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="hallName"> Hall name </label> <input
-                        id="hallName" class="form-control" th:field="*{name}" required
-                        autofocus="autofocus" />
+                    <label class="control-label"> Hall name </label>
+                      <select  th:field="*{name}" required>
+                          <option th:each="hall : ${halls}" th:value="${name}" th:text="${name}"></option>
+                      </select>
+
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="movieName"> Movie name </label> <input
-                            id="movieName" class="form-control" th:field="*{movieName}" required
-                            autofocus="autofocus" />
+                    <label class="control-label" > Movie name </label>
+                    <select  th:field="*{movieName}" required>
+                        <option th:each="movie : ${movies}" th:value="${name}" th:text="${name}"></option>
+                    </select>
                 </div>
 
                 <div class="form-group">

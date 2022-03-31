@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Controller
@@ -34,8 +33,8 @@ public class TicketController {
     }
 
     @PostMapping
-    public String saveTicket(@ModelAttribute("ticket") CreateTicketDTO createTicketDTO){
-        ticketService.createTicket(createTicketDTO);
+    public String saveTicket(@ModelAttribute("ticket") CreateTicketDTO createTicketDTO, Projection proj){
+        ticketService.createTicket(createTicketDTO, proj);
         return  "redirect:ticket/all";
     }
 
@@ -55,7 +54,7 @@ public class TicketController {
 
     @GetMapping("/delete/{id}")
     public String deleteTicket( @RequestParam @PathVariable ("id") int id){
-        ticketService.deleteTicketById(id);
+        ticketService.getTicketRepository().deleteById(id);
         return  "redirect:/ticket/all";
     }
 }

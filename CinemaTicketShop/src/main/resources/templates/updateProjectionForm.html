@@ -30,9 +30,16 @@
 
         <p> <input type="text" th:field = "*{date}" placeholder="Date" class="form-control mb-4 col-4"><p/>
         <p><input type="text" th:field = "*{startTime}"placeholder="Time" class="form-control mb-4 col-4"><p/>
-        <p><input type="text" th:field = "*{projection.hall.name}"placeholder="Hall name" class="form-control mb-4 col-4"><p/>
-        <p><input type="text" th:field = "*{projection.movie.movieName}"placeholder="Hall name" class="form-control mb-4 col-4"><p/>
-
+        <p><label class="control-label"> Hall name </label>
+            <select  th:field="*{name}" required>
+                <option th:each="hall : ${halls}" th:value="${name}" th:text="${name}"></option>
+            </select></p>
+        <p>
+            <label class="control-label" > Movie name </label>
+            <select  th:field="*{movieName}" required>
+                <option th:each="movie : ${movies}" th:value="${name}" th:text="${name}"></option>
+            </select>
+        </p>
 
         <p><input type="submit" class="btn btn-info col-2" value="Update"></p>
     </form>

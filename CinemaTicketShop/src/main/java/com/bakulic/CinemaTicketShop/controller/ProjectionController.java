@@ -1,8 +1,11 @@
 package com.bakulic.CinemaTicketShop.controller;
 
+import com.bakulic.CinemaTicketShop.model.Hall;
+import com.bakulic.CinemaTicketShop.model.Movie;
 import com.bakulic.CinemaTicketShop.model.Projection;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateProjectionDTO;
-import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateUserDTO;
+import com.bakulic.CinemaTicketShop.service.HallService;
+import com.bakulic.CinemaTicketShop.service.MovieService;
 import com.bakulic.CinemaTicketShop.service.ProjectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +25,23 @@ public class ProjectionController {
     @Autowired
     private ProjectionService projectionService;
 
+    @Autowired
+    private HallService hallService;
+
+    @Autowired
+    private MovieService movieService;
+
     @ModelAttribute("projection")
     public CreateOrUpdateProjectionDTO createOrUpdateProjectionDTO(){return new CreateOrUpdateProjectionDTO();}
-
 
     @GetMapping
     public String getProjectionForm(Model model) {
         CreateOrUpdateProjectionDTO newProjection = new CreateOrUpdateProjectionDTO();
+        List<Hall> hallList = hallService.getAllHalls();
+        List<Movie> movieList = movieService.getAllMovies();
         model.addAttribute("projection", newProjection);
+        model.addAttribute("halls", hallList);
+        model.addAttribute("movies", movieList);
         return "/createProjectionForm";
     }
 
@@ -48,35 +60,35 @@ public class ProjectionController {
 
     @PostMapping("/update/{id}")
     public String updateProjection(@PathVariable("id") int id, @ModelAttribute("projection")  CreateOrUpdateProjectionDTO projection) {
-        projectionService.updateProjection(id, projection);
-        return "redirect:projection/all";
+        projectionService.updateProjection(id, createOrUpdateProjectionDTO());
+        return "redirect:/projection/all";
     }
 
     @GetMapping("/all")
     public String getProjList(Model model) {
         List<Projection> list = projectionService.getAllProjections();
-        model.addAttribute("projection", list);
+        model.addAttribute("projections", list);
         return "projectionList";
     }
 
-    @GetMapping("/{id}")
+   /* @GetMapping("/{id}")
     public String getProjById(Model model, @PathVariable("id") int id) {
         Projection proj = projectionService.getProjectionRepository().findById(id);
-        model.addAttribute("projection", proj);
+        model.addAttribute("projections", proj);
         return "projectionDetails";
     }
 
-    @GetMapping("/movie")//koristi se
+    @GetMapping("/movie")
     public String getProjByMovie(Model model, @PathVariable("name") String name) {
         Collection<Projection> list = projectionService.getProjectionsByMovie(name);
         model.addAttribute("projection", list);
         return "projectionDetails";
-    }
+    }*/
 
 
     @GetMapping("/delete/{id}")
     public  String deleteProjById(@PathVariable ("id") int id){
-        projectionService.deleteProjectionById(id);
+        projectionService.getProjectionRepository().deleteById(id);
         return "redirect:/projection/all";
     }
 }

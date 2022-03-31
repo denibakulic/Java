@@ -28,7 +28,7 @@
 <div class="container">
     <form action="#" th:action="@{/user/update/{id}(id=${user.userId})}" method ="post" th:object="${user}">
 
-        <p> Username <input type="text" th:field = "*{username}" placeholder="Username" class="form-control mb-4 col-4"><p/>
+        <p> Username <input type="text" th:field = "*{username}" placeholder="Username" class="form-control mb-4 col-4" readonly><p/>
         <p>Password <input type="text" th:field = "*{password}"placeholder="Password" class="form-control mb-4 col-4"><p/>
         <p>Fullname<input type="text" th:field = "*{fullname}"placeholder="Fullname" class="form-control mb-4 col-4"><p/>
         <p>Email<input type="text" th:field = "*{email}"placeholder="Email" class="form-control mb-4 col-4"><p/>

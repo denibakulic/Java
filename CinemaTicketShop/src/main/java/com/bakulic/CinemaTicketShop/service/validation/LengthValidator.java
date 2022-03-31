@@ -15,11 +15,11 @@ public class LengthValidator {
 
     public void  checkLength(String length){
         if (length == null || length.isEmpty()) {
-            throw new InvalidDataException("The Lenght cannot be null or empty");
+            throw new InvalidDataException("The length cannot be null or empty");
         }
         Matcher matcher = pattern.matcher(length);
         if (!matcher.matches()) {
-            throw new InvalidLengthException(String.format("The Length provided %s is not in the right format", length));
+            throw new InvalidLengthException(String.format("The length provided %s is not in the right format", length));
         }
     }
 }

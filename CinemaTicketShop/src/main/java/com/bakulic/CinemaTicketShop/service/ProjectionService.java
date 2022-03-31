@@ -1,6 +1,5 @@
 package com.bakulic.CinemaTicketShop.service;
 
-import com.bakulic.CinemaTicketShop.model.Hall;
 import com.bakulic.CinemaTicketShop.model.Movie;
 import com.bakulic.CinemaTicketShop.model.Projection;
 import com.bakulic.CinemaTicketShop.model.Seat;
@@ -65,7 +64,7 @@ public class ProjectionService {
         //timeValidator.checkTime(createProjectionDTO.getStartTime());
         //dateValidator.checkDate(createProjectionDTO.getDate());
 
-        var proj = new Projection(); //object mapper, pretvotrba dto u entity(mapstruct)
+        var proj = new Projection();
         proj.setDate(createProjectionDTO.getDate());
         proj.setStartTime(createProjectionDTO.getStartTime());
 
@@ -79,7 +78,7 @@ public class ProjectionService {
         List<Seat> seatList = createSeatList(numOfSeats, proj);
         proj.setSeatList(seatList);
 
-        Projection projCreated = projectionRepository.save(proj); //povratan informacija da li kreirano
+        Projection projCreated = projectionRepository.save(proj);
         log.info(String.format("Projection %s has been created.", proj.getProjectionId()));
         return projCreated;
 
@@ -89,28 +88,31 @@ public class ProjectionService {
     public Projection updateProjection(int id, CreateOrUpdateProjectionDTO updateProjectionDTO) {
 
         if (updateProjectionDTO == null) {
-            throw new InvalidDataException("Hall data cannot be null");
+            throw new InvalidDataException("Projection data cannot be null");
         }
-        Projection proj = projectionRepository.findById(id);
+        var proj = projectionRepository.findById(id);
         if (proj == null) {
             throw new ObjectNotFoundException(String.format("The Projection with Id = %s doesn't exists", id));
         }
 
-        timeValidator.checkTime(updateProjectionDTO.getStartTime());
-        dateValidator.checkDate(updateProjectionDTO.getDate());
+        //timeValidator.checkTime(updateProjectionDTO.getStartTime());
+        //dateValidator.checkDate(updateProjectionDTO.getDate());
 
         proj.setDate(updateProjectionDTO.getDate());
         proj.setStartTime(updateProjectionDTO.getStartTime());
 
+        var oldHall = proj.getHall();
+        var oldSeatNum = oldHall.getNumberOfSeats();
         var hall = hallService.findHallByName(updateProjectionDTO.getName());
         proj.setHall(hall);
 
-        Integer numOfSeats = hall.getNumberOfSeats();
-        List<Seat> seatList = createSeatList(numOfSeats, proj);
+        var numOfSeats = hall.getNumberOfSeats();
+        var oldSeatList = proj.getSeatList();
+        var seatList = updateSeatList(oldSeatNum, numOfSeats, proj, oldSeatList);
 
         proj.setSeatList(seatList);
 
-        Projection projUpdate = projectionRepository.save(proj);
+        var projUpdate = projectionRepository.save(proj);
 
         log.info(String.format("Projection %s has been updated.", proj.getProjectionId()));
         return projUpdate;
@@ -130,6 +132,23 @@ public class ProjectionService {
         return seatList;
     };
 
+    public List<Seat> updateSeatList(int numOld, int numNew, Projection proj, List<Seat> seatList){
+        if (numNew >numOld){
+            IntStream.range(numOld+1, numNew)
+                    .forEach(index ->{
+                        var seat = new Seat();
+                        seat.setSeatNumber(index);
+                        seat.setProjection(proj);
+                        seatList.add(seat);
+                    });
+        }
+        if(numNew<numOld){
+            IntStream.range(numNew, numOld)
+                    .forEach(seatList::remove);
+        }
+        return seatList;
+    }
+
     /** get projections of a movie*/
     public Collection<Projection> getProjectionsByMovie(String name){
         if(name == null){
@@ -137,29 +156,5 @@ public class ProjectionService {
         }
         return  projectionRepository.listOfProjectionByMovie(name);
     }
-
-
-    /** get projection by movie*//*
-    public Projection getProjectionByMovie(String name){
-        if(name == null){
-            throw  new InvalidDataException("Movie name cannot be null");
-        }
-        List<Projection> projList = projectionRepository.findByMovie_Name(name);
-        return  projectionRepository.findByMovie_Name(name);
-    }
-*/
-    /**delete projection*/
-    public void deleteProjectionById(int id){
-
-        Projection proj = projectionRepository.findById(id);
-        if (proj == null) {
-            throw new ObjectNotFoundException(String.format("Projection not found with Id = %s", id));
-        }
-
-        projectionRepository.deleteById(id);
-        log.info(String.format("Projection %s has been deleted.", id));
-    }
-
-
 
 }

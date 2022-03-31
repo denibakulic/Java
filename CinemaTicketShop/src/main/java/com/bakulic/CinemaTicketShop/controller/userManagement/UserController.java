@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @AllArgsConstructor
 @Controller
@@ -51,9 +51,8 @@ public class UserController {
     }
     @PostMapping("/update/{id}")
     public String saveUpdateUser(@ModelAttribute("user") CreateOrUpdateUserDTO createOrUpdateUserDTO, @PathVariable("id") int id) {
-        //User user = userService.getUserRepository().findByUsername(createOrUpdateUserDTO.getUsername());
         userService.updateUser(createOrUpdateUserDTO, id);
-        return "redirect:user/all";
+        return "redirect:/user/all";
     }
 
 
@@ -66,7 +65,6 @@ public class UserController {
 
     @GetMapping("/delete/{id}")
     public String deleteUserById(@PathVariable("id") int id) {
-        System.err.println("bla bla");
         userService.getUserRepository().deleteById(id);
 
         return "redirect:/user/all";

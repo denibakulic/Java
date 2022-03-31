@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import com.bakulic.CinemaTicketShop.exceptions.*;
 
 @AllArgsConstructor
@@ -26,10 +24,9 @@ public class MovieService {
         return movieRepository;
     }
 
-    //private LengthValidator lengthValidator;
+    private LengthValidator lengthValidator;
+    public MovieService(){lengthValidator = new LengthValidator();}
 
-
-    //public MovieService(){lengthValidator = new LengthValidator();}
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserService.class);
 
     /**list of all users*/
@@ -44,7 +41,7 @@ public class MovieService {
                 throw new InvalidDataException("Movie data cannot be null");
             }
 
-            //lengthValidator.checkLength(createMovieDTO.getLength());
+            lengthValidator.checkLength(createMovieDTO.getLength());
 
             // create the movie
             Movie movie = new Movie();
@@ -57,7 +54,7 @@ public class MovieService {
 
             Movie movieCreated = movieRepository.save(movie);
 
-            log.info(String.format("User %s has been created.", movieCreated.getName()));
+            log.info(String.format("Movie %s has been created.", movieCreated.getName()));
             return movieCreated;
         }
 
@@ -88,21 +85,6 @@ public class MovieService {
                 throw new InvalidDataException("Name cannot be null");
             }
             return movieRepository.getByName(name);
-        }
-
-
-
-
-        /** delete movie by id*/
-        public void deleteMovieById (int id){
-
-            Movie movie = movieRepository.findById(id);
-            if (movie == null) {
-                throw new ObjectNotFoundException(String.format("Movie not found with Id = %s", id));
-            }
-
-            movieRepository.deleteById(id);
-            log.info(String.format("Movie %s has been deleted.", id));
         }
 
 

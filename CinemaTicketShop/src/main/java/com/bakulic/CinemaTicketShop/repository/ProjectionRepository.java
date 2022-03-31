@@ -1,14 +1,12 @@
 package com.bakulic.CinemaTicketShop.repository;
 
 import com.bakulic.CinemaTicketShop.model.Projection;
-import com.bakulic.CinemaTicketShop.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
-import java.util.UUID;
 
 @Repository
 @Component
