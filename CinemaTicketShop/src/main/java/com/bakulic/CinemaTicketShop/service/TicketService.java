@@ -44,27 +44,31 @@ public class TicketService extends ProjectionService {
 
 
     /** ticket create**/
-    public Ticket createTicket(CreateTicketDTO creteTicketDTO, Projection proj) {
+    public Ticket createTicket(CreateTicketDTO creteTicketDTO, int proj) {
         if (creteTicketDTO == null) {
             throw new InvalidDataException("Ticket cannot be null");
         }
         var ticket = new Ticket();
         var user = userRepository.findByUsername(creteTicketDTO.getUsername());
-        ticket.setUser(user);
+        List<User> userList = userRepository.findAll();
+        if(userList.contains(user)){
+            ticket.setUser(user);
 
-        ticket.setProjection(proj);
+        }
+        else {
+            throw new InvalidUsernameException("The username doesn't exist!");
+
+        }
+        var projection = projectionRepository.findById(proj);
+        ticket.setProjection(projection);
 
         Integer seatNumber = Integer.valueOf(creteTicketDTO.getSeatNumber());
         ticket.setSeatNumber(seatNumber);
 
+        var list = projection.getSeatList();
+        list.remove(seatNumber -1);
+        projection.setSeatList(list);
 
-        var hall = proj.getHall();
-        var numberOfSeats = hall.getNumberOfSeats();
-
-        var list = proj.getSeatList();
-        list.remove(seatNumber);
-
-        proj.setSeatList(list);
         var ticketCreated = ticketRepository.save(ticket);
         log.info(String.format("Ticket %s has been created.", ticket.getTicketId()));
         return ticketCreated;

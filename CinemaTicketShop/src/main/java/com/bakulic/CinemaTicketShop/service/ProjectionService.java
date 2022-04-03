@@ -61,8 +61,8 @@ public class ProjectionService {
             throw new InvalidDataException("Projection cannot be null"); //u kontrolere bad request
         }
 
-        //timeValidator.checkTime(createProjectionDTO.getStartTime());
-        //dateValidator.checkDate(createProjectionDTO.getDate());
+        timeValidator.checkTime(createProjectionDTO.getStartTime());
+        dateValidator.checkDate(createProjectionDTO.getDate());
 
         var proj = new Projection();
         proj.setDate(createProjectionDTO.getDate());
@@ -95,8 +95,8 @@ public class ProjectionService {
             throw new ObjectNotFoundException(String.format("The Projection with Id = %s doesn't exists", id));
         }
 
-        //timeValidator.checkTime(updateProjectionDTO.getStartTime());
-        //dateValidator.checkDate(updateProjectionDTO.getDate());
+        timeValidator.checkTime(updateProjectionDTO.getStartTime());
+        dateValidator.checkDate(updateProjectionDTO.getDate());
 
         proj.setDate(updateProjectionDTO.getDate());
         proj.setStartTime(updateProjectionDTO.getStartTime());

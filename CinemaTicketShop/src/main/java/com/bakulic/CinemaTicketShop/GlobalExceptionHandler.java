@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({InvalidEmailException.class, InvalidDataException.class,
             InvalidIdentifierException.class, InvalidUsernameException.class,
-            InvalidLoginException.class})
+            InvalidLoginException.class, InvalidPasswordException.class, InvalidLengthException.class, InvalidDateException.class, InvalidTimeException.class})
     public ResponseEntity<ErrorDetails> handleAsBadRequest(RuntimeException ex) {
         ErrorDetails errorDetails = new ErrorDetails(ex.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);

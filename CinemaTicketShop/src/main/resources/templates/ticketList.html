@@ -41,7 +41,6 @@
             <th scope="col">Movie</th>
             <th scope="col">Ticket number</th>
             <th scope="col"></th>
-            <th scope="col"></th>
 
 
         </tr>
@@ -53,8 +52,7 @@
             <td th:text = "${ticket.projection.startTime}"></td>
             <td th:text = "${ticket.projection.hall.name}"></td>
             <td th:text = "${ticket.projection.movie.name}"></td>
-            <td th:text = "${ticket.number}"></td>
-            <td th:text = "@/{{username}(username =${ticket.user.username})}}" class="btn btn-primary">User's tickets</td>
+            <td th:text = "${ticket.seatNumber}"></td>
             <td><a th:href ="@{/ticket/delete/{id}(id=${ticket.ticketId})}" class="btn btn-danger">Delete ticket</a></td>
         </tr>
         </tbody>

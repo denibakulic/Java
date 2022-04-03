@@ -58,14 +58,7 @@
                         <td><img th:src="@{${movie.picture}}" class="rounded mx-auto d-block" width="100" height="140" alt="poster"/></td>
                         <td class="text-center"  th:text="${movie.name}"></td>
                         <td class="text-center"  th:text="${movie.description}"></td>
-                    <td>
-                    <tr th:each = "projection: ${listProj}" >
-                        <td class="text-center" th:text="${projection.date}" >Date</td>
-                        <td class="text-center" th:text = "${projection.startTime}">Time</td>
-                        <td class="text-center" th:text = "${projection.hall.name}">Hall</td>
-                        <td class="text-center"><a th:href="@{/ticket}" class="btn btn-primary">Pick</a></td>
-                    </tr>
-                    </td>
+                        <td><a th:href="@{/projection/{name}(name=${movie.name})}" class="btn btn-info">See projections</a></td>
                     </tr>
                     </tbody>
                 </table>

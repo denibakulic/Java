@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Controller
@@ -25,17 +26,19 @@ public class TicketController {
     @Autowired
     private ProjectionService projectionService;
 
-    @GetMapping
-    public String getTicketForm(Model model) {
+    @GetMapping("/{projectionId}")
+    public String getTicketForm(Model model,  @PathVariable("projectionId") int projId) {
         CreateTicketDTO newTicket = new CreateTicketDTO();
+        var proj = projectionService.getProjectionRepository().findById(projId);
+        model.addAttribute("proj", proj);
         model.addAttribute("ticket", newTicket);
         return "/createTicketForm";
     }
 
-    @PostMapping
-    public String saveTicket(@ModelAttribute("ticket") CreateTicketDTO createTicketDTO, Projection proj){
-        ticketService.createTicket(createTicketDTO, proj);
-        return  "redirect:ticket/all";
+    @PostMapping("/{projectionId}")
+    public String saveTicket(@ModelAttribute("ticket") CreateTicketDTO createTicketDTO, @PathVariable("projectionId") Integer projId){
+        ticketService.createTicket(createTicketDTO, projId);
+        return  "final";
     }
 
     @GetMapping("/all")
@@ -45,7 +48,7 @@ public class TicketController {
         return "ticketList";
     }
 
-    @GetMapping("/{username}")
+    @GetMapping
     public String getUsersTickets(Model model, @PathVariable("username") String username){
         Collection<Ticket> list = ticketService.geTicketByUsername(username);
         model.addAttribute("tickets", list);

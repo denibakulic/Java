@@ -1,12 +1,14 @@
 package com.bakulic.CinemaTicketShop.model.dto.requests;
 
+import com.bakulic.CinemaTicketShop.model.Projection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.UUID;
+
+
 
 @Data
 @NoArgsConstructor
@@ -14,7 +16,7 @@ import java.util.UUID;
 @Builder
 public class CreateTicketDTO implements Serializable {
 
-    //aditional info
+
     private String username;
     private String date;
     private String startTime;

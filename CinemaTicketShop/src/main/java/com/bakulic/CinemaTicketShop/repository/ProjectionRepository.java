@@ -13,7 +13,7 @@ import java.util.Collection;
 public interface ProjectionRepository extends JpaRepository<Projection, Integer> {
 
     //popis projekcija nekog filma
-    @Query("SELECT p.hall.name, p.date, p.startTime FROM Projection p WHERE p.movie.name = :name")
+    @Query ("FROM Projection p WHERE p.movie.name = :name")
     Collection<Projection> listOfProjectionByMovie(String name);
 
     Projection findById(int id);

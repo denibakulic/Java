@@ -1,8 +1,10 @@
 package com.bakulic.CinemaTicketShop.controller;
 
 import com.bakulic.CinemaTicketShop.model.Movie;
+import com.bakulic.CinemaTicketShop.model.Projection;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateMovieDTO;
 import com.bakulic.CinemaTicketShop.service.MovieService;
+import com.bakulic.CinemaTicketShop.service.ProjectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class MovieController {
 
     @Autowired
     private final MovieService movieService;
+
+    @Autowired
+    private final ProjectionService projectionService;
 
     @ModelAttribute("movie")
     public CreateOrUpdateMovieDTO registerUserAccountDTO(){return new CreateOrUpdateMovieDTO();}
@@ -53,11 +58,13 @@ public class MovieController {
     @GetMapping("/all")
     public String getMovieList(Model model) {
         List<Movie> list = movieService.getAllMovies();
+        List<Projection> projList = projectionService.getAllProjections();
         model.addAttribute("movies", list);
+        model.addAttribute("projections", projList);
         return "movieList";
     }
 
-    @GetMapping("delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteMovieById( @PathVariable("id") int id) {
         movieService.getMovieRepository().deleteById(id);
         return "redirect:/movie/all";

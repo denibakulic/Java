@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <label class="control-label"> Hall name </label>
                       <select  th:field="*{name}" required>
-                          <option th:each="hall : ${halls}" th:value="${name}" th:text="${name}"></option>
+                          <option th:each="hall : ${halls}" th:value="${hall.name}" th:text="${hall.name}"></option>
                       </select>
 
                 </div>
@@ -52,7 +52,7 @@
                 <div class="form-group">
                     <label class="control-label" > Movie name </label>
                     <select  th:field="*{movieName}" required>
-                        <option th:each="movie : ${movies}" th:value="${name}" th:text="${name}"></option>
+                        <option th:each="movie : ${movies}" th:value="${movie.name}" th:text="${movie.name}"></option>
                     </select>
                 </div>
 

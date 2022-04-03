@@ -3,6 +3,7 @@ package com.bakulic.CinemaTicketShop.controller;
 import com.bakulic.CinemaTicketShop.model.Hall;
 import com.bakulic.CinemaTicketShop.model.Movie;
 import com.bakulic.CinemaTicketShop.model.Projection;
+import com.bakulic.CinemaTicketShop.model.Seat;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateProjectionDTO;
 import com.bakulic.CinemaTicketShop.service.HallService;
 import com.bakulic.CinemaTicketShop.service.MovieService;
@@ -77,13 +78,13 @@ public class ProjectionController {
         model.addAttribute("projections", proj);
         return "projectionDetails";
     }
-
-    @GetMapping("/movie")
+*/
+    @GetMapping("/{name}")
     public String getProjByMovie(Model model, @PathVariable("name") String name) {
         Collection<Projection> list = projectionService.getProjectionsByMovie(name);
-        model.addAttribute("projection", list);
+        model.addAttribute("projections", list);
         return "projectionDetails";
-    }*/
+    }
 
 
     @GetMapping("/delete/{id}")

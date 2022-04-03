@@ -52,7 +52,7 @@ public class LoginController {
         } else
             userService.login(loginUserAccountDTO);
             List<Movie> list = movieService.getAllMovies();
-            List<Projection> listProj = projectionService.getAllProjections(); //ili projekcije po filmu
+            List<Projection> listProj = projectionService.getAllProjections();
             model.addAttribute("movies", list);
             model.addAttribute("projections", listProj);
             return "home";
