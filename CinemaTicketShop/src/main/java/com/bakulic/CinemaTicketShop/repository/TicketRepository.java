@@ -16,5 +16,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     Collection<Ticket> findByUsername(String username);
 
     Ticket findById(int id);
+    Ticket findByUserUsername(String username);
 
 }

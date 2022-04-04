@@ -35,7 +35,6 @@
         <thead>
         <tr>
             <th scope="col">Ticket number</th>
-            <th scope="col">Status</th>
             <th scope="col">Hall</th>
             <th scope="col">Movie</th>
             <th scope="col" >Date</th>
@@ -45,12 +44,11 @@
         </thead>
         <tbody>
         <tr th:each = "ticket: ${tickets}" >
-            <td th:text = "${ticket.number}"></td>
-            <td th:text = "${ticket.reserveOrBuy}" ></td>
-            <td th:text = "${ticket.hall.name}"></td>
-            <td th:text = "${ticket.movie.name}" ></td>
+            <td th:text = "${ticket.seatNumber}"></td>
+            <td th:text = "${ticket.projection.hall.name}"></td>
+            <td th:text = "${ticket.projection.movie.name}" ></td>
             <td th:text = "${ticket.projection.date}"></td>
-            <td th:text = "${ticket.projection.time}" ></td>
+            <td th:text = "${ticket.projection.startTime}" ></td>
         </tr>
         </tbody>
 

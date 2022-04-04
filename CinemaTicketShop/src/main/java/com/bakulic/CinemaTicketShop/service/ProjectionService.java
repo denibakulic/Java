@@ -34,8 +34,8 @@ public class ProjectionService {
     private DateValidator dateValidator;
 
     public ProjectionService(){
-        timeValidator = new TimeValidator();
-        dateValidator = new DateValidator();
+        //timeValidator = new TimeValidator();
+        //dateValidator = new DateValidator();
     }
     @Autowired
     private HallService hallService;
@@ -61,8 +61,9 @@ public class ProjectionService {
             throw new InvalidDataException("Projection cannot be null"); //u kontrolere bad request
         }
 
-        timeValidator.checkTime(createProjectionDTO.getStartTime());
-        dateValidator.checkDate(createProjectionDTO.getDate());
+        //dateValidator.checkDate(createProjectionDTO.getDate());
+        //timeValidator.checkTime(createProjectionDTO.getStartTime());
+
 
         var proj = new Projection();
         proj.setDate(createProjectionDTO.getDate());
@@ -84,42 +85,7 @@ public class ProjectionService {
 
     }
 
-    /** update projection*/
-    public Projection updateProjection(int id, CreateOrUpdateProjectionDTO updateProjectionDTO) {
-
-        if (updateProjectionDTO == null) {
-            throw new InvalidDataException("Projection data cannot be null");
-        }
-        var proj = projectionRepository.findById(id);
-        if (proj == null) {
-            throw new ObjectNotFoundException(String.format("The Projection with Id = %s doesn't exists", id));
-        }
-
-        timeValidator.checkTime(updateProjectionDTO.getStartTime());
-        dateValidator.checkDate(updateProjectionDTO.getDate());
-
-        proj.setDate(updateProjectionDTO.getDate());
-        proj.setStartTime(updateProjectionDTO.getStartTime());
-
-        var oldHall = proj.getHall();
-        var oldSeatNum = oldHall.getNumberOfSeats();
-        var hall = hallService.findHallByName(updateProjectionDTO.getName());
-        proj.setHall(hall);
-
-        var numOfSeats = hall.getNumberOfSeats();
-        var oldSeatList = proj.getSeatList();
-        var seatList = updateSeatList(oldSeatNum, numOfSeats, proj, oldSeatList);
-
-        proj.setSeatList(seatList);
-
-        var projUpdate = projectionRepository.save(proj);
-
-        log.info(String.format("Projection %s has been updated.", proj.getProjectionId()));
-        return projUpdate;
-    }
-
     /** Create seat list*/
-
     public List<Seat> createSeatList(int num, Projection proj){
         List<Seat> seatList = new ArrayList<>();
         IntStream.range(1, num+1)
@@ -132,22 +98,6 @@ public class ProjectionService {
         return seatList;
     };
 
-    public List<Seat> updateSeatList(int numOld, int numNew, Projection proj, List<Seat> seatList){
-        if (numNew >numOld){
-            IntStream.range(numOld+1, numNew)
-                    .forEach(index ->{
-                        var seat = new Seat();
-                        seat.setSeatNumber(index);
-                        seat.setProjection(proj);
-                        seatList.add(seat);
-                    });
-        }
-        if(numNew<numOld){
-            IntStream.range(numNew, numOld)
-                    .forEach(seatList::remove);
-        }
-        return seatList;
-    }
 
     /** get projections of a movie*/
     public Collection<Projection> getProjectionsByMovie(String name){

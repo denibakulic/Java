@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Data
 public class TicketDTO implements Serializable {
     private int id;
-    private  String status;
     private UserDTO userDTO;
     private Integer seatNumber;
 
@@ -19,7 +18,6 @@ public class TicketDTO implements Serializable {
     public TicketDTO(Ticket ticket){
         if (ticket != null){
             this.id = ticket.getTicketId();
-            this.status = ticket.getStatus();
             if(ticket.getProjection() != null){
                 this.projectionDTO = new ProjectionDTO(ticket.getProjection());
             }

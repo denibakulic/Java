@@ -48,7 +48,7 @@
             <td th:text = "${user.email}" ></td>
             <td th:text = "${user.fullname}"></td>
             <td th:text = "${user.role}" ></td>
-            <td><a th:href="@{/ticket/{username}(username=${user.username})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/ticket/username/{username}(username=${user.username})}" class="btn btn-primary">View</a></td>
             <td><a th:href ="@{/user/update/{id}(id=${user.userId})}"class="btn btn-primary">Update user</a></td>
             <td><a th:href ="@{/user/delete/{id}(id=${user.userId})}" class="btn btn-danger">Delete user</a></td>
         </tr>

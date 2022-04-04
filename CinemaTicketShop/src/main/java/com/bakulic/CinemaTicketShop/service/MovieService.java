@@ -41,7 +41,7 @@ public class MovieService {
                 throw new InvalidDataException("Movie data cannot be null");
             }
 
-            lengthValidator.checkLength(createMovieDTO.getLength());
+            //lengthValidator.checkLength(createMovieDTO.getLength());
 
             // create the movie
             Movie movie = new Movie();

@@ -18,9 +18,6 @@ public class Ticket {
     @Column(name = "id")
     private int ticketId;
 
-    @Column(name = "status")
-    private String status;
-
     @Column(name="number")
     private Integer seatNumber;
 

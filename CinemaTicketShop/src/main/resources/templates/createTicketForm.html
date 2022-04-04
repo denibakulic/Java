@@ -35,30 +35,6 @@
                            required autofocus="autofocus" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="date"> Date</label>
-                    <input id="date"
-                           class="form-control" th:field="*{date}"  readonly
-                           autofocus="autofocus" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="time"> Time </label>
-                    <input id="time"
-                           class="form-control" th:field="*{startTime}" readonly
-                           autofocus="autofocus" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="hall"> Hall </label>
-                    <input id="hall"
-                           class="form-control" th:field="*{hallName}" readonly
-                           autofocus="autofocus" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="movie"> Movie </label>
-                    <input id="movie"
-                           class="form-control" th:field="*{movieName}" readonly
-                           autofocus="autofocus" />
-                </div>
-                <div class="form-group">
                     <label class="control-label"> Seat number </label>
                     <select  th:field="*{seatNumber}" required>
                         <option th:each="seat : ${proj.seatList}" th:value="${seat.seatNumber}" th:text="${seat.seatNumber}"></option>

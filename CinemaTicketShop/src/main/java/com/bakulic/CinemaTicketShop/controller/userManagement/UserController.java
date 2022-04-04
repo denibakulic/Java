@@ -1,8 +1,10 @@
 package com.bakulic.CinemaTicketShop.controller.userManagement;
 
+import com.bakulic.CinemaTicketShop.model.Ticket;
 import com.bakulic.CinemaTicketShop.model.User;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateUserDTO;
 import com.bakulic.CinemaTicketShop.model.dto.requests.RegisterUserAccountDTO;
+import com.bakulic.CinemaTicketShop.service.TicketService;
 import com.bakulic.CinemaTicketShop.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -20,6 +23,9 @@ public class UserController {
 
     @Autowired
     private final UserService userService;
+
+    @Autowired
+    private final TicketService ticketService;
 
     @ModelAttribute("user")
     public CreateOrUpdateUserDTO createOrUpdateUserDTO(){return new CreateOrUpdateUserDTO();}
@@ -45,7 +51,7 @@ public class UserController {
 
     @GetMapping("/update/{id}")
     public String getUpdateUserForm(Model model, @PathVariable ("id") int id) {
-        User user = userService.getUserRepository().findById(id);
+        var user = userService.getUserRepository().findById(id);
         model.addAttribute("user", user);
         return "updateUserForm";
     }
@@ -58,13 +64,16 @@ public class UserController {
 
     @GetMapping("/all")
     public String getUserList(Model model) {
-        List<User> list = userService.getAllUsers();
+        var list = userService.getAllUsers();
         model.addAttribute("users",list);
         return "userList";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteUserById(@PathVariable("id") int id) {
+        var user = userService.getUserRepository().findById(id);
+        Collection<Ticket> ticketList = ticketService.getTicketRepository().findByUsername(user.getUsername());
+        ticketList.removeAll(ticketList);
         userService.getUserRepository().deleteById(id);
 
         return "redirect:/user/all";

@@ -40,7 +40,7 @@
             <th scope="col">Start time</th>
             <th scope="col">Hall</th>
             <th scope="col">Movie</th>
-            <th scope="col" colspan="2"></th>
+            <th scope="col" ></th>
 
         </tr>
         </thead>
@@ -50,8 +50,7 @@
             <td th:text = "${projection.startTime}" ></td>
             <td th:text = "${projection.hall.name}"></td>
             <td th:text = "${projection.movie.name}" ></td>
-            <td><a th:href ="@{/projection/update/{id}(id=${projection.projectionId})}"class="btn btn-primary">Update projection</a></td>
-            <td><a th:href ="@{/projection/delete/{id}(id=${projection.projectionId})}" class="btn btn-danger">Delete projection</a></td>
+            <td><a th:href ="@{/projection/delete/{id}(id=${projection.projectionId})}" class="btn btn-danger">Cancel projection</a></td>
         </tr>
         </tbody>
 

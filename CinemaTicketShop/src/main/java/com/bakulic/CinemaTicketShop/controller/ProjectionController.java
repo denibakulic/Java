@@ -51,11 +51,15 @@ public class ProjectionController {
         projectionService.createProjection(createOrUpdateProjectionDTO);
         return "redirect:projection/all";
     }
-
+/*
     @GetMapping("/update/{id}")
     public String getUpdateProjectionForm(Model model, @PathVariable("id") int id) {
         Projection projection = projectionService.getProjectionRepository().findById(id);
+        List<Hall> hallList = hallService.getAllHalls();
+        List<Movie> movieList = movieService.getAllMovies();
         model.addAttribute("projection", projection);
+        model.addAttribute("halls", hallList);
+        model.addAttribute("movies", movieList);
         return "updateProjectionForm";
     }
 
@@ -64,7 +68,7 @@ public class ProjectionController {
         projectionService.updateProjection(id, createOrUpdateProjectionDTO());
         return "redirect:/projection/all";
     }
-
+*/
     @GetMapping("/all")
     public String getProjList(Model model) {
         List<Projection> list = projectionService.getAllProjections();

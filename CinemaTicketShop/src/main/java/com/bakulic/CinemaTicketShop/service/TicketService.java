@@ -80,12 +80,5 @@ public class TicketService extends ProjectionService {
         return ticketRepository.findAll();
     }
 
-    /**get tickets of a user*/
-    public Collection<Ticket> geTicketByUsername(String username){
-        if(username == null){
-            throw  new InvalidDataException("Username cannot be null");
-        }
-        return ticketRepository.findByUsername(username);
-    }
 
 }

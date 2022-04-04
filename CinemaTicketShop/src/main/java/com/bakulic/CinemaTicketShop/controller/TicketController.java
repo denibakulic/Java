@@ -48,15 +48,15 @@ public class TicketController {
         return "ticketList";
     }
 
-    @GetMapping
+    @GetMapping("/username/{username}")
     public String getUsersTickets(Model model, @PathVariable("username") String username){
-        Collection<Ticket> list = ticketService.geTicketByUsername(username);
+        Collection<Ticket> list = ticketService.getTicketRepository().findByUsername(username);
         model.addAttribute("tickets", list);
         return "userTicketList";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteTicket( @RequestParam @PathVariable ("id") int id){
+    public String deleteTicket( @PathVariable ("id") int id){
         ticketService.getTicketRepository().deleteById(id);
         return  "redirect:/ticket/all";
     }
