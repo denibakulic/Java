@@ -3,6 +3,7 @@ package com.bakulic.CinemaTicketShop.service;
 import com.bakulic.CinemaTicketShop.model.*;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateTicketDTO;
 import com.bakulic.CinemaTicketShop.repository.ProjectionRepository;
+import com.bakulic.CinemaTicketShop.repository.SeatRepository;
 import com.bakulic.CinemaTicketShop.repository.TicketRepository;
 import com.bakulic.CinemaTicketShop.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.bakulic.CinemaTicketShop.exceptions.*;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 @AllArgsConstructor
 @Service
@@ -24,6 +26,14 @@ public class TicketService extends ProjectionService {
     @Autowired
     public TicketRepository getTicketRepository(){
         return ticketRepository;
+    }
+
+    @Autowired
+    private final SeatRepository seatRepository;
+
+    @Autowired
+    public SeatRepository getSeatRepository(){
+        return seatRepository;
     }
 
     @Autowired
@@ -62,17 +72,32 @@ public class TicketService extends ProjectionService {
         var projection = projectionRepository.findById(proj);
         ticket.setProjection(projection);
 
-        Integer seatNumber = Integer.valueOf(creteTicketDTO.getSeatNumber());
+        var seatNumber = Integer.valueOf(creteTicketDTO.getSeatNumber());
         ticket.setSeatNumber(seatNumber);
 
-        var list = projection.getSeatList();
-        list.remove(seatNumber -1);
-        projection.setSeatList(list);
+        var seat = getSeatRepository().findByProjectionAndAndSeatNumber(projection, seatNumber);
+        seatRepository.deleteById(seat.getSeatId());
 
         var ticketCreated = ticketRepository.save(ticket);
         log.info(String.format("Ticket %s has been created.", ticket.getTicketId()));
         return ticketCreated;
 
+    }
+    public List<Seat> updateSeatList(int numOld, int numNew, Projection proj, List<Seat> seatList){
+        if (numNew >numOld){
+            IntStream.range(numOld+1, numNew)
+                    .forEach(index ->{
+                        var seat = new Seat();
+                        seat.setSeatNumber(index);
+                        seat.setProjection(proj);
+                        seatList.add(seat);
+                    });
+        }
+        if(numNew<numOld){
+            IntStream.range(numNew, numOld)
+                    .forEach(seatList::remove);
+        }
+        return seatList;
     }
 
     /**list of all halls*/

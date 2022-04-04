@@ -85,7 +85,10 @@ public class ProjectionService {
 
     }
 
+
+
     /** Create seat list*/
+
     public List<Seat> createSeatList(int num, Projection proj){
         List<Seat> seatList = new ArrayList<>();
         IntStream.range(1, num+1)
@@ -97,6 +100,7 @@ public class ProjectionService {
                 });
         return seatList;
     };
+
 
 
     /** get projections of a movie*/
