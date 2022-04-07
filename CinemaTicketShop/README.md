@@ -16,7 +16,7 @@ An app for buying and selling tickets in a cinema.
 
 ## Database Model:
 
-![database model](https://github.com/OSS-Java-Seminar/CinemaTicketShop/blob/main/database-model.drawio.png?raw=true)
+![database model](https://github.com/OSS-Java-Seminar/CinemaTicketShop/blob/main/DatabaseDiagram.png?raw=true)
 
 * Link to full image: https://raw.githubusercontent.com/OSS-Java-Seminar/CinemaTicketShop/main/database-model.drawio.png
 
