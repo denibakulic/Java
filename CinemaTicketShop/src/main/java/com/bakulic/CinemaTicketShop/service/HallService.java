@@ -1,14 +1,19 @@
 package com.bakulic.CinemaTicketShop.service;
 
 import com.bakulic.CinemaTicketShop.model.Hall;
+import com.bakulic.CinemaTicketShop.model.Projection;
+import com.bakulic.CinemaTicketShop.model.Seat;
 import com.bakulic.CinemaTicketShop.model.dto.requests.CreateOrUpdateHallDTO;
 import com.bakulic.CinemaTicketShop.repository.HallRepository;
+import com.bakulic.CinemaTicketShop.repository.ProjectionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bakulic.CinemaTicketShop.exceptions.*;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.IntStream;
 
 
 @AllArgsConstructor
@@ -23,6 +28,14 @@ public class HallService {
     @Autowired
     public HallRepository getHallRepository(){
         return hallRepository;
+    }
+
+    @Autowired
+    private final ProjectionRepository projectionRepository;
+
+    @Autowired
+    public ProjectionRepository getProjectionRepository(){
+        return projectionRepository;
     }
 
     /** hall create**/
