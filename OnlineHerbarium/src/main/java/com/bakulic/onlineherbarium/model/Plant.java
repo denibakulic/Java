@@ -29,8 +29,8 @@ public class Plant {
     @Column(name = "date")
     private String date;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-    private List<HerbariumList> list;
+    @ManyToMany(mappedBy = "plantList")
+    List<HerbariumOrList> herbariumOrList;
 
     @ManyToOne
     @JoinColumn(name = "idFamily")
