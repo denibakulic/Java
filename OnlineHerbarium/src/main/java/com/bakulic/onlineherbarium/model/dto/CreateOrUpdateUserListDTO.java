@@ -3,13 +3,15 @@ package com.bakulic.onlineherbarium.model.dto;
 import com.bakulic.onlineherbarium.model.Plant;
 import lombok.Data;
 
+
 import java.util.List;
+
 @Data
-public class CreateOrUpdateListDTO {
+public class CreateOrUpdateUserListDTO {
 
     private String title;
     private String description;
-    private List<Plant> plantList; //vjv trebat izmjene
     private String date;
-    private String typeName;
+    private List<Plant> plantList;
+    private int userId;
 }

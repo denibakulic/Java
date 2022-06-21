@@ -12,7 +12,7 @@ public class CreateOrUpdateHerbariumDTO {
     private String title;
     private String description;
     private String picture;
-    private List<Plant> plantList; //vjv trebat izmjene
+    private List<Plant> plantList;
     private String date;
     private String typeName;
 }

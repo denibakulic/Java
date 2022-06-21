@@ -29,10 +29,18 @@ public class Plant {
     @Column(name = "date")
     private String date;
 
-    @ManyToMany(mappedBy = "plantList")
-    List<HerbariumOrList> herbariumOrList;
-
     @ManyToOne
     @JoinColumn(name = "idFamily")
     private Family family;
+
+    @ManyToOne
+    @JoinColumn(name = "idHerbarium")
+    private Herbarium herbarium;
+
+    @ManyToMany
+    @JoinTable(
+            name = "plant_list",
+            joinColumns = @JoinColumn(name = "plantId"),
+            inverseJoinColumns = @JoinColumn(name = "listId"))
+    List<UserList> lists;
 }

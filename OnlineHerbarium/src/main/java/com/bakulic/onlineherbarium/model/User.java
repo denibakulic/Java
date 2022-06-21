@@ -31,5 +31,5 @@ public class User {
     private Role role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-    private List<HerbariumOrList> ticketList;
+    private List<Image> imageList;
 }

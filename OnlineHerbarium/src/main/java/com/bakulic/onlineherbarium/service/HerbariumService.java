@@ -1,0 +1,95 @@
+package com.bakulic.onlineherbarium.service;
+
+import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
+import com.bakulic.onlineherbarium.exceptions.ObjectNotFoundException;
+import com.bakulic.onlineherbarium.model.Herbarium;
+import com.bakulic.onlineherbarium.model.Plant;
+import com.bakulic.onlineherbarium.model.User;
+import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateHerbariumDTO;
+import com.bakulic.onlineherbarium.repository.HerbariumRepository;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Data
+@Service
+public class HerbariumService {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HerbariumService.class);
+
+    @Autowired
+    private HerbariumRepository herbariumRepository;
+
+    @Autowired
+    public HerbariumRepository getHerbariumRepository(){
+        return herbariumRepository;
+    }
+
+    @Autowired
+    private PlantService plantService;
+    private HerbariumService(PlantService plantService){
+        this.plantService = plantService;
+    }
+
+    /**
+     * list of all users
+     */
+    public List<Herbarium> getAllHerbariums() {
+        return herbariumRepository.findAll();
+    }
+
+
+    /** create Herbarium **/
+    public Herbarium createHerbarium(CreateOrUpdateHerbariumDTO createHerbariumDTO){
+        if(createHerbariumDTO == null){
+            throw new InvalidDataException("Herbarium cannot be null");
+        }
+        Herbarium newHerbarium = new Herbarium();
+        newHerbarium.setTitle(createHerbariumDTO.getTitle());
+        newHerbarium.setDescription(createHerbariumDTO.getDescription());
+        newHerbarium.setDate(createHerbariumDTO.getDate());
+        newHerbarium.setPicture(createHerbariumDTO.getPicture()); //string
+
+        Herbarium herbariumCreated = herbariumRepository.save(newHerbarium);
+        log.info(String.format("Herbarium %s has been created.", herbariumCreated.getTitle()));
+        return herbariumCreated;
+
+    }
+
+
+
+    /**update Herbarium*/
+    public Herbarium updateHerbarium(int id, CreateOrUpdateHerbariumDTO updateHerbariumDTO){
+
+        if (updateHerbariumDTO == null) {
+            throw new InvalidDataException("Update data cannot be null");
+        }
+        Herbarium herbarium = herbariumRepository.findById(id);
+        if (herbarium ==null) {
+            throw new ObjectNotFoundException(String.format("The herbarium with Id = %s doesn't exists", id));
+        }
+
+        herbarium.setTitle(updateHerbariumDTO.getTitle());
+        herbarium.setDescription(updateHerbariumDTO.getDescription());
+        herbarium.setDate(updateHerbariumDTO.getDate());
+        herbarium.setPicture(updateHerbariumDTO.getPicture());
+
+        Herbarium herbariumUpdated = herbariumRepository.save(herbarium);
+        log.info(String.format("Herbarium %s has been updated.", herbarium.getTitle()));
+        return herbariumUpdated;
+    }
+
+    /**list of all herbariums by user*/
+    public Collection<Herbarium> getAllHerbariumsByUserId(int id){
+        return herbariumRepository.listOfAllHerbariums(id);
+    }
+
+
+
+
+    //funkcija koja brise veze
+}

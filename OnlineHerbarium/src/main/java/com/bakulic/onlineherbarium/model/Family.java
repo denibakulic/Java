@@ -14,7 +14,7 @@ public class Family {
     @Column(name = "id")
     private int familyId;
 
-    @Column(name = "species")
+    @Column(name = "name")
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "family", cascade = CascadeType.ALL)
