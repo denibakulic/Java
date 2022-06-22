@@ -3,8 +3,6 @@ package com.bakulic.onlineherbarium.service;
 import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
 import com.bakulic.onlineherbarium.exceptions.ObjectNotFoundException;
 import com.bakulic.onlineherbarium.model.Herbarium;
-import com.bakulic.onlineherbarium.model.Plant;
-import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateHerbariumDTO;
 import com.bakulic.onlineherbarium.repository.HerbariumRepository;
 import lombok.Data;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @Service
@@ -85,11 +82,7 @@ public class HerbariumService {
 
     /**list of all herbariums by user*/
     public Collection<Herbarium> getAllHerbariumsByUserId(int id){
-        return herbariumRepository.listOfAllHerbariums(id);
+        return herbariumRepository.listOfAllHerbariumsByUser(id);
     }
 
-
-
-
-    //funkcija koja brise veze
 }

@@ -63,11 +63,6 @@ public class ProjectionController {
         return "updateProjectionForm";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateProjection(@PathVariable("id") int id, @ModelAttribute("projection")  CreateOrUpdateProjectionDTO projection) {
-        projectionService.updateProjection(id, createOrUpdateProjectionDTO());
-        return "redirect:/projection/all";
-    }
 
     @GetMapping("/all")
     public String getProjList(Model model) {
@@ -76,13 +71,7 @@ public class ProjectionController {
         return "projectionList";
     }
 
-   /* @GetMapping("/{id}")
-    public String getProjById(Model model, @PathVariable("id") int id) {
-        Projection proj = projectionService.getProjectionRepository().findById(id);
-        model.addAttribute("projections", proj);
-        return "projectionDetails";
-    }
-*/
+
     @GetMapping("/{name}")
     public String getProjByMovie(Model model, @PathVariable("name") String name) {
         Collection<Projection> list = projectionService.getProjectionsByMovie(name);

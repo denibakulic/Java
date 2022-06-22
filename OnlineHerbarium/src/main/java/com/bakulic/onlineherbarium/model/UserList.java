@@ -23,7 +23,7 @@ public class UserList {
     private String description;
 
     @Column(name = "date")
-    private LocalDateTime date; //automatski se upise trenutni datum, i promijeni kod update
+    private LocalDateTime date;
 
     @ManyToMany(mappedBy = "lists")
     List<Plant> plants;

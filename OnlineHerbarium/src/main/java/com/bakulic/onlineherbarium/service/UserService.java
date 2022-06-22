@@ -127,7 +127,8 @@ public class UserService {
         User user = getUserRepository().findById(id);
         user.setFullname(updateUserDTO.getFullname());
         user.setEmail(updateUserDTO.getEmail());
-
+        Role role = roleRepository.findByName(updateUserDTO.getRoleName());
+        user.setRole(role);
         user.setPassword(EncryptionService.encrypt(updateUserDTO.getPassword(), salt));
         user.setUsername(updateUserDTO.getUsername());
 

@@ -9,6 +9,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -25,6 +26,10 @@ public class RoleService {
         return roleRepository;
     }
 
+    /**list of all roles*/
+    public List<Role> getAllRoles(){
+        return roleRepository.findAll();
+    }
 
     /** create role **/
     public Role createRole(CreateOrUpdateRoleDTO createRoleDTO){
@@ -58,9 +63,8 @@ public class RoleService {
         return roleUpdate;
     }
 
-    /**list of all roles*/
-    public List<Role> getAllRoles(){
-        return roleRepository.findAll();
+    /**list of all roles by user*/
+    public Collection<Role> getAllRolesByUser(int id){
+        return roleRepository.listOfAllRolesByUser(id);
     }
-
 }

@@ -16,7 +16,7 @@ public class FamilyService {
     private FamilyRepository familyRepository;
 
     @Autowired
-    public FamilyRepository getFamilyRepositoryRepository(){
+    public FamilyRepository getFamilyRepository(){
         return familyRepository;
     }
 

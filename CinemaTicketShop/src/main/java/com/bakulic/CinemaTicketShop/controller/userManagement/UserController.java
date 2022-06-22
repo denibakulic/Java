@@ -39,7 +39,7 @@ public class UserController {
     public String getCreateUserForm(Model model){
         RegisterUserAccountDTO newUser = new RegisterUserAccountDTO();
         model.addAttribute("user", newUser);
-        return "createUser";
+        return "register";
     }
 
     // register a new user's account: not all the user information are required

@@ -1,6 +1,7 @@
 package com.bakulic.onlineherbarium.repository;
 
 import com.bakulic.onlineherbarium.model.Herbarium;
+import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.UserList;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,8 @@ public interface UserListRepository extends JpaRepository<UserList, Integer> {
     UserList findById(int id);
 
     @Query("FROM UserList u WHERE u.user.userId = :id")
-    Collection<UserList> listOfAllUserList(int id);
+    Collection<UserList> listOfAllUserListByUser(int id);
+
+    @Query("FROM Plant p WHERE p.plantId = :id")
+    Collection<UserList> listOfAllUserListsByPlant(int id);
 }

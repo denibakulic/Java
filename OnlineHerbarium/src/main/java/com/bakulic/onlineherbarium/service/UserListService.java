@@ -46,7 +46,7 @@ public class UserListService {
     /**
      * list of all users
      */
-    public List<UserList> getAllUserList() {
+    public List<UserList> getAllUserLists() {
         return userListRepository.findAll();
     }
 
@@ -111,7 +111,7 @@ public class UserListService {
     }
 
     /**list of all lists by user*/
-    public Collection<UserList> getAllLists(int id){return userListRepository.listOfAllUserList(id);
+    public Collection<UserList> getAllListsByUser(int id){return userListRepository.listOfAllUserListByUser(id);
     }
 
 }
