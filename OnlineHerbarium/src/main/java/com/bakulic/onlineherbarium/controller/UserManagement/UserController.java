@@ -55,7 +55,7 @@ public class UserController {
     public String getUpdateUserForm(Model model, @PathVariable("id") int id) {
         var user = userService.getUserRepository().findById(id);
         model.addAttribute("user", user);
-        return "updateUserForm";
+        return "updateUser";
     }
     @PostMapping("/update/{id}")
     public String saveUpdateUser(@ModelAttribute("user") CreateOrUpdateUserDTO createOrUpdateUserDTO, @PathVariable("id") int id) {

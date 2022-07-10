@@ -1,6 +1,7 @@
 package com.bakulic.onlineherbarium.controller;
 
 import com.bakulic.onlineherbarium.model.Role;
+import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateRoleDTO;
 import com.bakulic.onlineherbarium.service.RoleService;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
@@ -50,6 +52,13 @@ public class RoleController {
         List<Role> list = roleService.getAllRoles();
         model.addAttribute("roles", list);
         return "roleList";
+    }
+
+    @GetMapping("/users")
+    public String getUsersByRole(Model model, @PathVariable ("id") int id){
+        Collection<User> list = roleService.getAllUsersByRole(id);
+        model.addAttribute("users", list);
+        return "roleUsers";
     }
 
 }

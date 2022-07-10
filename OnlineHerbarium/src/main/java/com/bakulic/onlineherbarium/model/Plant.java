@@ -23,11 +23,17 @@ public class Plant {
     @Column(name ="habitat")
     private String habitat;
 
-    @Column(name = "collected")
-    private String collected;
-
     @Column(name = "date")
     private String date;
+
+    @Column(name = "image")
+    private String image;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "link")
+    private String link;
 
     @ManyToOne
     @JoinColumn(name = "idFamily")

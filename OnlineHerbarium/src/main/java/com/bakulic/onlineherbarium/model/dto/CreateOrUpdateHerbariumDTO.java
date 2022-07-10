@@ -11,8 +11,6 @@ public class CreateOrUpdateHerbariumDTO {
 
     private String title;
     private String description;
-    private String picture;
     private List<Plant> plantList;
-    private String date;
-    private String typeName;
+    private String dateCreated;
 }

@@ -24,10 +24,10 @@ public class FamilyService {
     /** create family **/
     public Family createFamily(CreateOrUpdateFamilyDTO createFamilyDTO){
         if(createFamilyDTO == null){
-            throw new InvalidDataException("Role cannot be null");
+            throw new InvalidDataException("Family cannot be null");
         }
         Family family = new Family();
-
+        family.setName(createFamilyDTO.getName());
         Family familyCreated = familyRepository.save(family);
         log.info(String.format("Family %s has been created.", family.getName()));
         return familyCreated;
@@ -46,7 +46,6 @@ public class FamilyService {
         }
 
         family.setName(updateFamilyDTO.getName());
-
 
         Family familyUpdated = familyRepository.save(family);
         log.info(String.format("Hall %s has been updated.", family.getName()));

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>List of all families</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/css/main.css">
+    </head>
+    <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg static-top">
+
+    </nav>
+    <br>
+    <!-- Page Content -->
+    <div class="container">
+        <td><a th:href="@{/family}" class="btn btn-success">Add Family</a></td>
+        <br></br>
+        <table class="table">
+
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th cope ="col">Info link</th>
+                <th scope="col" colspan="2"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "family: ${families}" >
+                <td th:text = "${family.name}"></td>
+                <td th:text = "${family.link}"></td>
+                <td><a th:href ="@{/family/update/{id}(id=${family.familyId})}"class="btn btn-primary">Update family</a></td>
+                <td><a th:href ="@{/family/delete/{id}(id=${family.familyId})}" class="btn btn-danger">Delete family</a></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+
+    <footer id="sticky-footer" class="flex-shrink-0 py-4 text-white-50">
+        <div class="container text-center">
+            <small>Copyright &copy; Online Herbarium</small>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="/static/scripts/navbar.js"></script>
+    </body>
+</html>

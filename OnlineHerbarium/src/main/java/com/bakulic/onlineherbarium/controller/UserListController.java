@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
@@ -32,8 +33,8 @@ public class UserListController {
         return "redirect:userList/all";
     }
 
-    @GetMapping("update/{id}")
-    public String getUpdateUserListForm(Model model, @PathVariable("id") int id){
+    @GetMapping("/update/{id}")
+    public String getUpdateUserListForm(Model model, @PathVariable int id){
         UserList userList = userListService.getUserListRepository().findById(id);
         model.addAttribute("userList", userList);
         return "updateUserListForm";
@@ -46,10 +47,17 @@ public class UserListController {
     }
 
     @GetMapping("/all")
-    public String getUserListList(Model model) {
+    public String getAllUserList(Model model) {
         List<UserList> list = userListService.getAllUserLists();
         model.addAttribute("userLists", list);
         return "userListsList";
+    }
+
+    @GetMapping("/user")
+    public String getUserListByUser(Model model, @PathVariable("id") int id){
+        Collection <UserList> usersLists = userListService.getAllListsByUser(id);
+        model.addAttribute("usersLists", usersLists);
+        return "updateUserListForm";
     }
 
     @GetMapping("/delete/{id}")

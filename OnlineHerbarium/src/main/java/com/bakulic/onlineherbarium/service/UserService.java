@@ -75,8 +75,8 @@ public class UserService {
         newUser.setEmail(registerUserAccountDTO.getEmail());
         newUser.setUsername(registerUserAccountDTO.getUsername());
         newUser.setPassword(EncryptionService.encrypt(registerUserAccountDTO.getPassword(), salt));
-        Role role =roleRepository.findByName("user");
-        newUser.setRole(role);
+        Role roleId =roleRepository.findById(1);
+        newUser.setRole(roleId);
 
         var userCreated = userRepository.save(newUser);
 
@@ -127,7 +127,7 @@ public class UserService {
         User user = getUserRepository().findById(id);
         user.setFullname(updateUserDTO.getFullname());
         user.setEmail(updateUserDTO.getEmail());
-        Role role = roleRepository.findByName(updateUserDTO.getRoleName());
+        Role role = roleRepository.findById(updateUserDTO.getRoleId());
         user.setRole(role);
         user.setPassword(EncryptionService.encrypt(updateUserDTO.getPassword(), salt));
         user.setUsername(updateUserDTO.getUsername());

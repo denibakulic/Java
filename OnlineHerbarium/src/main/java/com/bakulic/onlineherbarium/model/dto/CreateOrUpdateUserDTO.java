@@ -9,5 +9,5 @@ public class CreateOrUpdateUserDTO {
     private String password;
     private String fullname;
     private String email;
-    private String roleName;
+    private int roleId;
 }

@@ -3,6 +3,7 @@ package com.bakulic.onlineherbarium.service;
 import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
 import com.bakulic.onlineherbarium.exceptions.ObjectNotFoundException;
 import com.bakulic.onlineherbarium.model.Role;
+import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateRoleDTO;
 import com.bakulic.onlineherbarium.repository.RoleRepository;
 import lombok.Data;
@@ -64,7 +65,7 @@ public class RoleService {
     }
 
     /**list of all roles by user*/
-    public Collection<Role> getAllRolesByUser(int id){
-        return roleRepository.listOfAllRolesByUser(id);
+    public Collection<User> getAllUsersByRole(int id){
+        return roleRepository.listOfAllUsersByRole(id);
     }
 }

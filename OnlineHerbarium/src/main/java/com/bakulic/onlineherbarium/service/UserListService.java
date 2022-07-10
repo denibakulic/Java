@@ -89,15 +89,18 @@ public class UserListService {
         LocalDateTime now = LocalDateTime.now();
         list.setDate(now);
 
-        ConnectData(list);
+        //ConnectData(list);
         UserList listUpdated = userListRepository.save(list);
         log.info(String.format("List %s has been updated.", list.getTitle()));
         return listUpdated;
     }
 
-    /** fill connection data*/
-    private void ConnectData(UserList list) {
-        list.getPlants() //kako u rontendu prikazat
+    /** fill connection data*//*
+    private void getPlantsfromUserList(int id) {
+        UserList list = getUserListRepository().findById(id);
+        List<Plant> userPlants
+        List<Plant> allPlants = getPlantRepository().findAll();
+        list.getPlants() //kako u frontendu prikazat
                 .addAll(list
                         .getPlants()
                         .stream()
@@ -109,7 +112,7 @@ public class UserListService {
 
 
     }
-
+*/
     /**list of all lists by user*/
     public Collection<UserList> getAllListsByUser(int id){return userListRepository.listOfAllUserListByUser(id);
     }

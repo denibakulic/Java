@@ -43,9 +43,12 @@ public class PlantService {
         Plant plant = new Plant();
         plant.setFamily(familyRepository.findByName(createPlantDTO.getFamilyName()));
         plant.setSpecies(createPlantDTO.getSpecies());
+        plant.setSite(createPlantDTO.getSite());
         plant.setHabitat(createPlantDTO.getHabitat());
-        plant.setCollected(createPlantDTO.getCollected());
+        plant.setDescription(createPlantDTO.getDescription());
         plant.setDate(createPlantDTO.getDate());
+        plant.setLink(createPlantDTO.getPlantLink());
+        plant.setImage(createPlantDTO.getImage());
 
         Plant plantCreated = plantRepository.save(plant);
         log.info(String.format("Plant %s has been created.", plant.getSpecies()));
@@ -66,9 +69,12 @@ public class PlantService {
 
         plant.setFamily(familyRepository.findByName(updatePlantDTO.getFamilyName()));
         plant.setSpecies(updatePlantDTO.getSpecies());
+        plant.setSite(updatePlantDTO.getSite());
         plant.setHabitat(updatePlantDTO.getHabitat());
-        plant.setCollected(updatePlantDTO.getCollected());
+        plant.setDescription(updatePlantDTO.getDescription());
         plant.setDate(updatePlantDTO.getDate());
+        plant.setLink(updatePlantDTO.getPlantLink());
+        plant.setImage(updatePlantDTO.getImage());
 
 
         Plant plantUpdated = plantRepository.save(plant);

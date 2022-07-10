@@ -1,14 +1,17 @@
 package com.bakulic.onlineherbarium.controller;
 
 import com.bakulic.onlineherbarium.model.Herbarium;
+import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateHerbariumDTO;
 import com.bakulic.onlineherbarium.service.HerbariumService;
+import com.bakulic.onlineherbarium.service.PlantService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -19,6 +22,9 @@ public class HerbariumController {
 
     @Autowired
     private final HerbariumService herbariumService;
+
+    @Autowired
+    private final PlantService plantService;
 
     @GetMapping
     public String getHerbariumForm(Model model){
@@ -47,10 +53,19 @@ public class HerbariumController {
     }
 
     @GetMapping("/all")
-    public String getHallList(Model model) {
+    public String getHerbariumList(Model model) {
         List<Herbarium> list = herbariumService.getAllHerbariums();
         model.addAttribute("herbarium", list);
         return "herbariumList";
+    }
+
+    @GetMapping("/{name}")
+    public String getHerbariumByName(Model model, @PathVariable("name") String name) {
+        Herbarium herbarium = herbariumService.getHerbariumRepository().findByTitle(name);
+        Collection<Plant> plantList = plantService.getPlantRepository().listOfHerbariumPlants(name);
+        model.addAttribute("plantList", plantList);
+        model.addAttribute("herbarium", herbarium);
+        return "herbariumPage";
     }
 
     @GetMapping("/delete/{id}")

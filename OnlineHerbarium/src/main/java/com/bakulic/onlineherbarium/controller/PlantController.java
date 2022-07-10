@@ -1,8 +1,11 @@
 package com.bakulic.onlineherbarium.controller;
 
+import com.bakulic.onlineherbarium.model.Family;
+import com.bakulic.onlineherbarium.model.Herbarium;
 import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.UserList;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdatePlantDTO;
+import com.bakulic.onlineherbarium.service.FamilyService;
 import com.bakulic.onlineherbarium.service.PlantService;
 import com.bakulic.onlineherbarium.service.UserListService;
 import lombok.AllArgsConstructor;
@@ -26,9 +29,14 @@ public class PlantController {
     @Autowired
     private final UserListService userListService;
 
+    @Autowired
+    private final FamilyService familyService;
+
     @GetMapping
     public String getPlantForm(Model model){
         CreateOrUpdatePlantDTO newPlant = new CreateOrUpdatePlantDTO();
+        List<Family> familyList = familyService.getAllFamilies();
+        model.addAttribute("families", familyList);
         model.addAttribute("plant", newPlant);
         return "createPlantForm";
     }
@@ -59,7 +67,14 @@ public class PlantController {
         return "plantList";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/{name}")
+    public String getPlantByName(Model model, @PathVariable("name") String name) {
+        Plant plant = plantService.getPlantRepository().findBySpecies(name);
+        model.addAttribute("plant", plant);
+        return "plantPage";
+    }
+
+    @GetMapping("/delete/{id}") //popravit
     public  String deletePlantById( @PathVariable ("id") int id){
         Collection <UserList> userLists = userListService.getUserListRepository().listOfAllUserListsByPlant(id);
         IntStream.range(0, userLists.size())

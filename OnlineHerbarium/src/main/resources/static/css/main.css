@@ -1,0 +1,30 @@
+.navbar {
+    background-color: #427a5e;
+}
+
+.flex-shrink-0{
+    background-color: #427a5e;
+    position: relative;
+    width: 100%;
+    bottom: 0px;
+}
+
+body{
+    background-color: #e2ffe1;
+}
+
+p{
+    font-family: SansSerif, Garamond, sans-serif;
+    text-align: center;
+    font-size: 25px;
+}
+
+h1{
+    font-family: SansSerif, Georgia, sans-serif;
+    text-align: center;
+    font-size: 40px ;
+    font-style: oblique;
+    color: #469b5e;
+}
+
+

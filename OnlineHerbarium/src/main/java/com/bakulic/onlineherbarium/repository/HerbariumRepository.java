@@ -12,7 +12,8 @@ public interface HerbariumRepository extends JpaRepository<Herbarium, Integer> {
 
     Herbarium findById(int id);
 
-    @Query("FROM User u WHERE u.userId = :id")
-    Collection<Herbarium> listOfAllHerbariumsByUser(int id);
+   Herbarium findByTitle(String name);
+
+
 
 }

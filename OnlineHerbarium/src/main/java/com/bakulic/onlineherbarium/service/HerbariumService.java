@@ -48,8 +48,7 @@ public class HerbariumService {
         Herbarium newHerbarium = new Herbarium();
         newHerbarium.setTitle(createHerbariumDTO.getTitle());
         newHerbarium.setDescription(createHerbariumDTO.getDescription());
-        newHerbarium.setDate(createHerbariumDTO.getDate());
-        newHerbarium.setPicture(createHerbariumDTO.getPicture()); //string
+        newHerbarium.setDate(createHerbariumDTO.getDateCreated());
 
         Herbarium herbariumCreated = herbariumRepository.save(newHerbarium);
         log.info(String.format("Herbarium %s has been created.", herbariumCreated.getTitle()));
@@ -72,17 +71,10 @@ public class HerbariumService {
 
         herbarium.setTitle(updateHerbariumDTO.getTitle());
         herbarium.setDescription(updateHerbariumDTO.getDescription());
-        herbarium.setDate(updateHerbariumDTO.getDate());
-        herbarium.setPicture(updateHerbariumDTO.getPicture());
 
         Herbarium herbariumUpdated = herbariumRepository.save(herbarium);
         log.info(String.format("Herbarium %s has been updated.", herbarium.getTitle()));
         return herbariumUpdated;
-    }
-
-    /**list of all herbariums by user*/
-    public Collection<Herbarium> getAllHerbariumsByUserId(int id){
-        return herbariumRepository.listOfAllHerbariumsByUser(id);
     }
 
 }

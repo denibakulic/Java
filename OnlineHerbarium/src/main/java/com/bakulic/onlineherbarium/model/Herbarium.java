@@ -20,9 +20,6 @@ public class Herbarium {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "pictures")
-    private String picture;
-
     @Column(name = "date")
     private String date;
 
