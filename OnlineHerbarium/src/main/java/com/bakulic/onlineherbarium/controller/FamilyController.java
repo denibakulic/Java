@@ -29,7 +29,7 @@ public class FamilyController {
     public String getFamilyForm(Model model){
         CreateOrUpdateFamilyDTO newFamily = new CreateOrUpdateFamilyDTO();
         model.addAttribute("family", newFamily);
-        return "createFamilyForm";
+        return "createFamily";
     }
 
     @PostMapping
@@ -42,7 +42,7 @@ public class FamilyController {
     public String getUpdateFamilyForm(Model model, @PathVariable("id") int id){
         Family family = familyService.getFamilyRepository().findById(id);
         model.addAttribute("family", family);
-        return "updateFamilyForm";
+        return "updateFamily";
     }
 
     @PostMapping("/update/{id}")
@@ -60,9 +60,9 @@ public class FamilyController {
 
     @GetMapping("/delete/{id}")
     public  String deleteFamilyById( @PathVariable ("id") int id){
-        List<Plant> allPlanList = plantService.getAllPlants();
+        List<Plant> allPlantList = plantService.getAllPlants();
         Collection<Plant> plantList = plantService.getPlantRepository().listOfAllPlantsByFamily(id);
-        allPlanList.removeAll(plantList);
+        allPlantList.removeAll(plantList);
         familyService.getFamilyRepository().deleteById(id);
         return "redirect:/family/all";
     }

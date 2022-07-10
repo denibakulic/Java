@@ -25,7 +25,7 @@ public class RoleController {
     public String getRoleForm(Model model){
         CreateOrUpdateRoleDTO newRole = new CreateOrUpdateRoleDTO();
         model.addAttribute("role", newRole);
-        return "createRoleForm";
+        return "createRole";
     }
 
     @PostMapping
@@ -38,7 +38,7 @@ public class RoleController {
     public String getUpdateRoleForm(Model model, @PathVariable("id") int id){
         Role role = roleService.getRoleRepository().findById(id);
         model.addAttribute("role", role);
-        return "updateRoleForm";
+        return "updateRole";
     }
 
     @PostMapping("/update/{id}")

@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class UserListService {
@@ -95,24 +96,32 @@ public class UserListService {
         return listUpdated;
     }
 
-    /** fill connection data*//*
-    private void getPlantsfromUserList(int id) {
-        UserList list = getUserListRepository().findById(id);
-        List<Plant> userPlants
-        List<Plant> allPlants = getPlantRepository().findAll();
-        list.getPlants() //kako u frontendu prikazat
-                .addAll(list
-                        .getPlants()
-                        .stream()
-                        .map(p ->{
-                            Plant pp = getPlantRepository().findById(p.getPlantId());
-                            pp.getLists().add(list);
-                            return pp;
-                        }).collect(Collectors.toList()));
-
-
+    /** add plant to list*/
+    public List<Plant> addPlantToList (int listId, int plantId){
+        UserList list = userListRepository.findById(listId);
+        List<Plant> plants = list.getPlants();
+        Plant plant = plantRepository.findById(plantId);
+        for (Plant p : plants){
+            if (!p.equals(plant)){
+                plants.add(plant);
+            }
+        }
+        return plants;
     }
-*/
+
+    /** remove plant from list*/
+    public void removePlantFromList(int listId, int plantId){
+        UserList list = userListRepository.findById(listId);
+        List<Plant> plants = list.getPlants();
+        Plant plant = plantRepository.findById(plantId);
+        for (Plant p : plants){
+            if (p.equals(plant)){
+                plants.remove(plant);
+            }
+        }
+    }
+
+
     /**list of all lists by user*/
     public Collection<UserList> getAllListsByUser(int id){return userListRepository.listOfAllUserListByUser(id);
     }

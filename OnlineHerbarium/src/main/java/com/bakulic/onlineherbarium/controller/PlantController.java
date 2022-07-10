@@ -38,7 +38,7 @@ public class PlantController {
         List<Family> familyList = familyService.getAllFamilies();
         model.addAttribute("families", familyList);
         model.addAttribute("plant", newPlant);
-        return "createPlantForm";
+        return "createPlant";
     }
 
     @PostMapping
@@ -51,7 +51,7 @@ public class PlantController {
     public String getUpdatePlantForm(Model model, @PathVariable("id") int id){
         Plant plant = plantService.getPlantRepository().findById(id);
         model.addAttribute("plant", plant);
-        return "updatePlantForm";
+        return "updatePlant";
     }
 
     @PostMapping("/update/{id}")
@@ -67,14 +67,14 @@ public class PlantController {
         return "plantList";
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/{name}") //popravit da je id a ne name
     public String getPlantByName(Model model, @PathVariable("name") String name) {
         Plant plant = plantService.getPlantRepository().findBySpecies(name);
         model.addAttribute("plant", plant);
         return "plantPage";
     }
 
-    @GetMapping("/delete/{id}") //popravit
+    @GetMapping("/delete/{id}") //popravit, ako se izbrise biljka mora se izbrisat od svugdi
     public  String deletePlantById( @PathVariable ("id") int id){
         Collection <UserList> userLists = userListService.getUserListRepository().listOfAllUserListsByPlant(id);
         IntStream.range(0, userLists.size())

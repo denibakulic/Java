@@ -30,7 +30,7 @@ public class HerbariumController {
     public String getHerbariumForm(Model model){
         CreateOrUpdateHerbariumDTO newHerbarium = new CreateOrUpdateHerbariumDTO();
         model.addAttribute("herbarium", newHerbarium);
-        return "createHerbariumForm";
+        return "createHerbarium";
     }
 
     @PostMapping
@@ -43,7 +43,7 @@ public class HerbariumController {
     public String getUpdateHerbariumForm(Model model, @PathVariable("id") int id){
         Herbarium herbarium = herbariumService.getHerbariumRepository().findById(id);
         model.addAttribute("herbarium", herbarium);
-        return "updateHerbariumForm";
+        return "updateHerbarium";
     }
 
     @PostMapping("/update/{id}")

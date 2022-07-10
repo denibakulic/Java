@@ -1,7 +1,10 @@
 package com.bakulic.onlineherbarium.controller;
 
+import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.UserList;
+import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserDTO;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserListDTO;
+import com.bakulic.onlineherbarium.service.PlantService;
 import com.bakulic.onlineherbarium.service.UserListService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,12 @@ public class UserListController {
     @Autowired
     private final UserListService userListService;
 
+    @Autowired
+    private final PlantService plantService;
+
+    @ModelAttribute("userList")
+    public CreateOrUpdateUserListDTO createOrUpdateUserListDTO(){return new CreateOrUpdateUserListDTO();}
+
     @GetMapping
     public String getUserListForm(Model model){
         CreateOrUpdateUserListDTO newUserList = new CreateOrUpdateUserListDTO();
@@ -30,14 +39,14 @@ public class UserListController {
     @PostMapping
     public String createUserList(@ModelAttribute("userList")  CreateOrUpdateUserListDTO createUserListDTO){
         userListService.createUserList(createUserListDTO);
-        return "redirect:userList/all";
+        return "redirect:userList/list/{id}"; //kako poslat na ovu putanju
     }
 
     @GetMapping("/update/{id}")
     public String getUpdateUserListForm(Model model, @PathVariable int id){
         UserList userList = userListService.getUserListRepository().findById(id);
         model.addAttribute("userList", userList);
-        return "updateUserListForm";
+        return "updateUserList";
     }
 
     @PostMapping("/update/{id}")
@@ -57,13 +66,34 @@ public class UserListController {
     public String getUserListByUser(Model model, @PathVariable("id") int id){
         Collection <UserList> usersLists = userListService.getAllListsByUser(id);
         model.addAttribute("usersLists", usersLists);
-        return "updateUserListForm";
+        return "updateUserList";
+    }
+
+    @GetMapping("/list/{id}")
+    public String getUserListPage(Model model, @PathVariable int id){
+        UserList us = userListService.getUserListRepository().findById(id);
+        model.addAttribute("list", us);
+        List<Plant> plantList = plantService.getPlantRepository().findAllByListId(id);
+        model.addAttribute("plantList", plantList);
+        return "userListPage";
+    }
+
+    @GetMapping("/add/{plantId}") //provjerit da li radi, popravit putanju
+    public String addPlantToList(@PathVariable int id, @PathVariable int plantId) {
+        userListService.addPlantToList(id, plantId);
+        return "redirect:/userList/list/{id}";
+    }
+
+    @GetMapping("/list/{id}/remove/{plantId}") //provjerit da li radi
+    public String removePlantFromList(@PathVariable int id, @PathVariable int plantId) {
+        userListService.removePlantFromList(id, plantId);
+        return "redirect:/userList/list/{id}";
     }
 
     @GetMapping("/delete/{id}")
     public  String deleteUserListById( @PathVariable ("id") int id){
         userListService.getUserListRepository().deleteById(id);
-        return "redirect:/family/all";
+        return "redirect:/userList/all";
     }
 
 }

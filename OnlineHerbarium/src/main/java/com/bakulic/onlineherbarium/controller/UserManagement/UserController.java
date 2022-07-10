@@ -34,7 +34,6 @@ public class UserController {
     @ModelAttribute("user")
     public CreateOrUpdateUserDTO createOrUpdateUserDTO(){return new CreateOrUpdateUserDTO();}
 
-
     @ModelAttribute("newUser")
     public RegisterUserAccountDTO registerUserAccountDTO(){return new RegisterUserAccountDTO();}
 
