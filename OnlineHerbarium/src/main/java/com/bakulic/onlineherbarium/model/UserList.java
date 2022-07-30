@@ -32,4 +32,7 @@ public class UserList {
     @JoinColumn(name = "idUser")
     private User user;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userList", cascade = CascadeType.ALL)
+    private List<Image> imageList;
+
 }

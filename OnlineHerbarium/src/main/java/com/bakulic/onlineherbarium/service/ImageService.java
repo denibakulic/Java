@@ -20,6 +20,11 @@ public class ImageService {
     /** list of all images*/
     public List<Image> getAllImages() {return imageRepository.findAll();}
 
+    /** list of all images by userlist*/
+    public Collection<Image> getAllImagesByUserList(int id){
+        return imageRepository.listOfAllImagesByUserList(id);
+    }
+
     /** list of all images by user*/
     public Collection<Image> getAllImagesByUser(int id){
         return imageRepository.listOfAllImagesByUser(id);

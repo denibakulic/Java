@@ -11,6 +11,9 @@ import java.util.Collection;
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Integer> {
 
+    @Query("FROM UserList ul WHERE ul.listId = :id")
+    Collection<Image> listOfAllImagesByUserList(int id);
+
     @Query("FROM User u WHERE u.userId = :id")
     Collection<Image> listOfAllImagesByUser(int id);
 }

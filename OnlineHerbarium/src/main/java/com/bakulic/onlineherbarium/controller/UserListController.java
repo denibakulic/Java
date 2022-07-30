@@ -50,19 +50,19 @@ public class UserListController {
     }
 
     @PostMapping("/update/{id}")
-    public String UpdateUserList(@PathVariable ("id") int id, @ModelAttribute("userList") CreateOrUpdateUserListDTO updateUserListDTO){
+    public String updateUserList(@PathVariable ("id") int id, @ModelAttribute("userList") CreateOrUpdateUserListDTO updateUserListDTO){
         userListService.updateUserList(id, updateUserListDTO);
         return "redirect:/userList/all";
     }
 
     @GetMapping("/all")
-    public String getAllUserList(Model model) {
+    public String getAllUserLists(Model model) {
         List<UserList> list = userListService.getAllUserLists();
         model.addAttribute("userLists", list);
         return "userListsList";
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user/{id}")
     public String getUserListByUser(Model model, @PathVariable("id") int id){
         Collection <UserList> usersLists = userListService.getAllListsByUser(id);
         model.addAttribute("usersLists", usersLists);

@@ -74,10 +74,12 @@ public class UserController {
     public String deleteUserById(@PathVariable("id") int id) {
         List<Image> allImageList = imageService.getAllImages();
         Collection<Image> imageList = imageService.getAllImagesByUser(id);
+
         allImageList.removeAll(imageList);
 
         List<UserList> allIUserLists = userListService.getAllUserLists();
         Collection<UserList> userLists = userListService.getAllListsByUser(id);
+
         allIUserLists.removeAll(userLists);
 
         userService.getUserRepository().deleteById(id);

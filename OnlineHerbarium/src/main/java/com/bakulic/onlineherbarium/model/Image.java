@@ -13,10 +13,10 @@ public class Image {
     @Column(name = "id")
     private int imageId;
 
-    @Column(name = "name")
-    private String imageName;
+    @Lob
+    byte[] content;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
-    private User user;
+    @JoinColumn(name = "idUserList")
+    private UserList userList;
 }
