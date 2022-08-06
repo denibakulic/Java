@@ -42,6 +42,8 @@ public class HerbariumController {
     @GetMapping("update/{id}")
     public String getUpdateHerbariumForm(Model model, @PathVariable("id") int id){
         Herbarium herbarium = herbariumService.getHerbariumRepository().findById(id);
+        Collection<Plant> plantList = plantService.getPlantRepository().listOfHerbariumPlants(id);
+        model.addAttribute("plantList", plantList);
         model.addAttribute("herbarium", herbarium);
         return "updateHerbarium";
     }
@@ -59,13 +61,26 @@ public class HerbariumController {
         return "herbariumList";
     }
 
-    @GetMapping("/{name}")
-    public String getHerbariumByName(Model model, @PathVariable("name") String name) {
-        Herbarium herbarium = herbariumService.getHerbariumRepository().findByTitle(name);
-        Collection<Plant> plantList = plantService.getPlantRepository().listOfHerbariumPlants(name);
+    @GetMapping("/view/{id}")
+    public String getHerbariumById(Model model, @PathVariable("id") int id) {
+        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(id);
+        Collection<Plant> plantList = plantService.getPlantRepository().listOfHerbariumPlants(id);
         model.addAttribute("plantList", plantList);
         model.addAttribute("herbarium", herbarium);
         return "herbariumPage";
+    }
+
+    @GetMapping("/plants/{id}")
+    public String getHerbariumPlants(Model model, @PathVariable("id") int id) {
+        Collection<Plant> plantList = plantService.getPlantRepository().listOfHerbariumPlants(id);
+        model.addAttribute("plantList", plantList);
+        return "herbariumPlantPage";
+    }
+
+    @GetMapping("/plants/{id}/{plantId}")
+    public String updateHerbariumPlants (@PathVariable ("id") int id, @PathVariable ("plantId") int plantId){
+       herbariumService.updateHerbariuPlants(id, plantId);
+        return "redirect:/herbarium/updateHerbarium";
     }
 
     @GetMapping("/delete/{id}")

@@ -13,6 +13,6 @@ public interface HerbariumRepository extends JpaRepository<Herbarium, Integer> {
 
     Herbarium findById(int id);
 
-   Herbarium findByTitle(String name);
+    Herbarium findByTitle(String name);
 
 }

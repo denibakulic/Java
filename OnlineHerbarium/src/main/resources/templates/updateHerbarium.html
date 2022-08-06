@@ -20,7 +20,7 @@
             <p> <input type="text" th:field = "*{title}" placeholder="Title" class="form-control mb-4 col-4"><p/>
             <p> <input type="text" th:field = "*{description}" placeholder="Description" class="form-control mb-4 col-4"><p/>
             <p> <input type="text" th:field = "*{dateCreated}" placeholder="Date created" class="form-control mb-4 col-4" readonly><p/>
-            //update plantove u herbariumu
+            <td><a th:href ="@{/herbarium/plants/{id}(id=${herbarium.herbariumId})}"class="btn btn-primary">View plants</a></td>
             <p><input type="submit" class="btn btn-info col-2" value="Update"></p>
         </form>
     </div>

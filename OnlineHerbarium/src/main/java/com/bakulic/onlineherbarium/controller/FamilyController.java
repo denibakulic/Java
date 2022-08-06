@@ -58,6 +58,13 @@ public class FamilyController {
         return "familyList";
     }
 
+    @GetMapping("/search")
+    public String getFamilyListSearch(Model model) {
+        List<Family> list = familyService.getAllFamilies();
+        model.addAttribute("families", list);
+        return "familyList";
+    }
+
     @GetMapping("/delete/{id}")
     public  String deleteFamilyById( @PathVariable ("id") int id){
         List<Plant> allPlantList = plantService.getAllPlants();

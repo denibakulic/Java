@@ -54,7 +54,7 @@ public class FamilyService {
 
     /**list of all families*/
     public List<Family> getAllFamilies(){
-        return familyRepository.findAll();
+        return familyRepository.findAllByOrderByNameAsc();
     }
 
 }

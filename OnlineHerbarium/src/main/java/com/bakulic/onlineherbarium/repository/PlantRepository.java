@@ -21,11 +21,8 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
     @Query("FROM Family f WHERE f.familyId = :id")
     Collection<Plant> listOfAllPlantsByFamily(int id);
 
-    @Query("FROM Family f WHERE f.name = :name")
-    Collection<Plant> listOfAllPlantsByFamilyName(String name);
-
-    @Query("FROM Herbarium h WHERE h.title = :title")
-    Collection<Plant> listOfHerbariumPlants(String title);
+    @Query("FROM Herbarium h WHERE h.herbariumId = :id")
+    Collection<Plant> listOfHerbariumPlants(int id);
 
     @Query("FROM Plant p JOIN UserList us where us.listId = :listId")
     List<Plant> findAllByListId(@Param("listId")int listId);

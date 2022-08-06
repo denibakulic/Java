@@ -31,7 +31,8 @@
                 <td th:text = "${herbarium.title}"></td>
                 <td th:text = "${herbarium.description}"></td>
                 <td th:text = "${herbarium.dateCreated}"></td>
-                <td><a th:href ="@{/herbarium/update/{id}(id=${herbarium.herbariumId})}"class="btn btn-primary">Update herbarium</a></td>
+                <td><a th:href ="@{/herbarium/view/{id}(id=${herbarium.herbariumId})}"class="btn btn-primary">View herbarium</a></td>
+                <td><a th:href ="@{/herbarium/update/{id}(id=${herbarium.herbariumId})}"class="btn btn-primary">Update herbarium info</a></td>
                 <td><a th:href ="@{/herbarium/delete/{id}(id=${herbarium.herbariumId})}" class="btn btn-danger">Delete herbarium</a></td>
             </tr>
             </tbody>

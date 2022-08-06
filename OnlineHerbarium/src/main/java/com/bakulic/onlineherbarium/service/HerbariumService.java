@@ -3,8 +3,10 @@ package com.bakulic.onlineherbarium.service;
 import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
 import com.bakulic.onlineherbarium.exceptions.ObjectNotFoundException;
 import com.bakulic.onlineherbarium.model.Herbarium;
+import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateHerbariumDTO;
 import com.bakulic.onlineherbarium.repository.HerbariumRepository;
+import com.bakulic.onlineherbarium.repository.PlantRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,15 @@ public class HerbariumService {
     public HerbariumRepository getHerbariumRepository(){
         return herbariumRepository;
     }
+
+    @Autowired
+    private PlantRepository plantRepository;
+
+    @Autowired
+    public PlantRepository getPlantRepository(){
+        return plantRepository;
+    }
+
 
     @Autowired
     private PlantService plantService;
@@ -75,6 +86,15 @@ public class HerbariumService {
         Herbarium herbariumUpdated = herbariumRepository.save(herbarium);
         log.info(String.format("Herbarium %s has been updated.", herbarium.getTitle()));
         return herbariumUpdated;
+    }
+
+    /** update herbarium plants*/
+    public void updateHerbariuPlants (int id, int idPlant){
+        Collection<Plant> herbariumPlants = plantRepository.listOfHerbariumPlants(id);
+        Plant plant = plantRepository.findById(idPlant);
+        if (herbariumPlants.contains(plant)){
+            herbariumPlants.remove(plant);
+        }
     }
 
 }

@@ -11,38 +11,17 @@
 
 </nav>
 <header>
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active" style="background-image: url('/static/images/plant2.jpg')">
-            </div>
-        </div>
-    </div>
+
 </header>
 
 <!-- Page Content -->
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <h1>Add plant</h1><br>
-
-            <form th:action="@{/plant/search}" method="post" th:object="${plant}">
-                <div class="form-group">
-                    <label class="control-label"> Family </label>
-                    <select  th:field="*{name}" required>
-                        <option th:each="family : ${families}" th:value="${family.name}" th:text="${family.name}"></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </div>
-            </form>
+    <h1>Select a family to find plants</h1><br>
+        <div class="form-group">
+            <span th:each = "family: ${families}" >
+               <li><a th:href = "@{/plant/searchResult/{name}(name=${family.name})}" th:text="${family.name}"></a></li>
+            </span>
         </div>
-    </div>
 </div>
 
 <footer id="sticky-footer" class="flex-shrink-0 py-4 text-white-50">

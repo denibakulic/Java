@@ -74,20 +74,12 @@ public class PlantController {
         return "plantPage";
     }
 
-    @GetMapping("/{search}")
-    public String getPlantByFamilyForm(Model model) {
-        List<Family> families = familyService.getAllFamilies();
-        model.addAttribute("families", families);
-        return "search";
-    }
-
-    @PostMapping("/{search}/{id}")
-    public String getPlantByFamily(Model model, @PathVariable ("id") int id) {
-        Collection<Plant> plants = plantService.getPlantRepository().listOfAllPlantsByFamily(id);
+    @GetMapping("/{searchResult}/{name}")
+    public String getPlantByFamily(Model model, @PathVariable ("name") String name) {
+        Collection<Plant> plants = plantService.getPlantRepository().listOfAllPlantsByFamilyName(name);
         model.addAttribute("plants", plants);
         return "searchResult";
     }
-
 
     @GetMapping("/delete/{id}") //popravit, ako se izbrise biljka mora se izbrisat od svugdi
     public  String deletePlantById( @PathVariable ("id") int id){
