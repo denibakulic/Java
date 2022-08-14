@@ -5,6 +5,7 @@ import com.bakulic.onlineherbarium.model.Herbarium;
 import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.UserList;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdatePlantDTO;
+import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserDTO;
 import com.bakulic.onlineherbarium.service.FamilyService;
 import com.bakulic.onlineherbarium.service.PlantService;
 import com.bakulic.onlineherbarium.service.UserListService;
@@ -32,6 +33,9 @@ public class PlantController {
     @Autowired
     private final FamilyService familyService;
 
+    @ModelAttribute("plant")
+    public CreateOrUpdatePlantDTO createOrUpdatePlantDTO(){return new CreateOrUpdatePlantDTO();}
+
     @GetMapping
     public String getPlantForm(Model model){
         CreateOrUpdatePlantDTO newPlant = new CreateOrUpdatePlantDTO();
@@ -51,7 +55,7 @@ public class PlantController {
     public String getUpdatePlantForm(Model model, @PathVariable("id") int id){
         Plant plant = plantService.getPlantRepository().findById(id);
         model.addAttribute("plant", plant);
-        return "updatePlant";
+        return "update-plant";
     }
 
     @PostMapping("/update/{id}")
@@ -64,21 +68,21 @@ public class PlantController {
     public String getPlantList(Model model) {
         List<Plant> list = plantService.getAllPlants();
         model.addAttribute("plants", list);
-        return "plantList";
+        return "all-plants";
     }
 
-    @GetMapping("/{name}") //popravit da je id a ne name
+    @GetMapping("/{name}") //id umisto imena
     public String getPlantByName(Model model, @PathVariable("name") String name) {
         Plant plant = plantService.getPlantRepository().findBySpecies(name);
         model.addAttribute("plant", plant);
-        return "plantPage";
+        return "plant-page";
     }
 
-    @GetMapping("/{searchResult}/{name}")
-    public String getPlantByFamily(Model model, @PathVariable ("name") String name) {
-        Collection<Plant> plants = plantService.getPlantRepository().listOfAllPlantsByFamilyName(name);
+    @GetMapping("/{searchResult}/{id}")
+    public String getPlantByFamily(Model model, @PathVariable ("id") int id) {
+        Collection<Plant> plants = plantService.getPlantRepository().listOfAllPlantsByFamily(id);
         model.addAttribute("plants", plants);
-        return "searchResult";
+        return "search-result";
     }
 
     @GetMapping("/delete/{id}") //popravit, ako se izbrise biljka mora se izbrisat od svugdi

@@ -3,6 +3,7 @@ package com.bakulic.onlineherbarium.controller;
 import com.bakulic.onlineherbarium.model.Role;
 import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateRoleDTO;
+import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserDTO;
 import com.bakulic.onlineherbarium.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,14 @@ public class RoleController {
     @Autowired
     private final RoleService roleService;
 
+    @ModelAttribute("role")
+    public CreateOrUpdateRoleDTO createOrUpdateRoleDTO(){return new CreateOrUpdateRoleDTO();}
+
     @GetMapping
     public String getRoleForm(Model model){
         CreateOrUpdateRoleDTO newRole = new CreateOrUpdateRoleDTO();
         model.addAttribute("role", newRole);
-        return "createRole";
+        return "create-role";
     }
 
     @PostMapping
@@ -38,7 +42,7 @@ public class RoleController {
     public String getUpdateRoleForm(Model model, @PathVariable("id") int id){
         Role role = roleService.getRoleRepository().findById(id);
         model.addAttribute("role", role);
-        return "updateRole";
+        return "update-role";
     }
 
     @PostMapping("/update/{id}")
@@ -48,17 +52,11 @@ public class RoleController {
     }
 
     @GetMapping("/all")
-    public String getFamilyList(Model model) {
+    public String getRoleList(Model model) {
         List<Role> list = roleService.getAllRoles();
         model.addAttribute("roles", list);
-        return "roleList";
+        return "all-roles";
     }
 
-    @GetMapping("/users")
-    public String getUsersByRole(Model model, @PathVariable ("id") int id){
-        Collection<User> list = roleService.getAllUsersByRole(id);
-        model.addAttribute("users", list);
-        return "roleUsers";
-    }
 
 }

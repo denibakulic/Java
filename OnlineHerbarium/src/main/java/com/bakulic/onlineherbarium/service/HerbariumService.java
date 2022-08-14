@@ -88,8 +88,8 @@ public class HerbariumService {
         return herbariumUpdated;
     }
 
-    /** update herbarium plants*/
-    public void updateHerbariuPlants (int id, int idPlant){
+    /** remove herbarium plants*/
+    public void removeHerbariumPlants (int id, int idPlant){
         Collection<Plant> herbariumPlants = plantRepository.listOfHerbariumPlants(id);
         Plant plant = plantRepository.findById(idPlant);
         if (herbariumPlants.contains(plant)){

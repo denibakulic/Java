@@ -64,8 +64,4 @@ public class RoleService {
         return roleUpdate;
     }
 
-    /**list of all roles by user*/
-    public Collection<User> getAllUsersByRole(int id){
-        return roleRepository.listOfAllUsersByRole(id);
-    }
 }

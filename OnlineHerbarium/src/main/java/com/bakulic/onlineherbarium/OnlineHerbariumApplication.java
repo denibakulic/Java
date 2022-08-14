@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-@ComponentScan(basePackages = {"com.bakulic.onlineherbarium.repository"})
+@ComponentScan(basePackages = {"com.bakulic.onlineherbarium.repository",
+        "com.bakulic.onlineherbarium.controller",
+        "com.bakulic.onlineherbarium.service"})
 public class OnlineHerbariumApplication {
 
     public static void main(String[] args) {

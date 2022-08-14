@@ -16,7 +16,11 @@ public class Image {
     @Lob
     byte[] content;
 
+    @Column(name="location")
+    private String location;
+
     @ManyToOne
     @JoinColumn(name = "idUserList")
     private UserList userList;
+
 }

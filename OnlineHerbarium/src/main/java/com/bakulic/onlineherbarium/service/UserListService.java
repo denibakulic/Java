@@ -96,19 +96,6 @@ public class UserListService {
         return listUpdated;
     }
 
-    /** add plant to list*/
-    public List<Plant> addPlantToList (int listId, int plantId){
-        UserList list = userListRepository.findById(listId);
-        List<Plant> plants = list.getPlants();
-        Plant plant = plantRepository.findById(plantId);
-        for (Plant p : plants){
-            if (!p.equals(plant)){
-                plants.add(plant);
-            }
-        }
-        return plants;
-    }
-
     /** remove plant from list*/
     public void removePlantFromList(int listId, int plantId){
         UserList list = userListRepository.findById(listId);

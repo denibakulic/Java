@@ -1,7 +1,6 @@
 package com.bakulic.onlineherbarium.controller.UserManagement;
 
 import com.bakulic.onlineherbarium.model.Image;
-import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.UserList;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserDTO;
 import com.bakulic.onlineherbarium.model.dto.RegisterUserAccountDTO;
@@ -41,7 +40,7 @@ public class UserController {
     public String getCreateUserForm(Model model){
         RegisterUserAccountDTO newUser = new RegisterUserAccountDTO();
         model.addAttribute("user", newUser);
-        return "createUser";
+        return "create-user";
     }
 
     @PostMapping
@@ -54,7 +53,7 @@ public class UserController {
     public String getUpdateUserForm(Model model, @PathVariable("id") int id) {
         var user = userService.getUserRepository().findById(id);
         model.addAttribute("user", user);
-        return "updateUser";
+        return "update-user";
     }
     @PostMapping("/update/{id}")
     public String saveUpdateUser(@ModelAttribute("user") CreateOrUpdateUserDTO createOrUpdateUserDTO, @PathVariable("id") int id) {
@@ -67,7 +66,7 @@ public class UserController {
     public String getUserList(Model model) {
         var list = userService.getAllUsers();
         model.addAttribute("users",list);
-        return "userList";
+        return "all-users";
     }
 
     @GetMapping("/delete/{id}")
