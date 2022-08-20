@@ -11,6 +11,19 @@
 
 body{
     background-color: #e2ffe1;
+
+}
+
+.container{
+    min-height: 1050px;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    text-align: center;
+
 }
 
 p{
@@ -27,4 +40,21 @@ h1{
     color: #469b5e;
 }
 
+/* unvisited link */
+a:link {
+    color: white;
+}
 
+/* mouse over link */
+a:hover {
+    color: yellow;
+}
+
+/* selected link */
+a:active {
+    color: greenyellow;
+}
+a{
+    text-decoration: none;
+    color: white;
+}

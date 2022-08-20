@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Data
 public class LoginUserAccountDTO implements Serializable {
 
-    private String username;
+    private String email;
     private String password;
 
 }

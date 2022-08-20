@@ -1,53 +1,68 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th="http://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>List of all plants</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/main.css">
-</head>
-<body>
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark static-top">
+    <head>
+        <meta charset="UTF-8">
+        <title>List of all plants</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    </head>
 
-</nav>
+    <body>
+        <div class="navbar navbar-expand-lg static-top">
+            <a class="navbar-brand" href="/" >
+                <span class="sr-only">(current)</span>
+                <img th:src="@{/images/plantIcon.png}" alt="..." height="36"/>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/herbarium/all/user">Herbarium</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/userlist/user/{${current.userId}">Lists</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/family/search">Find</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-<!-- Page Content -->
-<div class="container">
-    <table class="table">
-        <h1 th:text = "$list.title"></h1>
-        <td><a th:href="@{/userList/add/{list.listId}}" class="btn success">Add plants</a></td>
-        <td><a th:href="@{}" class="btn success">View gallery</a></td>
-        <thead>
-        <tr>
-            <th scope="col">Family</th>
-            <th scope="col">Species</th>
-            <th scope="col">Habitat</th>
-            <th scope="col=2"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each = "plant: ${plantList}" >
-            <td th:text = "${plant.family}"></td>
-            <td th:text = "${plant.species}" ></td>
-            <td th:text = "${plant.habitat}"></td>
-            <td><a th:href ="@{/user-list/list/{id}(id=${list.userListId})/remove/{plantId}(plantId=${plant.plantId})}"class="btn btn-primary">Remove</a></td> ispravit putanju
-        </tr>
-        </tbody>
+        <div class="container">
+            <table class="table">
+                <h1 th:text = "$list.title"></h1>
+                <td><a th:href="@{/userList/add/{list.listId}}" class="btn success">Add plants</a></td>
+                <td><a th:href="@{}" class="btn success">View gallery</a></td>
+                <thead>
+                    <tr>
+                        <th scope="col">Family</th>
+                        <th scope="col">Species</th>
+                        <th scope="col">Habitat</th>
+                        <th scope="col=2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each = "plant: ${plantList}" >
+                        <td th:text = "${plant.family}"></td>
+                        <td th:text = "${plant.species}" ></td>
+                        <td th:text = "${plant.habitat}"></td>
+                        <td><a th:href ="@{/user-list/list/{id}(id=${list.userListId})/remove/{plantId}(plantId=${plant.plantId})}"class="btn btn-primary">Remove</a></td> ispravit putanju
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    </table>
-
-</div>
-
-
-<footer id="sticky-footer" class="flex-shrink-0 py-4 text-white-50">
-    <div class="container text-center">
-        <small>Copyright &copy; Online Herbarium</small>
-    </div>
-</footer>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="/static/scripts/navbar.js"></script>
-</body>
+        <footer id="sticky-footer" class="flex-shrink-0 py-4 text-white-50">
+            <div>
+                <small>Copyright &copy; Online Herbarium</small>
+            </div>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
 </html>

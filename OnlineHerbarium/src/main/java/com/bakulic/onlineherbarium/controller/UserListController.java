@@ -1,20 +1,24 @@
 package com.bakulic.onlineherbarium.controller;
 
 import com.bakulic.onlineherbarium.model.Plant;
+import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.UserList;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserListDTO;
 import com.bakulic.onlineherbarium.service.PlantService;
 import com.bakulic.onlineherbarium.service.UserListService;
+import com.bakulic.onlineherbarium.service.UserService;
+import com.bakulic.onlineherbarium.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @AllArgsConstructor
 @Controller
@@ -27,20 +31,25 @@ public class UserListController {
     @Autowired
     private final PlantService plantService;
 
+    @Autowired
+    private final UserServiceImpl userService;
+
     @ModelAttribute("userList")
     public CreateOrUpdateUserListDTO createOrUpdateUserListDTO(){return new CreateOrUpdateUserListDTO();}
 
-    @GetMapping
-    public String getUserListForm(Model model){
+    @GetMapping("/{id}")
+    public String getUserListForm(Model model, @PathVariable int id){
+        User user = userService.getUserRepository().findById(id);
         CreateOrUpdateUserListDTO newUserList = new CreateOrUpdateUserListDTO();
         model.addAttribute("userList", newUserList);
+        model.addAttribute("user", user);
         return "create-userlist";
     }
 
-    @PostMapping
-    public String createUserList(@ModelAttribute("userList")  CreateOrUpdateUserListDTO createUserListDTO){
-        userListService.createUserList(createUserListDTO);
-        return "redirect:userlist/list/{id}"; //kako poslat na ovu putanju
+    @PostMapping("/{id}")
+    public String createUserList(@ModelAttribute("userList") CreateOrUpdateUserListDTO createUserListDTO, @PathVariable int id){
+        userListService.createUserList(createUserListDTO, id);
+        return "redirect:/userlist/user/{id}";
     }
 
     @GetMapping("/update/{id}")
@@ -60,14 +69,17 @@ public class UserListController {
     public String getAllUserLists(Model model) {
         List<UserList> list = userListService.getAllUserLists();
         model.addAttribute("userLists", list);
-        return "user-lists";
+        return "all-userlists";
     }
 
     @GetMapping("/user/{id}")
     public String getUserListByUser(Model model, @PathVariable("id") int id){
         Collection <UserList> usersLists = userListService.getAllListsByUser(id);
+        User user = userService.getUserRepository().findById(id);
+        model.addAttribute("user", user);
         model.addAttribute("usersLists", usersLists);
-        return "update-userlist";
+        Logger logger = new Logger();
+        return "user-lists";
     }
 
     @GetMapping("/list/{id}")

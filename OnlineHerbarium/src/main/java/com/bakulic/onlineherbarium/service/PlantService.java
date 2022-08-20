@@ -2,6 +2,7 @@ package com.bakulic.onlineherbarium.service;
 
 import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
 import com.bakulic.onlineherbarium.exceptions.ObjectNotFoundException;
+import com.bakulic.onlineherbarium.model.Family;
 import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdatePlantDTO;
 import com.bakulic.onlineherbarium.repository.FamilyRepository;
@@ -41,13 +42,13 @@ public class PlantService {
             throw new InvalidDataException("Plant cannot be null");
         }
         Plant plant = new Plant();
-        plant.setFamily(familyRepository.findByName(createPlantDTO.getFamilyName()));
+        Family family = familyRepository.findByName(createPlantDTO.getName());
+        plant.setFamily(family);
         plant.setSpecies(createPlantDTO.getSpecies());
         plant.setSite(createPlantDTO.getSite());
         plant.setHabitat(createPlantDTO.getHabitat());
         plant.setDescription(createPlantDTO.getDescription());
         plant.setDate(createPlantDTO.getDate());
-        plant.setLink(createPlantDTO.getPlantLink());
         plant.setImage(createPlantDTO.getImage());
 
         Plant plantCreated = plantRepository.save(plant);
@@ -67,13 +68,12 @@ public class PlantService {
             throw new ObjectNotFoundException(String.format("The plant with Id = %s doesn't exists", id));
         }
 
-        plant.setFamily(familyRepository.findByName(updatePlantDTO.getFamilyName()));
+        plant.setFamily(familyRepository.findByName(updatePlantDTO.getName()));
         plant.setSpecies(updatePlantDTO.getSpecies());
         plant.setSite(updatePlantDTO.getSite());
         plant.setHabitat(updatePlantDTO.getHabitat());
         plant.setDescription(updatePlantDTO.getDescription());
         plant.setDate(updatePlantDTO.getDate());
-        plant.setLink(updatePlantDTO.getPlantLink());
         plant.setImage(updatePlantDTO.getImage());
 
 

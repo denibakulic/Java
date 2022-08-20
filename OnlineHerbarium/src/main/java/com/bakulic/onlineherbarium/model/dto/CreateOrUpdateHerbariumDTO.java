@@ -4,13 +4,14 @@ import com.bakulic.onlineherbarium.model.Plant;
 import lombok.Data;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class CreateOrUpdateHerbariumDTO {
+public class CreateOrUpdateHerbariumDTO implements Serializable {
 
     private String title;
     private String description;
     private List<Plant> plantList;
-    private String dateCreated;
+
 }

@@ -1,18 +1,15 @@
 package com.bakulic.onlineherbarium.controller;
 
 import com.bakulic.onlineherbarium.model.Family;
-import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateFamilyDTO;
-import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserDTO;
 import com.bakulic.onlineherbarium.service.FamilyService;
 import com.bakulic.onlineherbarium.service.PlantService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+
 import java.util.List;
 
 @AllArgsConstructor
@@ -56,9 +53,9 @@ public class FamilyController {
     }
 
     @GetMapping("/all")
-    public String getFamilyList(Model model) {
-        List<Family> list = familyService.getAllFamilies();
-        model.addAttribute("families", list);
+    public String getAllFamilies(Model model){
+        List<Family> families = familyService.getAllFamilies();
+        model.addAttribute("families", families);
         return "all-families";
     }
 
@@ -71,9 +68,9 @@ public class FamilyController {
 
     @GetMapping("/delete/{id}")
     public  String deleteFamilyById( @PathVariable ("id") int id){
-        List<Plant> allPlantList = plantService.getAllPlants();
-        Collection<Plant> plantList = plantService.getPlantRepository().listOfAllPlantsByFamily(id);
-        allPlantList.removeAll(plantList);
+//        List<Plant> allPlantList = plantService.getAllPlants();
+//        Collection<Plant> plantList = plantService.getPlantRepository().listOfAllPlantsByFamily(id);
+//        allPlantList.removeAll(plantList);
         familyService.getFamilyRepository().deleteById(id);
         return "redirect:/family/all";
     }

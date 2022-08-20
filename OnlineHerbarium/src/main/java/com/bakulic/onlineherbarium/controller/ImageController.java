@@ -24,21 +24,21 @@ public class ImageController {
     @Autowired
     private final ImageService imageService;
 
-    @Autowired
-    private final UserListService userListService;
+//    @Autowired
+//    private final UserListService userListService;
 
     @ModelAttribute("image")
     public Image image() {
         return new Image();
     }
 
-
+/*
     @PostMapping("/upload-image")
     public int uploadImage(@RequestParam("file") MultipartFile file, UserList userList) throws Exception {
         return imageService.save(file.getBytes(), userList);
 
     }
-
+*/
     @GetMapping
     public String getUserImages(@PathVariable("id") int id, Model model){
         Collection<Image> imageList = imageService.getAllImagesByUserList(id);

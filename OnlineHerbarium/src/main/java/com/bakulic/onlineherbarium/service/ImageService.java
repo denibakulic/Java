@@ -1,8 +1,6 @@
 package com.bakulic.onlineherbarium.service;
 
 import com.bakulic.onlineherbarium.model.Image;
-import com.bakulic.onlineherbarium.model.UserList;
-import com.bakulic.onlineherbarium.repository.FileSystemRepository;
 import com.bakulic.onlineherbarium.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,19 +14,19 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-    @Autowired
-    FileSystemRepository fileSystemRepository;
+//    @Autowired
+//    FileSystemRepository fileSystemRepository;
 
     @Autowired
     public ImageRepository getImageRepository() {return imageRepository;}
 
-    public int save(byte[] bytes, UserList userList) throws Exception {
+   /* public int save(byte[] bytes, UserList userList) throws Exception {
         String location = fileSystemRepository.save(bytes, userList);
 
         return imageRepository.save(new Image(userList, location))
                 .getId();
 
-    }
+    }*/
 
     /** list of all images*/
     public List<Image> getAllImages() {return imageRepository.findAll();}

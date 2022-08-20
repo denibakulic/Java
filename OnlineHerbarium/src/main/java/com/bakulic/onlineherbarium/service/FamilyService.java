@@ -4,12 +4,14 @@ import com.bakulic.onlineherbarium.exceptions.*;
 import com.bakulic.onlineherbarium.model.Family;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateFamilyDTO;
 import com.bakulic.onlineherbarium.repository.FamilyRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Data
 public class FamilyService {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FamilyService.class);

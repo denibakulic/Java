@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "plants")
 @Data
 public class Plant {
     @Id
@@ -31,9 +30,6 @@ public class Plant {
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "link")
-    private String link;
 
     @ManyToOne
     @JoinColumn(name = "idFamily")

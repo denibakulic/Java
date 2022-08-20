@@ -12,10 +12,6 @@ import java.util.Collection;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-    Role findByName(String name);
-
     Role findById(int id);
 
-    @Query("FROM User u WHERE u.role.roleId = :id")
-    Collection<User> listOfAllUsersByRole(int id);
 }

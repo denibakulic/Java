@@ -2,13 +2,14 @@ package com.bakulic.onlineherbarium.service;
 
 import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
 import com.bakulic.onlineherbarium.exceptions.ObjectNotFoundException;
-import com.bakulic.onlineherbarium.model.Herbarium;
 import com.bakulic.onlineherbarium.model.Plant;
+import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.UserList;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserListDTO;
 import com.bakulic.onlineherbarium.repository.PlantRepository;
 import com.bakulic.onlineherbarium.repository.UserListRepository;
 import com.bakulic.onlineherbarium.repository.UserRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
 
 @Service
+@Data
 public class UserListService {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HerbariumService.class);
@@ -28,21 +29,11 @@ public class UserListService {
     private UserListRepository userListRepository;
 
     @Autowired
-    public UserListRepository getUserListRepository(){
-        return userListRepository;
-    }
-
-    @Autowired
     private PlantRepository plantRepository;
-
-    @Autowired
-    private PlantRepository getPlantRepository(){return plantRepository;}
 
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserRepository getUserRepository(){return userRepository;}
 
     /**
      * list of all users
@@ -53,19 +44,19 @@ public class UserListService {
 
 
     /** create UserList **/
-    public UserList createUserList(CreateOrUpdateUserListDTO createListDTO) {
+    public UserList createUserList(CreateOrUpdateUserListDTO createListDTO, int id) {
         if (createListDTO == null) {
             throw new InvalidDataException("List cannot be null");
         }
-        UserList newList = new UserList() {
-        };
+        User user = userRepository.findById(id);
+        UserList newList = new UserList();
         newList.setTitle(createListDTO.getTitle());
         newList.setDescription(createListDTO.getDescription());
+        newList.setUser(user);
 
         DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         newList.setDate(now);
-        newList.setUser(userRepository.findById(createListDTO.getUserId()));
 
         UserList listCreated = userListRepository.save(newList);
         log.info(String.format("List %s has been created.", listCreated.getTitle()));
@@ -112,5 +103,6 @@ public class UserListService {
     /**list of all lists by user*/
     public Collection<UserList> getAllListsByUser(int id){return userListRepository.listOfAllUserListByUser(id);
     }
+
 
 }

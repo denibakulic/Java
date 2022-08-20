@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "herbarium")
 @Data
 public class Herbarium {
     @Id
@@ -19,9 +18,6 @@ public class Herbarium {
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "date")
-    private String date;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "herbarium", cascade = CascadeType.ALL)
     private List<Plant> plantList;

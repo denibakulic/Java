@@ -2,11 +2,10 @@ package com.bakulic.onlineherbarium.controller.UserManagement;
 
 import com.bakulic.onlineherbarium.model.Image;
 import com.bakulic.onlineherbarium.model.UserList;
-import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserDTO;
 import com.bakulic.onlineherbarium.model.dto.RegisterUserAccountDTO;
 import com.bakulic.onlineherbarium.service.ImageService;
 import com.bakulic.onlineherbarium.service.UserListService;
-import com.bakulic.onlineherbarium.service.UserService;
+import com.bakulic.onlineherbarium.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @Autowired
     private final ImageService imageService;
@@ -30,8 +29,6 @@ public class UserController {
     @Autowired
     private final UserListService userListService;
 
-    @ModelAttribute("user")
-    public CreateOrUpdateUserDTO createOrUpdateUserDTO(){return new CreateOrUpdateUserDTO();}
 
     @ModelAttribute("newUser")
     public RegisterUserAccountDTO registerUserAccountDTO(){return new RegisterUserAccountDTO();}
@@ -49,18 +46,6 @@ public class UserController {
         return "redirect:user/all";
     }
 
-    @GetMapping("/update/{id}")
-    public String getUpdateUserForm(Model model, @PathVariable("id") int id) {
-        var user = userService.getUserRepository().findById(id);
-        model.addAttribute("user", user);
-        return "update-user";
-    }
-    @PostMapping("/update/{id}")
-    public String saveUpdateUser(@ModelAttribute("user") CreateOrUpdateUserDTO createOrUpdateUserDTO, @PathVariable("id") int id) {
-        userService.updateUser(createOrUpdateUserDTO, id);
-        return "redirect:/user/all";
-    }
-
 
     @GetMapping("/all")
     public String getUserList(Model model) {
@@ -71,15 +56,15 @@ public class UserController {
 
     @GetMapping("/delete/{id}")
     public String deleteUserById(@PathVariable("id") int id) {
-        List<Image> allImageList = imageService.getAllImages();
-        Collection<Image> imageList = imageService.getAllImagesByUser(id);
-
-        allImageList.removeAll(imageList);
-
-        List<UserList> allIUserLists = userListService.getAllUserLists();
-        Collection<UserList> userLists = userListService.getAllListsByUser(id);
-
-        allIUserLists.removeAll(userLists);
+//        List<Image> allImageList = imageService.getAllImages();
+//        Collection<Image> imageList = imageService.getAllImagesByUser(id);
+//
+//        allImageList.removeAll(imageList);
+//
+//        List<UserList> allIUserLists = userListService.getAllUserLists();
+//        Collection<UserList> userLists = userListService.getAllListsByUser(id);
+//
+//        allIUserLists.removeAll(userLists);
 
         userService.getUserRepository().deleteById(id);
         return "redirect:/user/all";
