@@ -1,14 +1,20 @@
 package com.bakulic.onlineherbarium.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "userList")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

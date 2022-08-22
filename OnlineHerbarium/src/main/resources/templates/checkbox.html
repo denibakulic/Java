@@ -32,12 +32,12 @@
         </div>
 
         <div class="container">
-            <form class="ui form" th:action="@{/userList/add/{id}(id=${userList.listId})}" method="post">
+            <form class="ui form" th:action="@{/userlist/add/{id}(id=${userList.listId})}" method="post">
                 <ul>
                     <li th:each ="plant : ${plants}">
                         <div class="ui checkbox">
-                            <input type="checkbox" th:field="userPlants" th:value="${plant.plantId}}">
-                            <label th:text="${plant.species}}"></label>
+                            <label th:text="${plant.species}"></label>
+                            <input type="checkbox" name="plant" th:value="${plant.plantId}">
                         </div>
                     </li>
                 </ul>
@@ -46,7 +46,6 @@
                 </div>
             </form>
         </div>
-
 
         <footer id="sticky-footer" class="flex-shrink-0 py-4 text-white-50">
             <div>

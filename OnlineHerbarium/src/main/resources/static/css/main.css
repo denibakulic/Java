@@ -40,11 +40,6 @@ h1{
     color: #469b5e;
 }
 
-/* unvisited link */
-a:link {
-    color: white;
-}
-
 /* mouse over link */
 a:hover {
     color: yellow;
@@ -56,5 +51,18 @@ a:active {
 }
 a{
     text-decoration: none;
-    color: white;
+    color: black;
+}
+
+.navbar a{
+    color: #fff;
+}
+
+.navbar a:active {
+    color: greenyellow;
+}
+
+.nav-item:last-child{
+    position: absolute;
+    right: 20px;
 }

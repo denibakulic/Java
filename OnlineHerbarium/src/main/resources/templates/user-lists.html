@@ -19,13 +19,7 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/herbarium/all/user">Herbarium</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/userlist/user/{id}(id=${current.userId})">Lists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/family/search">Find</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -49,9 +43,9 @@
                         <td th:text = "${list.title}"></td>
                         <td th:text = "${list.description}"></td>
                         <td th:text = "${list.date}"></td>
-                        <td><a th:href ="@{/userlist/list/{id}(id=${list.userListId})}"class="btn btn-primary">View list</a></td>
-                        <td><a th:href ="@{/userlist/update/{id}(id=${list.userListId})}"class="btn btn-primary">Update list</a></td>
-                        <td><a th:href ="@{/userlist/delete/{id}(id=${list.userListId})}" class="btn btn-danger">Delete list</a></td>
+                        <td><a th:href ="@{/userlist/list/{id}(id=${list.listId})}"class="btn btn-success">View list</a></td>
+                        <td><a th:href ="@{/userlist/update/{id}(id=${list.listId})}"class="btn btn-info">Update list</a></td>
+                        <td><a th:href ="@{/userlist/delete/{id}(id=${list.listId})}" class="btn btn-danger">Delete list</a></td>
                     </tr>
                 </tbody>
             </table>

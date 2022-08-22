@@ -43,7 +43,7 @@ public class PlantController {
     }
 
     @PostMapping
-    public String createPlant(@ModelAttribute("plant")  CreateOrUpdatePlantDTO createPlantDTO){
+    public String createPlant(CreateOrUpdatePlantDTO createPlantDTO){
         plantService.createPlant(createPlantDTO);
         return "redirect:plant/all";
     }
@@ -60,13 +60,6 @@ public class PlantController {
         Plant plant = plantService.getPlantRepository().findBySpecies(name);
         model.addAttribute("plant", plant);
         return "plant-page";
-    }
-
-    @GetMapping("/{searchResult}/{id}")
-    public String getPlantByFamily(Model model, @PathVariable ("id") int id) {
-        Collection<Plant> plants = plantService.getPlantRepository().listOfAllPlantsByFamily(id);
-        model.addAttribute("plants", plants);
-        return "search-result";
     }
 
     @GetMapping("/delete/{id}") //popravit, ako se izbrise biljka mora se izbrisat od svugdi

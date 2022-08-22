@@ -18,6 +18,4 @@ public interface UserListRepository extends JpaRepository<UserList, Integer> {
     @Query("FROM UserList u WHERE u.user.userId = :id")
     Collection<UserList> listOfAllUserListByUser(int id);
 
-    @Query("FROM Plant p WHERE p.lists = :id")
-    Collection<UserList> listOfAllUserListsByPlant(int id);
 }

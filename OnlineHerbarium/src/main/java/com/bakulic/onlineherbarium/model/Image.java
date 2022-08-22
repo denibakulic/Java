@@ -13,9 +13,6 @@ public class Image {
     @Column(name = "id")
     private int imageId;
 
-    @Lob
-    byte[] content;
-
     @Column(name="location")
     private String location;
 

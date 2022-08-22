@@ -18,13 +18,7 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/herbarium/all/user">Herbarium</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/userlist/user/{${current.userId}">Lists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/family/search">Find</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -32,7 +26,7 @@
 
         <div class="container">
             <h1 class="mt-4">Update list</h1>
-            <form action="#" th:action="@{/herbarium/update/{id}(id=${herbarium.herbariumId})}" method ="post" th:object="${family}">
+            <form th:action="@{/userlist/update/{id}(id=${userList.listId})}" method ="post" th:object="${userList}">
 
                 <p> <input type="text" th:field = "*{title}" placeholder="Title" class="form-control mb-4 col-4"><p/>
                 <p> <input type="text" th:field = "*{description}" placeholder="Description" class="form-control mb-4 col-4"><p/>

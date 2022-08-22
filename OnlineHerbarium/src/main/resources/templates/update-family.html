@@ -25,7 +25,7 @@
                         <a class="nav-link" href="/userlist/user/{${current.userId}">Lists</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/family/search">Find</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -33,11 +33,11 @@
 
         <div class="container">
             <h1 class="mt-4">Update family</h1>
-            <form action="#" th:action="@{/family/update/{id}(id=${family.familyId})}" method ="post" th:object="${family}">
+            <form action="#" th:action="@{/families/update/{id}(id=${family.familyId})}" method ="post" th:object="${family}">
 
-                <p> <input type="text" th:field = "*{name}" placeholder="Name" class="form-control mb-4 col-4"><p/>
+                <p> <input type="text" th:field = "*{name}" placeholder="Name" class="form-control mb-4 col-4">
+                    <input type="submit" class="btn btn-info col-2" value="Update"><p/>
 
-                <p><input type="submit" class="btn btn-info col-2" value="Update"></p>
             </form>
         </div>
 

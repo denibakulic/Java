@@ -9,6 +9,7 @@ import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserListDTO;
 import com.bakulic.onlineherbarium.repository.PlantRepository;
 import com.bakulic.onlineherbarium.repository.UserListRepository;
 import com.bakulic.onlineherbarium.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 
-
+@AllArgsConstructor
 @Service
 @Data
 public class UserListService {
@@ -97,6 +98,15 @@ public class UserListService {
                 plants.remove(plant);
             }
         }
+    }
+
+    public UserList addPlantsToList(int listId, int plantId){
+        UserList ul = userListRepository.findById(listId);
+        Plant plant = plantRepository.findById(plantId);
+        ul.getPlants().add(plant);
+        System.err.println(ul.getPlants().get(0).getPlantId());
+        userListRepository.save(ul);
+        return ul;
     }
 
 

@@ -17,13 +17,7 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/herbarium/all/user">Herbarium</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/userlist/user/{${current.userId}">Lists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/family/search">Find</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -31,11 +25,11 @@
 
         <div class="container">
                 <h1 class="my-3">Select a plant to see more details</h1>
-                    <span th:each="plant :${plants}">
-                            <li><span th:text="${plant.species}" th:remove="tag"></span>
-                            <span th:href ="@{/plant/{name}(name=${plant.species})}"class="btn btn-success" th:text="${plant.species}"></span>
-                            </li>
-                    </span>
+                    <div class="row text-center text-lg-start">
+                        <span th:each="plant :${plants}">
+                            <li><a th:href = "@{/plant/{name}(name=${plant.species})}" th:text="${plant.species}"></a></li>
+                        </span>
+                    </div>
         </div>
 
 

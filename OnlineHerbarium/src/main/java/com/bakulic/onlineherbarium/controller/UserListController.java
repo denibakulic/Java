@@ -9,15 +9,15 @@ import com.bakulic.onlineherbarium.service.UserListService;
 import com.bakulic.onlineherbarium.service.UserService;
 import com.bakulic.onlineherbarium.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 @AllArgsConstructor
@@ -47,7 +47,7 @@ public class UserListController {
     }
 
     @PostMapping("/{id}")
-    public String createUserList(@ModelAttribute("userList") CreateOrUpdateUserListDTO createUserListDTO, @PathVariable int id){
+    public String createUserList(CreateOrUpdateUserListDTO createUserListDTO, @PathVariable int id){
         userListService.createUserList(createUserListDTO, id);
         return "redirect:/userlist/user/{id}";
     }
@@ -62,23 +62,15 @@ public class UserListController {
     @PostMapping("/update/{id}")
     public String updateUserList(@PathVariable ("id") int id, @ModelAttribute("userList") CreateOrUpdateUserListDTO updateUserListDTO){
         userListService.updateUserList(id, updateUserListDTO);
-        return "redirect:/userlist/all";
-    }
-
-    @GetMapping("/all")
-    public String getAllUserLists(Model model) {
-        List<UserList> list = userListService.getAllUserLists();
-        model.addAttribute("userLists", list);
-        return "all-userlists";
+        return "redirect:/userlist/list/{id}";
     }
 
     @GetMapping("/user/{id}")
-    public String getUserListByUser(Model model, @PathVariable("id") int id){
-        Collection <UserList> usersLists = userListService.getAllListsByUser(id);
+    public String getUserListByUser(Model model, @PathVariable ("id") int id){
+        Collection<UserList> userLists =userListService.getAllListsByUser(id);
         User user = userService.getUserRepository().findById(id);
         model.addAttribute("user", user);
-        model.addAttribute("usersLists", usersLists);
-        Logger logger = new Logger();
+        model.addAttribute("userLists", userLists);
         return "user-lists";
     }
 
@@ -86,18 +78,19 @@ public class UserListController {
     public String getUserListPage(Model model, @PathVariable int id){
         UserList us = userListService.getUserListRepository().findById(id);
         model.addAttribute("list", us);
-        List<Plant> plantList = plantService.getPlantRepository().findAllByListId(id);
+        Collection<Plant> plantList = plantService.getPlantRepository().listOfAllPlantsByListId(id);
         model.addAttribute("plantList", plantList);
         return "userlist-page";
     }
 
-    @GetMapping("/add/{userListId}")
-    public String addPlantToList(@PathVariable int userListId, Model model) {
-        UserList userList=userListService.getUserListRepository().findById(userListId);
-        List<Plant> userPlants = plantService.getPlantRepository().findAllByListId(userListId);
+    @GetMapping("/add/{id}")
+    public String addPlantToListForm(Model model, @PathVariable int id) {
+        UserList userList=userListService.getUserListRepository().findById(id);
+        Collection<Plant> userPlants = plantService.getPlantRepository().listOfAllPlantsByListId(id);
         List<Plant> plants = plantService.getAllPlants();
-        List<Plant> displayPlants = new LinkedList<>();
-        plants.stream().forEach(i -> {
+        List<Plant> displayPlants = new ArrayList<>();
+
+        plants.forEach(i -> {
             if(!userPlants.contains(i)){
                 displayPlants.add(i);
             }
@@ -108,13 +101,19 @@ public class UserListController {
         return "checkbox";
     }
 
-    @PostMapping("/add/{userListId}")
-    public String savePlantsToList(@PathVariable int userListId){
-       // UserList userList = userListService.getUserListRepository().findById(userListId);
-     //   userListService.getUserListRepository().save(userList);
-        return "redirect:/userlist/list/{userListId}";
+    @PostMapping("/add/{id}")
+    public String addPlantToList(@PathVariable int id,
+                                 @RequestParam(value="plant", required = false) List<Plant> plants,
+                                 Model model) {
+        System.err.println(plants.get(0).getPlantId());
+        System.err.println(plants.get(1).getPlantId());
+        plants.forEach(plant ->{
+            userListService.addPlantsToList(id, plant.getPlantId());
+        });
+        return "redirect:/userlist/list/{id}";
     }
 
+//
 
     @GetMapping("/list/{id}/remove/{plantId}") //provjerit da li radi
     public String removePlantFromList(@PathVariable int id, @PathVariable int plantId) {
@@ -125,7 +124,7 @@ public class UserListController {
     @GetMapping("/delete/{id}")
     public  String deleteUserListById( @PathVariable ("id") int id){
         userListService.getUserListRepository().deleteById(id);
-        return "redirect:/userlist/all";
+        return "redirect:/";
     }
 
 }

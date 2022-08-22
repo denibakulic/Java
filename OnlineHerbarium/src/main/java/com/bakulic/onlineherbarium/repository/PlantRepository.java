@@ -18,13 +18,10 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
 
     Plant findBySpecies(String name);
 
-    @Query("FROM Family f WHERE f.familyId = :id")
+
+    @Query("FROM Plant p WHERE p.family.familyId = :id")
     Collection<Plant> listOfAllPlantsByFamily(int id);
 
-    @Query("FROM Herbarium h WHERE h.herbariumId = :id")
-    Collection<Plant> listOfHerbariumPlants(int id);
-
-    @Query("FROM Plant p JOIN UserList us where us.listId = :listId")
-    List<Plant> findAllByListId(@Param("listId")int listId);
-
+    @Query("SELECT p FROM Plant p JOIN p.lists list JOIN list.plants plants WHERE list.listId = :listId")
+    Collection<Plant> listOfAllPlantsByListId (@Param("listId") int listId);
 }

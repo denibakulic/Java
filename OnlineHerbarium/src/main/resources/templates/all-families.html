@@ -19,20 +19,14 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/herbarium/all/user">Herbarium</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/userLists/user/{id}(id=${current.userId})">Lists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/family/search">Find</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
 
         <div class="container">
-            <td><a th:href="@{/family}" class="btn btn-success">Add Family</a></td>
+            <td><a th:href="@{/families}" class="btn btn-success">Add Family</a></td>
             <br></br>
             <table class="table">
                 <thead>
@@ -44,8 +38,8 @@
                 <tbody>
                     <tr th:each = "family: ${families}" >
                         <td th:text = "${family.name}"></td>
-                        <td><a th:href ="@{/family/update/{id}(id=${family.familyId})}"class="btn btn-info">Update family</a></td>
-                        <td><a th:href ="@{/family/delete/{id}(id=${family.familyId})}" class="btn btn-danger">Delete family</a></td>
+                        <td><a th:href ="@{/families/update/{id}(id=${family.familyId})}"class="btn btn-info">Update family</a></td>
+                        <td><a th:href ="@{/families/delete/{id}(id=${family.familyId})}" class="btn btn-danger">Delete family</a></td>
                     </tr>
                 </tbody>
             </table>

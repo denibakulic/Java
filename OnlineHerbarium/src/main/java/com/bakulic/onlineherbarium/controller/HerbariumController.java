@@ -32,7 +32,7 @@ public class HerbariumController {
 
     @GetMapping
     public String getHerbarium(Model model) {
-        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(11);
+        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(3);
         Collection<Plant> plantList = plantService.getAllPlants();
         model.addAttribute("plantList", plantList);
         model.addAttribute("herbarium", herbarium);
@@ -41,7 +41,7 @@ public class HerbariumController {
 
     @GetMapping("/admin")
     public String getHerbariumAdmin(Model model) {
-        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(11);
+        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(3);
         Collection<Plant> plantList = plantService.getAllPlants();
         model.addAttribute("plantList", plantList);
         model.addAttribute("herbarium", herbarium);

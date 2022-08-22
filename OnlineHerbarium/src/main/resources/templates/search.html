@@ -19,13 +19,7 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/herbarium/all/user">Herbarium</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/userLists/user/{id}(id=${current.userId})">Lists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/family/search">Find</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -35,7 +29,7 @@
             <h1>Select a family to find plants</h1><br>
                 <div class="form-group">
                     <span th:each = "family: ${families}" >
-                       <li><a th:href = "@{/plant/searchResult/{name}(name=${family.name})}" th:text="${family.name}"></a></li>
+                       <li><a th:href = "@{/families/search/{id}(id=${family.familyId})}" th:text="${family.name}"></a></li>
                     </span>
                 </div>
         </div>
