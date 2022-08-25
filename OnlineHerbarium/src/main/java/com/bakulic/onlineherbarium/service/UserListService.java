@@ -1,7 +1,7 @@
 package com.bakulic.onlineherbarium.service;
 
-import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
-import com.bakulic.onlineherbarium.exceptions.ObjectNotFoundException;
+
+import com.bakulic.onlineherbarium.exceptions.*;
 import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.UserList;
@@ -24,7 +24,7 @@ import java.util.List;
 @Data
 public class UserListService {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HerbariumService.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserList.class);
 
     @Autowired
     private UserListRepository userListRepository;
@@ -34,14 +34,6 @@ public class UserListService {
 
     @Autowired
     private UserRepository userRepository;
-
-
-    /**
-     * list of all users
-     */
-    public List<UserList> getAllUserLists() {
-        return userListRepository.findAll();
-    }
 
 
     /** create UserList **/
@@ -82,32 +74,28 @@ public class UserListService {
         LocalDateTime now = LocalDateTime.now();
         list.setDate(now);
 
-        //ConnectData(list);
         UserList listUpdated = userListRepository.save(list);
         log.info(String.format("List %s has been updated.", list.getTitle()));
         return listUpdated;
     }
 
-    /** remove plant from list*/
-    public void removePlantFromList(int listId, int plantId){
-        UserList list = userListRepository.findById(listId);
-        List<Plant> plants = list.getPlants();
-        Plant plant = plantRepository.findById(plantId);
-        for (Plant p : plants){
-            if (p.equals(plant)){
-                plants.remove(plant);
-            }
-        }
-    }
-
-    public UserList addPlantsToList(int listId, int plantId){
+    /** add plants to list*/
+    public void addPlantsToList(int listId, int plantId){
         UserList ul = userListRepository.findById(listId);
         Plant plant = plantRepository.findById(plantId);
         ul.getPlants().add(plant);
-        System.err.println(ul.getPlants().get(0).getPlantId());
         userListRepository.save(ul);
-        return ul;
     }
+
+
+    /** remove plant from list*/
+    public void removePlantFromList(int listId, int plantId){
+        UserList list = userListRepository.findById(listId);
+        Plant plant = plantRepository.findById(plantId);
+        list.getPlants().remove(plant);
+        userListRepository.save(list);
+    }
+
 
 
     /**list of all lists by user*/

@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 
 @AllArgsConstructor
@@ -32,7 +31,7 @@ public class HerbariumController {
 
     @GetMapping
     public String getHerbarium(Model model) {
-        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(3);
+        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(1);
         Collection<Plant> plantList = plantService.getAllPlants();
         model.addAttribute("plantList", plantList);
         model.addAttribute("herbarium", herbarium);
@@ -41,7 +40,7 @@ public class HerbariumController {
 
     @GetMapping("/admin")
     public String getHerbariumAdmin(Model model) {
-        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(3);
+        Herbarium herbarium = herbariumService.getHerbariumRepository().findById(1);
         Collection<Plant> plantList = plantService.getAllPlants();
         model.addAttribute("plantList", plantList);
         model.addAttribute("herbarium", herbarium);

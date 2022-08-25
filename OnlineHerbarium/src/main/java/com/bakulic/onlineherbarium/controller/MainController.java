@@ -19,8 +19,6 @@ public class MainController {
     @Autowired
     private UserServiceImpl userService;
 
-
-
     @GetMapping("/login")
     public String login() {
         return "login";

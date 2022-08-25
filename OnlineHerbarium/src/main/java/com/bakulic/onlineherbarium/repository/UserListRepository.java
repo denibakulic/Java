@@ -1,8 +1,5 @@
 package com.bakulic.onlineherbarium.repository;
 
-import com.bakulic.onlineherbarium.model.Herbarium;
-import com.bakulic.onlineherbarium.model.Plant;
-import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.UserList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

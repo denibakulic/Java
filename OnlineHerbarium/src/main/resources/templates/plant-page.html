@@ -36,17 +36,17 @@
                 <div class="col-md-4">
                     <h3 class="my-3">Plant details</h3>
                     <ul>
-                        <li>Species:<span th:text="${plant.species}" th:remove="tag"></span></li>
-                        <li>Family:<span th:text="${plant.family.name}" th:remove="tag"></span></li>
-                        <li>Site:<span th:text="${plant.site}" th:remove="tag"></span></li>
-                        <li>Habitat:<span th:text="${plant.habitat}" th:remove="tag"></span></li>
-                        <li>Date:<span th:text="${plant.date}" th:remove="tag"></span></li>
+                        <li><span class="plant-data">Species:</span> <span th:text="${plant.species}" th:remove="tag"></span></li>
+                        <li><span class="plant-data">Family:</span> <span th:text="${plant.family.name}" th:remove="tag"></span></li>
+                        <li><span class="plant-data">Site:</span> <span th:text="${plant.site}" th:remove="tag"></span></li>
+                        <li><span class="plant-data">Habitat:</span> <span th:text="${plant.habitat}" th:remove="tag"></span></li>
+                        <li><span class="plant-data">Date:</span> <span th:text="${plant.date}" th:remove="tag"></span></li>
                     </ul>
                 </div>
             </div>
-           <div class="row">
+           <div class="row plant_desc">
                <h3 class="my-3">Plant description</h3>
-               <span th:text="${plant.description}" th:remove="tag"></span>
+               <div th:text="${plant.description}"></div>
            </div>
             <div class="col">
                 <h3 class="my-3">Want to know more</h3>

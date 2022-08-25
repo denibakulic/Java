@@ -1,5 +1,6 @@
 .navbar {
     background-color: #427a5e;
+    margin-bottom: 25px;
 }
 
 .flex-shrink-0{
@@ -11,19 +12,20 @@
 
 body{
     background-color: #e2ffe1;
+    position: relative;
+    min-height: 100vh;
 
 }
 
 .container{
-    min-height: 1050px;
+    min-height: calc(100vh - 136px);
 }
 
-footer{
+
+.flex-shrink-0 {
     position: absolute;
-    bottom: 0;
     height: 50px;
     text-align: center;
-
 }
 
 p{
@@ -38,11 +40,12 @@ h1{
     font-size: 40px ;
     font-style: oblique;
     color: #469b5e;
+    margin-bottom: 40px;
 }
 
 /* mouse over link */
 a:hover {
-    color: yellow;
+    color: #00adff;
 }
 
 /* selected link */
@@ -66,3 +69,58 @@ a{
     position: absolute;
     right: 20px;
 }
+
+thead{
+    background-color: #427a5e66;
+}
+
+tbody tr:nth-child(even){
+    background-color: #427a5e1A;
+}
+
+.btn-danger {
+    background-color: #dc6335e8;
+    border-color: #dc6335e8;
+}
+
+.btn-success {
+    background-color: #084a16c7;
+    border-color: #084a16c7;
+}
+
+.btn-success:hover {
+    background-color: #218838c7;
+    border-color: #218838c7;
+}
+
+.btn-info {
+
+    background-color: #17b893;
+    border-color: #17b893;
+}
+
+.home_img{
+    margin-top: -25px;
+}
+
+.plant_desc{
+    flex-direction: column;
+    margin-left: 0;
+}
+
+.col {
+    padding-left: 0;
+}
+
+.plant-data{
+    font-weight: 700;
+    color: #427a5e;
+}
+
+.family-list a{
+    padding: 20px;
+    line-height: 1.7;
+    font-size: 25px;
+}
+
+

@@ -1,15 +1,13 @@
 package com.bakulic.onlineherbarium.model;
 
-import com.sun.istack.NotNull;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
 @Data
 public class User {
     @Id
@@ -20,13 +18,13 @@ public class User {
     @Column(name = "fullname")
     private String fullname;
 
-    @Column(name = "email", unique = true)
-    private String email;
+    @Column(name = "username", unique = true)
+    private String username;
 
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
@@ -42,12 +40,11 @@ public class User {
 
     }
 
-    public User(String fullname, String email, String password, Collection<Role> roles, Boolean role) {
+    public User(String fullname, String username, String password, Collection<Role> roles, Boolean role) {
         super();
         this.fullname = fullname;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }
-
 }

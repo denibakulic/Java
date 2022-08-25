@@ -1,7 +1,6 @@
 package com.bakulic.onlineherbarium.service;
 
-
-import com.bakulic.onlineherbarium.exceptions.*;
+import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
 import com.bakulic.onlineherbarium.model.Role;
 import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.dto.RegisterUserAccountDTO;
@@ -40,71 +39,51 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-    /**
-     * list of all users
-     */
+    /**list of all users*/
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    /**
-     * user register
-     */
-
+    /**user register*/
     public User register(RegisterUserAccountDTO registerUserAccountDTO) {
         if (registerUserAccountDTO == null) {
             throw new InvalidDataException("User account data cannot be null");
         }
 
-        Role role = roleRepository.findById(2);
-
         User newUser = new User(
                 registerUserAccountDTO.getFullname(),
-                registerUserAccountDTO.getEmail(),
+                registerUserAccountDTO.getUsername(),
                 bCryptPasswordEncoder.encode(registerUserAccountDTO.getPassword()),
-                Arrays.asList(role),
+                Arrays.asList(new Role("USER_ROLE")),
                 registerUserAccountDTO.getRole());
-
 
         log.info(String.format("User %s has been created.", newUser.getUserId()));
         return userRepository.save(newUser);
     }
 
-        public User getUser () {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (!(authentication instanceof AnonymousAuthenticationToken)) {
-                String currentUserEmail = authentication.getName();
-                User currentUser = userRepository.findByEmail(currentUserEmail);
-                return currentUser;
-            }
-            return null;
+    /** get current user*/
+    public User getUser () {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+            User currentUser = userRepository.findByUsername(currentUserName);
+            return currentUser;
         }
+        return null;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
+        User user = userRepository.findByUsername(username);
         if(user==null){
             throw new UsernameNotFoundException("Invalid username or password!");
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),  mapRolesToAuthorities(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),  mapRolesToAuthorities(user.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    /**
-     * check if the email has not been registered
-     */
-    public void checkIfEmailNotUsed(String email) {
-        List<User> users = getAllUsers();
-        for(User u : users){
-            if(Objects.equals(u.getEmail(), email)){
-                String msg = String.format("The email %s is already in use from another user!", email);
-                throw new InvalidUsernameException(msg);
-            }
-        }
-    }
 }
 

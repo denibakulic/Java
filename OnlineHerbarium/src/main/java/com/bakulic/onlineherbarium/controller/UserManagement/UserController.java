@@ -1,7 +1,5 @@
 package com.bakulic.onlineherbarium.controller.UserManagement;
 
-import com.bakulic.onlineherbarium.model.Image;
-import com.bakulic.onlineherbarium.model.UserList;
 import com.bakulic.onlineherbarium.model.dto.RegisterUserAccountDTO;
 import com.bakulic.onlineherbarium.service.ImageService;
 import com.bakulic.onlineherbarium.service.UserListService;
@@ -12,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.List;
 
 @AllArgsConstructor
 @Controller
@@ -56,16 +52,6 @@ public class UserController {
 
     @GetMapping("/delete/{id}")
     public String deleteUserById(@PathVariable("id") int id) {
-//        List<Image> allImageList = imageService.getAllImages();
-//        Collection<Image> imageList = imageService.getAllImagesByUser(id);
-//
-//        allImageList.removeAll(imageList);
-//
-//        List<UserList> allIUserLists = userListService.getAllUserLists();
-//        Collection<UserList> userLists = userListService.getAllListsByUser(id);
-//
-//        allIUserLists.removeAll(userLists);
-
         userService.getUserRepository().deleteById(id);
         return "redirect:/user/all";
     }

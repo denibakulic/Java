@@ -1,6 +1,5 @@
 package com.bakulic.onlineherbarium.model.dto;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,7 +10,7 @@ public class RegisterUserAccountDTO implements Serializable {
 
     private String password;
     private String fullname;
-    private String email;
+    private String username;
     private Boolean role;
 
 }

@@ -13,7 +13,7 @@
                     <div class="col-md-8 mx-auto">
                         <h2>Upload your pictures</h2>
                         <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
-                        <form method="post" th:action="@{image/upload/{id}(id=${list.listId})}" enctype="multipart/form-data">
+                        <form method="post" th:action="@{/image/upload/{id}(id=${list.listId})}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <input type="file" name="file" class="form-control-file">
                             </div>

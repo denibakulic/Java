@@ -42,7 +42,7 @@ public class FamilyService {
     public Family updateFamily(int id, CreateOrUpdateFamilyDTO updateFamilyDTO){
 
         if (updateFamilyDTO == null) {
-            throw new InvalidDataException("Role data cannot be null");
+            throw new InvalidDataException("Family data cannot be null");
         }
         Family family = familyRepository.findById(id);
         if (family ==null) {

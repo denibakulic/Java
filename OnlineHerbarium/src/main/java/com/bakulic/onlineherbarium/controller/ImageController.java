@@ -1,11 +1,9 @@
 package com.bakulic.onlineherbarium.controller;
 
 import com.bakulic.onlineherbarium.model.Image;
-import com.bakulic.onlineherbarium.model.User;
 import com.bakulic.onlineherbarium.model.UserList;
 import com.bakulic.onlineherbarium.service.ImageService;
 import com.bakulic.onlineherbarium.service.UserListService;
-import com.bakulic.onlineherbarium.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +27,7 @@ public class ImageController {
     @Autowired
     private final ImageService imageService;
 
-    @Autowired
-    private final UserServiceImpl userService;
+
 
     @Autowired
     private final UserListService userListService;
@@ -41,7 +38,8 @@ public class ImageController {
         return new Image();
     }
 
-    private final String UPLOAD_DIR = "/images/user_uploads";
+    private final String UPLOAD_DIR = "D:/MojiProjekti/Java/OnlineHerbarium/src/main/resources/static/user_uploads" ;
+
 
     @GetMapping("/upload/{id}")
     public String getUploadForm(Model model, @PathVariable ("id") int id){
@@ -57,26 +55,34 @@ public class ImageController {
         img.setUserList(ul);
 
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        img.setLocation(UPLOAD_DIR + "/" + fileName);
+        img.setLocation("/user_uploads" + fileName);
+
 
         try {
-            Path path = Paths.get(UPLOAD_DIR + fileName);
+            Path path = Paths.get(UPLOAD_DIR +fileName);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        imageService.getImageRepository().save(img);
         attributes.addFlashAttribute("message", "You successfully uploaded " + fileName + '!');
         return "redirect:/userlist/list/{id}";
     }
-//
 
 
     @GetMapping("/gallery/{id}")
     public String getUserImages(@PathVariable("id") int id, Model model){
         Collection<Image> imageList = imageService.getAllImagesByUserList(id);
+        UserList userList = userListService.getUserListRepository().findById(id);
+        model.addAttribute("list", userList);
         model.addAttribute("images", imageList);
 
         return "image-gallery";
+    }
+
+    @GetMapping("/delete/{imgId}")
+    public  String deleteImage(@PathVariable int imgId){
+        imageService.getImageRepository().deleteById(imgId);
+        return "redirect:/";
     }
 }

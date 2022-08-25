@@ -3,7 +3,6 @@ package com.bakulic.onlineherbarium.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
@@ -39,10 +38,5 @@ public class Plant {
     @JoinColumn(name = "idHerbarium")
     private Herbarium herbarium;
 
-    @ManyToMany
-    @JoinTable(
-            name = "plant_list",
-            joinColumns = @JoinColumn(name = "plantId"),
-            inverseJoinColumns = @JoinColumn(name = "listId"))
-    List<UserList> lists;
+
 }

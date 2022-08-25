@@ -1,7 +1,6 @@
 package com.bakulic.onlineherbarium.service;
 
-import com.bakulic.onlineherbarium.exceptions.InvalidDataException;
-import com.bakulic.onlineherbarium.exceptions.ObjectNotFoundException;
+import com.bakulic.onlineherbarium.exceptions.*;
 import com.bakulic.onlineherbarium.model.Family;
 import com.bakulic.onlineherbarium.model.Plant;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdatePlantDTO;
@@ -55,31 +54,6 @@ public class PlantService {
         log.info(String.format("Plant %s has been created.", plant.getSpecies()));
         return plantCreated;
 
-    }
-
-    /**update plant*/
-    public Plant updatePlant(int id, CreateOrUpdatePlantDTO updatePlantDTO){
-
-        if (updatePlantDTO == null) {
-            throw new InvalidDataException("Update data cannot be null");
-        }
-        Plant plant = plantRepository.findById(id);
-        if (plant ==null) {
-            throw new ObjectNotFoundException(String.format("The plant with Id = %s doesn't exists", id));
-        }
-
-        plant.setFamily(familyRepository.findByName(updatePlantDTO.getName()));
-        plant.setSpecies(updatePlantDTO.getSpecies());
-        plant.setSite(updatePlantDTO.getSite());
-        plant.setHabitat(updatePlantDTO.getHabitat());
-        plant.setDescription(updatePlantDTO.getDescription());
-        plant.setDate(updatePlantDTO.getDate());
-        plant.setImage(updatePlantDTO.getImage());
-
-
-        Plant plantUpdated = plantRepository.save(plant);
-        log.info(String.format("Plant %s has been updated.", plant.getSpecies()));
-        return plantUpdated;
     }
 
     /**list of all plants*/

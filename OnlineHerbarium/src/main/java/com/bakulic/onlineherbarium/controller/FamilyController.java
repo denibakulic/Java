@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.List;
 
+
 @AllArgsConstructor
 @Controller
 @RequestMapping(value = "/families")
@@ -76,9 +77,6 @@ public class FamilyController {
 
     @GetMapping("/delete/{id}")
     public  String deleteFamilyById( @PathVariable ("id") int id){
-//        List<Plant> allPlantList = plantService.getAllPlants();
-//        Collection<Plant> plantList = plantService.getPlantRepository().listOfAllPlantsByFamily(id);
-//        allPlantList.removeAll(plantList);
         familyService.getFamilyRepository().deleteById(id);
         return "redirect:/families/all";
     }

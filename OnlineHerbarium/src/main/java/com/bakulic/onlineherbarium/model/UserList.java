@@ -3,11 +3,9 @@ package com.bakulic.onlineherbarium.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,7 +28,11 @@ public class UserList {
     @Column(name = "date")
     private LocalDateTime date;
 
-    @ManyToMany(mappedBy = "lists")
+    @ManyToMany
+    @JoinTable(
+            name = "plant_list",
+            joinColumns = @JoinColumn(name = "plantId", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "listId", referencedColumnName = "id"))
     List<Plant> plants;
 
     @ManyToOne

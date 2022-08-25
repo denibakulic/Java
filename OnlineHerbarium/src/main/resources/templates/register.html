@@ -14,6 +14,9 @@
                 <div th:if="${param.success}">
                     <div class="alert alert-info">You've successfully registered!</div>
                 </div>
+                <div th:if="${param.usernameError}">
+                    <div class="alert alert-danger">Username is already in use!</div>
+                </div>
                 <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
                     <div class="card-img-left d-none d-md-flex">
                         <img th:src ="@{/images/plant4.jpg}">
@@ -27,8 +30,8 @@
                                        required autofocus="autofocus" />
                             </div>
                             <div class="form-floating mb-3">
-                                <label class="control-label" for="email"> Email </label> <input
-                                    id="email" class="form-control" th:field="*{email}" required
+                                <label class="control-label" for="username"> Username </label> <input
+                                    id="username" class="form-control" th:field="*{username}" required
                                     autofocus="autofocus" />
                             </div>
 

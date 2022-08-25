@@ -6,19 +6,15 @@ import com.bakulic.onlineherbarium.model.UserList;
 import com.bakulic.onlineherbarium.model.dto.CreateOrUpdateUserListDTO;
 import com.bakulic.onlineherbarium.service.PlantService;
 import com.bakulic.onlineherbarium.service.UserListService;
-import com.bakulic.onlineherbarium.service.UserService;
 import com.bakulic.onlineherbarium.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
-import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.*;
-import java.util.logging.Logger;
+
 
 @AllArgsConstructor
 @Controller
@@ -78,15 +74,15 @@ public class UserListController {
     public String getUserListPage(Model model, @PathVariable int id){
         UserList us = userListService.getUserListRepository().findById(id);
         model.addAttribute("list", us);
-        Collection<Plant> plantList = plantService.getPlantRepository().listOfAllPlantsByListId(id);
-        model.addAttribute("plantList", plantList);
+        List<Plant> plants = us.getPlants();
+        model.addAttribute("plantList", plants);
         return "userlist-page";
     }
 
     @GetMapping("/add/{id}")
     public String addPlantToListForm(Model model, @PathVariable int id) {
         UserList userList=userListService.getUserListRepository().findById(id);
-        Collection<Plant> userPlants = plantService.getPlantRepository().listOfAllPlantsByListId(id);
+        List<Plant> userPlants = userList.getPlants();
         List<Plant> plants = plantService.getAllPlants();
         List<Plant> displayPlants = new ArrayList<>();
 
@@ -103,21 +99,32 @@ public class UserListController {
 
     @PostMapping("/add/{id}")
     public String addPlantToList(@PathVariable int id,
-                                 @RequestParam(value="plant", required = false) List<Plant> plants,
-                                 Model model) {
-        System.err.println(plants.get(0).getPlantId());
-        System.err.println(plants.get(1).getPlantId());
+                                 @RequestParam(value = "plant" , required = false) List<Plant> plants) {
         plants.forEach(plant ->{
             userListService.addPlantsToList(id, plant.getPlantId());
+
         });
         return "redirect:/userlist/list/{id}";
     }
 
-//
+    @GetMapping("/remove/{id}")
+    public String removePlantFromListForm(Model model, @PathVariable int id) {
+        UserList userList=userListService.getUserListRepository().findById(id);
+        List<Plant> userPlants = userList.getPlants();
+        System.err.println(userPlants.get(0).getPlantId());
 
-    @GetMapping("/list/{id}/remove/{plantId}") //provjerit da li radi
-    public String removePlantFromList(@PathVariable int id, @PathVariable int plantId) {
-        userListService.removePlantFromList(id, plantId);
+        model.addAttribute("userList", userList);
+        model.addAttribute("plants", userPlants);
+        return "checkbox-remove";
+    }
+
+    @PostMapping("/remove/{id}")
+    public String removePlantFromList(@PathVariable int id,
+                                      @RequestParam(value = "plant" , required = false) List<Plant> plants) {
+        plants.forEach(plant ->{
+            userListService.removePlantFromList(id, plant.getPlantId());
+
+        });
         return "redirect:/userlist/list/{id}";
     }
 

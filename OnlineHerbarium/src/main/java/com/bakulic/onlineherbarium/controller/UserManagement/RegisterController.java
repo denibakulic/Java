@@ -39,10 +39,8 @@ public class RegisterController {
         List<User> allUsers = userService.getUserRepository().findAll();
         if (allUsers.isEmpty() == false) {
             for (int i = 0; i < allUsers.size(); i++) {
-                if (allUsers.get(i).getEmail().equals(registerUserAccountDTO.getEmail()))
-                    return "redirect:/registration?usernameError";
-                if (allUsers.get(i).getEmail().equals(registerUserAccountDTO.getEmail()))
-                    return "redirect:/registration?emailError";
+                if (allUsers.get(i).getUsername().equals(registerUserAccountDTO.getUsername()))
+                    return "redirect:/register?usernameError";
             }
         }
         userService.register(registerUserAccountDTO);

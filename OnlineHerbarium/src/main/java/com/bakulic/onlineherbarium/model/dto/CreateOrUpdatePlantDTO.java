@@ -1,6 +1,5 @@
 package com.bakulic.onlineherbarium.model.dto;
 
-import com.bakulic.onlineherbarium.model.UserList;
 import lombok.Data;
 
 import java.io.Serializable;

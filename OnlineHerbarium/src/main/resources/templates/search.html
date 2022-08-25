@@ -27,7 +27,7 @@
 
         <div class="container">
             <h1>Select a family to find plants</h1><br>
-                <div class="form-group">
+                <div class="form-group family-list">
                     <span th:each = "family: ${families}" >
                        <li><a th:href = "@{/families/search/{id}(id=${family.familyId})}" th:text="${family.name}"></a></li>
                     </span>

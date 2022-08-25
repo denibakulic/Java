@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 
@@ -23,9 +22,6 @@ public class PlantController {
 
     @Autowired
     private final PlantService plantService;
-
-    @Autowired
-    private final UserListService userListService;
 
     @Autowired
     private final FamilyService familyService;
@@ -62,15 +58,8 @@ public class PlantController {
         return "plant-page";
     }
 
-    @GetMapping("/delete/{id}") //popravit, ako se izbrise biljka mora se izbrisat od svugdi
+    @GetMapping("/delete/{id}")
     public  String deletePlantById( @PathVariable ("id") int id){
-//        Collection <UserList> userLists = userListService.getUserListRepository().listOfAllUserListsByPlant(id);
-//        IntStream.range(0, userLists.size())
-//                        .forEach(index ->{
-//                            UserList list = userListService.getUserListRepository().findById(index+1);
-//                            List<Plant> plantListOfUserList = list.getPlants();
-//                            plantListOfUserList.remove(plantService.getPlantRepository().findById(id));
-//                        });
         plantService.getPlantRepository().deleteById(id);
         return "redirect:/plant/all";
 

@@ -25,7 +25,8 @@
 
         <div class="container">
                 <h1 class="my-3">Select a plant to see more details</h1>
-                    <div class="row text-center text-lg-start">
+            <br>
+                    <div class="row text-center text-lg-start family-list">
                         <span th:each="plant :${plants}">
                             <li><a th:href = "@{/plant/{name}(name=${plant.species})}" th:text="${plant.species}"></a></li>
                         </span>

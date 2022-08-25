@@ -22,7 +22,7 @@ public class HerbariumService {
     private PlantRepository plantRepository;
 
 
-    /** remove herbarium plants*/
+    /** remove plant from herbarium*/
     public void removeHerbariumPlants (int id, int idPlant){
         List<Plant> plantList = plantRepository.findAll();
         Plant plant = plantRepository.findById(idPlant);
