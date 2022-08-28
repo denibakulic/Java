@@ -27,7 +27,7 @@
 
     <div class="container">
       <div class="row text-center text-lg-start">
-            <span th:each = "img: ${images}">
+            <span th:each = "img: ${images}" th:remove="tag">
                 <div class="col-lg-3 col-md-4 col-6">
                     <img class="img-fluid img-thumbnail" th:src="@{${img.location}}" alt="image">
                     <a th:href ="@{/image/delete/{imgId}(imgId=${img.imageId})}">Delete</a>

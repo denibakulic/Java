@@ -129,7 +129,7 @@ public class UserListController {
     }
 
     @GetMapping("/delete/{id}")
-    public  String deleteUserListById( @PathVariable ("id") int id){
+    public  String deleteUserListById(@PathVariable ("id") int id){
         userListService.getUserListRepository().deleteById(id);
         return "redirect:/";
     }

@@ -7,7 +7,7 @@
         <link rel="stylesheet" th:href="@{/css/main.css}"/>
     </head>
 
-    <body>
+    <body class="herbarium">
         <div class="navbar navbar-expand-lg static-top">
             <a class="navbar-brand" href="/" >
                 <span class="sr-only">(current)</span>
@@ -28,7 +28,7 @@
         <div class="container">
             <h1 th:text="${herbarium.title}"></h1>
             <div class="row text-center text-lg-start">
-                <span th:each = "plant: ${plantList}">
+                <span th:each = "plant: ${plantList}" th:remove="tag">
                     <div class="col-lg-3 col-md-4 col-6">
                         <img class="img-fluid img-thumbnail" th:src="@{${plant.image}}" alt="image">
                         <a th:href ="@{/plant/{name}(name=${plant.species})}" th:text="${plant.species}"></a>

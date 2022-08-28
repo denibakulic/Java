@@ -13,7 +13,7 @@
 body{
     background-color: #e2ffe1;
     position: relative;
-    min-height: 100vh;
+    min-height: 150vh;
 
 }
 
@@ -123,4 +123,24 @@ tbody tr:nth-child(even){
     font-size: 25px;
 }
 
+.plant-img{
+    height: 450px;
+    align-content: center;
+    /*padding-right: 100px;*/
+    padding-left: 100px;
+}
 
+.herbarium{
+    min-height: 400vh;
+}
+ .plants{
+     min-height: 300vh;
+ }
+
+ .plant{
+     padding-right: 250px;
+ }
+
+ .admin{
+     min-height: 200px;
+ }

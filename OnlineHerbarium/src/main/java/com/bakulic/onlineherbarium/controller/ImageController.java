@@ -38,7 +38,7 @@ public class ImageController {
         return new Image();
     }
 
-    private final String UPLOAD_DIR = "D:/MojiProjekti/Java/OnlineHerbarium/src/main/resources/static/user_uploads" ;
+    private final String UPLOAD_DIR = "C:/Zavrsni/Java/OnlineHerbarium/src/main/resources/static/user_uploads" ;
 
 
     @GetMapping("/upload/{id}")
@@ -59,7 +59,7 @@ public class ImageController {
 
 
         try {
-            Path path = Paths.get(UPLOAD_DIR +fileName);
+            Path path = Paths.get(UPLOAD_DIR + fileName);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
