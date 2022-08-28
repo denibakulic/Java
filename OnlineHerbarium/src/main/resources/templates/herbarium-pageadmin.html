@@ -37,7 +37,7 @@
                 <tbody>
                 <tr th:each = "plant: ${plantList}" >
                     <td th:text = "${plant.species}"></td>
-                    <td><a th:href ="@{/plant/delete/{id}(id=${plant.plantId})}" class="btn btn-danger">Delete plant</a></td>
+                    <td><a th:href ="@{/herbarium/plants/{id}(id=${plant.plantId})}" class="btn btn-danger">Delete plant</a></td>
                 </tr>
                 </tbody>
             </table>

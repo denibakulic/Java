@@ -47,10 +47,10 @@ public class HerbariumController {
         return "herbarium-pageadmin";
     }
 
-    @GetMapping("/plants/{id}/{plantId}")
-    public String removeHerbariumPlants (@PathVariable ("id") int id, @PathVariable ("plantId") int plantId){
-       herbariumService.removeHerbariumPlants(id, plantId);
-        return "redirect:/herbarium/view/{id}";
+    @GetMapping("/plants/{plantId}")
+    public String removeHerbariumPlants (@PathVariable ("plantId") int plantId){
+       plantService.getPlantRepository().deleteById(plantId);
+        return "redirect:/herbarium/admin";
     }
 
 }
